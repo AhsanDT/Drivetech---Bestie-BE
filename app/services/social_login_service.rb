@@ -68,7 +68,7 @@ class SocialLoginService
     elsif @provider == "apple"
       User.create(email: response['email'], password: PASSWORD_DIGEST)
     else
-      User.create(email: response['email'], first_name: response['name'].split(' ').first, last_name: response['name'].split(' ').last,  password: PASSWORD_DIGEST)
+      User.create(email: response['email'], first_name: response['name'].split(' ').first, last_name: response['name'].split(' ').last,  password: PASSWORD_DIGEST, login_type: 'social login')
     end
   end
 end
