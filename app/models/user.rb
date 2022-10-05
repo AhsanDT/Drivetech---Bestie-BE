@@ -2,10 +2,9 @@ class User < ApplicationRecord
 
   has_secure_password
 
-  validates :email, uniqueness: true
+  validates :email, uniqueness: true, on: :create
   validates :password_digest, presence: true
   validates :password_digest, length: { minimum: 6 }, confirmation: true
-
 
   has_one_attached :profile_image
   has_one_attached :id_front_image
@@ -18,6 +17,7 @@ class User < ApplicationRecord
   has_one :camera_detail, dependent: :destroy
 
   accepts_nested_attributes_for :camera_detail, allow_destroy: true
+  accepts_nested_attributes_for :user_interests, allow_destroy: true
 
   enum profile_type: {
     user: 0,

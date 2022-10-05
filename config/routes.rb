@@ -3,8 +3,21 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
-      post '/signup', to: 'registrations#create'
-      post '/login', to: 'sessions#login'
+      resources :authentication, only: [] do
+        collection do
+          post :login
+          post :sign_up
+          post :forgot_password
+          post :verify_token
+          post :reset_password
+        end
+      end
+
+      resources :social_login, only: [] do
+        collection do
+          post :social_login
+        end
+      end
     end
   end
 end
