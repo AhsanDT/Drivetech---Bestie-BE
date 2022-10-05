@@ -10,6 +10,7 @@ Rails.application.routes.draw do
           post :forgot_password
           post :verify_token
           post :reset_password
+          put :update_social_login
         end
       end
 
@@ -18,6 +19,7 @@ Rails.application.routes.draw do
           post :social_login
         end
       end
+      get 'static_page', to: 'static_page#static_page'
     end
   end
 end
