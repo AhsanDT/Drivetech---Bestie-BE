@@ -1,10 +1,5 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
-#
-# Examples:
-#
-#   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
-#   Character.create(name: 'Luke', movie: movies.first)
+# Interest
+
 Interest.destroy_all
 Interest.create(title: 'Photography')
 Interest.create(title: 'Film Photography')
@@ -49,3 +44,10 @@ Interest.create(title: 'Google Sheets')
 Interest.create(title: 'Poshmark')
 Interest.create(title: 'Depop')
 Interest.create(title: 'Ebay')
+
+# Guideliens/Pages
+
+Page.destroy_all
+Page.create(title: 'Terms & Conditions', permalink: 'terms&condition', content: "<h2>Welcome to Bestie!</h2> </n> <p> These terms and conditions outline the rules and regulations for the use of Bestie's Website, located at <a>www.bestie.com</a>. </p> </n> <p> By accessing this website we assume you accept these terms and conditions. Do not continue to use Bestie if you do not agree to take all of the terms and conditions stated on this page. </p> </n> <p> The following terminology applies to these Terms and Conditions, Privacy Statement and Disclaimer Notice and all Agreements: <q>Client</q>, <q>You</q> and <q>Your</q> refers to you, the person log on this website and compliant to the Company’s terms and conditions. <q>The Company</q>, <q>Ourselves</q>, <q>We</q>, <q>Our</q> and <q>Us</q>, refers to our Company. <q>Party</q>, <q>Parties</q>, or <q>Us</q>, refers to both the Client and ourselves. All terms refer to the offer, acceptance and consideration of payment necessary to undertake the process of our assistance to the Client in the most appropriate manner for the express purpose of meeting the Client’s needs in respect of provision of the Company’s stated services, in accordance with and subject to, prevailing law of Netherlands. Any use of the above terminology or other words in the singular, plural, capitalization and/or he/she or they, are taken. </p>")
+Page.create(title: 'Privacy Policy', permalink: 'privacy_policy', content: "<h5>Please read Privacy Policy</h5> </n> </n><h6>Reservation of Rights</h6></n><p> We reserve the right to request that you remove all links or any particular link to our Website. You approve to immediately remove all links to our Website upon request. We also reserve the right to amen these terms and conditions and it’s linking policy at any time. By continuously linking to our Website, you agree to be bound to and follow these linking terms and conditions.</p> </n></n><h6>Removal of links from our website</h6></n><p> If you find any link on our Website that is offensive for any reason, you are free to contact and inform us any moment. We will consider requests to remove links but we are not obligated to or so or to respond to you directly.</p></n></n><p> We do not ensure that the information on this website is correct, we do not warrant its completeness or accuracy; nor do we promise to ensure that the website remains available or that the material on the website is kept up to date.</p></n></n><h6>Disclaimer</h6></n><p> To the maximum extent permitted by applicable law, we exclude all representations, warranties and conditions relating to our website and the use of this website. Nothing in this disclaimer will:</p>")
+Page.create(title: 'FAQ', permalink:'faq', content: "<p>The following organizations may link to our Website without prior written approval:</p></n></n><ul><li>Government agencies;</li><li>Search engines;</li><li>News organizations;</li><li>Online directory distributors may link to our Website in the same manner as they hyperlink to the Websites of other listed businesses; and</li><li>System wide Accredited Businesses except soliciting non-profit organizations, charity shopping malls, and charity fundraising groups which may not hyperlink to our Web site.</li><li>These organizations may link to our home page, to publications or to other Website information so long as the link: (a) is not in any way deceptive; (b) does not falsely imply sponsorship, endorsement or approval of the linking party and its products and/or services; and (c) fits within the context of the linking party’s site.</li></ul></n></n><p>We may consider and approve other link requests from the following types of organizations:</p></n></n><ul><li>commonly-known consumer and/or business information sources;dot.com community sites;</li><li>associations or other groups representing charities;</li><li>online directory distributors;</li><li>internet portals;</li></ul>")

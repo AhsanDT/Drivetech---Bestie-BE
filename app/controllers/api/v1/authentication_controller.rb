@@ -1,6 +1,6 @@
 class Api::V1::AuthenticationController < Api::V1::ApiController
-  before_action :authorize_user, except: [:sign_up, :login, :forgot_password, :verify_token, :reset_password]
-  before_action :find_user_by_email, only: [:forgot_password, :verify_token, :reset_password]
+  before_action :authorize_user, except: [:sign_up, :login, :forgot_password, :verify_token, :reset_password, :update_social_login]
+  before_action :find_user_by_email, only: [:forgot_password, :verify_token, :reset_password, :update_social_login]
 
   def sign_up
     @user = User.create(sign_up_params.merge(profile_completed: true, login_type: 'manual'))
@@ -15,11 +15,17 @@ class Api::V1::AuthenticationController < Api::V1::ApiController
   def login
     @user = User.find_by(email: login_params[:email])
     if @user&.authenticate(login_params[:password])
-      render json: {
-        message: 'User logged in successfully',
-        data: @user,
-        auth_token: JsonWebToken.encode(user_id: @user.id)
-      }, status: :ok
+      if @user.profile_completed?
+        render json: {
+          message: 'User logged in successfully',
+          data: @user,
+          auth_token: JsonWebToken.encode(user_id: @user.id)
+        }, status: :ok
+      else
+        render json: {
+          message: 'Please complete your profile first'
+        },status: :ok
+      end
     else
       render json:{
         message: 'Invalid Email or Password'
@@ -58,6 +64,16 @@ class Api::V1::AuthenticationController < Api::V1::ApiController
     else
       render json: {
         message: 'There are errors while updaing password',
+        error: @user.errors.full_messages
+      }, status: :unprocessable_entity
+    end
+  end
+
+  def update_social_login
+    @user.update(sign_up_params.merge(profile_completed: true))
+    if @user.errors.any?
+      render json: {
+        message: 'There are error while updating user',
         error: @user.errors.full_messages
       }, status: :unprocessable_entity
     end
