@@ -6,11 +6,11 @@ class User < ApplicationRecord
   validates :password_digest, presence: true
   validates :password_digest, length: { minimum: 6 }, confirmation: true
 
-  has_one_attached :profile_image
-  has_one_attached :id_front_image
-  has_one_attached :id_back_image
-  has_one_attached :selfie
-  has_many_attached :portfolio
+  has_one_attached :profile_image, dependent: :destroy
+  has_one_attached :id_front_image, dependent: :destroy
+  has_one_attached :id_back_image, dependent: :destroy
+  has_one_attached :selfie, dependent: :destroy
+  has_many_attached :portfolio, dependent: :destroy
 
   has_many :user_interests, dependent: :destroy
   has_many :interests, through: :user_interests

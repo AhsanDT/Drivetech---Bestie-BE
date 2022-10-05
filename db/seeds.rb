@@ -5,7 +5,7 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
-
+Interest.destroy_all
 Interest.create(title: 'Photography')
 Interest.create(title: 'Film Photography')
 Interest.create(title: 'Wedding Photography')
