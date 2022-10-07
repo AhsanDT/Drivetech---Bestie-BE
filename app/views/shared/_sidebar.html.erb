@@ -2,16 +2,16 @@
   <div class="inside">
     <div class="logo_blk">
       <div class="logo">
-        <a href="index.php">
+        <a href="<%= admin_dashboard_index_path %>">
           <img src="/assets/logo_color.svg" alt="">
         </a>
       </div>
     </div>
     <ul>
       <li><a href="<%= admin_dashboard_index_path %>" class="active">Dashboard</a></li>
-      <li><a href="users.php">Users</a></li>
-      <li><a href="besties.php">Besties</a></li>
-      <li><a href="sub-admins.php">Sub Admins</a></li>
+      <li><a href="<%= admin_users_path %>">Users</a></li>
+      <li><a href="<%= admin_bestie_index_path %>">Besties</a></li>
+      <li><a href="<%= admin_sub_admins_path %>">Sub Admins</a></li>
       <li><a href="<%= admin_guidelines_path %>">Guidelines</a></li>
       <li><a href="support.php">Support</a></li>
     </ul>

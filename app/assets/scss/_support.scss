@@ -1,0 +1,127 @@
+#support {
+	.status {
+		color: #ff8b3e;
+	}
+	.users_blk {
+		.search_blk {
+			max-width: 35rem;
+			.input {
+				height: 4.5rem;
+			}
+			.btn {
+				box-shadow: none;
+			}
+		}
+
+		.users_list {
+			@include list;
+			height: 50rem;
+			overflow-y: auto;
+			margin-left: -5rem;
+			li {
+				padding: 2rem 2rem 2rem 5rem;
+				&.active {
+					background-color: #00000005;
+				}
+				.user {
+					@include flex;
+					.img {
+						width: 4.6rem;
+						min-width: 4.6rem;
+						height: 4.6rem;
+						border-radius: 75%;
+						overflow: hidden;
+						margin-right: 1rem;
+					}
+					.txt {
+						width: calc(100% - 5.6rem);
+
+						.msg {
+							overflow: hidden;
+							white-space: nowrap;
+							text-overflow: ellipsis;
+						}
+					}
+				}
+			}
+		}
+	}
+	.chat_blk {
+		border-left: 0.1rem solid #e0e0e0;
+		padding-left: 1rem;
+		.selected_chat {
+			padding: 1.8rem 2.4rem;
+			background: #f8f8f8;
+			border-radius: 2rem;
+			@include flex(center);
+
+			.img {
+				width: 7.7rem;
+				min-width: 7.7rem;
+				height: 7.7rem;
+				overflow: hidden;
+				border-radius: 75%;
+				margin-right: 1.6rem;
+			}
+			.form_blk {
+				@include flex(center);
+				margin-left: auto;
+				input {
+					margin-right: 1rem;
+				}
+			}
+		}
+		.msg_contain {
+			margin-top: 3.5rem;
+			height: 45rem;
+			overflow-y: auto;
+			.msg {
+				font-size: 1.2rem;
+				&:not(:last-child) {
+					margin-bottom: 6rem;
+				}
+				.detail {
+					@include flex(center);
+					margin-bottom: 1rem;
+					.img {
+						width: 5rem;
+						min-width: 5rem;
+						height: 5rem;
+						border-radius: 75%;
+						overflow: hidden;
+						margin-right: 1.2rem;
+					}
+				}
+			}
+		}
+		.send_blk {
+			padding: 1rem 1.4rem;
+			background: #ffffff;
+			border: 0.1rem solid #f3f3f3;
+			border-radius: 2rem;
+			margin-top: 1rem;
+			@include flex(center);
+			.att-btn {
+				width: 2.6rem;
+				min-width: 2.6rem;
+				height: 2.6rem;
+				padding: 0;
+			}
+			.input {
+				height: 4rem;
+				border: transparent;
+				box-shadow: none;
+			}
+			.send_btn {
+				padding: 1rem;
+				@include flex(center, center);
+				border-radius: 75%;
+				overflow: hidden;
+				width: 4.4rem;
+				min-width: 4.4rem;
+				height: 4.4rem;
+				background-color: #ff6933;
+			}
+		}
+	}
+}

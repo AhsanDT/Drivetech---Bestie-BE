@@ -13,6 +13,9 @@ Rails.application.routes.draw do
         get :get_page
       end
     end
+    resources :users, only: [:index, :show]
+    resources :bestie, only: [:index, :show]
+    resources :sub_admins, only: [:index, :new, :create]
   end
 
   namespace :api do

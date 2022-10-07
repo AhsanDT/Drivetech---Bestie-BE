@@ -24,11 +24,19 @@ class User < ApplicationRecord
     user: 0,
     bestie: 1
   }
-
   enum pronoun: {
     "he/him" => 0,
     "she/her" => 1,
     "they/them" => 2
   }
+
+  scope :count_male_user, -> { where('sex = (?)','male').count }
+  scope :count_female_user, -> { where('sex = (?)','female').count }
+  scope :end_users, -> {where('profile_type = (?)', '0')}
+  scope :bestie_users, -> {where('profile_type = (?)', '1')}
+
+  def full_name
+    first_name + ' ' + last_name
+  end
 
 end

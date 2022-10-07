@@ -1,0 +1,120 @@
+<section id="account_section">
+  <%= render 'shared/sidebar' %>
+  <div id="users" class="main_side">
+    <div id="top_header">
+      <h2>User</h2>
+    </div>
+
+    <div class="row">
+     <div class="col-6">
+      <ul class="top_blk">
+        <li>
+          <div class="dropdown">
+            <button class="filter text dropdown-toggle fs_5 fw_600" data-bs-toggle="dropdown">
+              <div class="img_blk">
+                <img src="/assets/filter-icon.svg" alt="">
+              </div>
+              filters
+            </button>
+            <ul class="dropdown-menu" >
+              <li><button type="button">All Data</button></li>
+              <li><button type="button">User's Info</button></li>
+              <li><button type="button">Vacant Land</button></li>
+              <li><button type="button"> Dream Address</button></li>
+              <li><button type="button">I Want to Buy</button></li>
+              <li><button type="button">I Want to Sell</button></li>
+            </ul>
+          </div>
+        </li>
+        <li>
+          <div class="form_blk">
+            <div class="icon_blk">
+              <img src="/assets/Search.svg" alt="">
+            </div>
+            <input type="search" placeholder="Search" class="input">
+          </div>
+        </li>
+      </ul>
+    </div>
+    <div class="col-6">
+      <ul class="right_blk">
+        <button type="button" class="filter">
+          <div class="img_blk">
+            <img src="/assets/download.svg" alt="">
+          </div>
+          Download CSV
+        </button>
+      </ul>
+    </div>
+  </div>
+
+  <!-- table_section -->
+  <div id="table_users">
+    <div class="table__blk">
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 15rem;">Full Name</th>
+            <th style="width: 20rem;">Email</th>
+            <th style="width: 15rem;">Phone Number</th>
+            <th style="width: 14rem;">Country</th>
+            <th style="width: 7rem;">Age</th>
+            <th style="width: 11rem;">Sex</th>
+            <th style="width: 28rem;">Interest</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @end_users&.each do |user| %>
+            <tr>
+                <td class="fw-bold"><%= link_to user&.full_name, admin_user_path(id: user.id) %></td>
+                <td><%= user&.email %></td>
+                <td><%= user&.phone_number %></td>
+                <td><%= user&.country %></td>
+                <td><%= user&.age %></td>
+                <td><%= user&.sex %></td>
+                <td class="interest">
+                  <% user&.interests.each do |interest|%>
+                    <span><%= interest&.title %></span>
+                  <%end%>
+                </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+<!-- pagination_section -->
+  <div class="paginate_sec">
+    <p>Showing 1 to 9 of 200 entries</p>
+    <nav aria-label="Page navigation example">
+      <ul class="pagination">
+        <li class="page_item disable me-4">
+          <a class="page_link" href="#" aria-label="Previous">
+            <div class="icon_blk me-2">
+              <img src="/assets/left arrow.svg" aria-hidden="true" alt="icon">
+            </div>
+            Previous
+          </a>
+        </li>
+        <li class="page_no "><a class="" href="#">1</a></li>
+        <li class="page_no"><a class="" href="#">2</a></li>
+        <li class="page_no"><a class="" href="#">3</a></li>
+        <li class="page_item ms-4">
+          <a class="page_link fw_600" href="#" aria-label="Previous">
+            Next
+            <div class="icon_blk ms-2">
+              <img src="/assets/right arrow.svg" aria-hidden="true" alt="icon">
+            </div>
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</div>
+</section>
+<!-- account_section -->
+
+
+<!-- Main Js -->
+<script src="/assets/main.js"></script>
