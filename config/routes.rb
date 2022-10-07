@@ -1,5 +1,19 @@
 Rails.application.routes.draw do
+  devise_for :admins
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+  root to: "admin/dashboard#index"
+
+  namespace :admin do
+    resources :dashboard do
+      collection do
+      end
+    end
+    resources :guidelines, only: [:index, :update, :edit] do
+      collection do
+        get :get_page
+      end
+    end
+  end
 
   namespace :api do
     namespace :v1 do
@@ -11,6 +25,7 @@ Rails.application.routes.draw do
           post :verify_token
           post :reset_password
           put :update_social_login
+          get :get_interests
         end
       end
 

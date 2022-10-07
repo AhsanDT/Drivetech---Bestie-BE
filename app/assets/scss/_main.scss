@@ -1,0 +1,213 @@
+/*
+|----------------------------------------------------------------------
+|       Body
+|----------------------------------------------------------------------
+*/
+
+html {
+	font-size: 10 + $pix;
+	@media (max-width: 1440px) {
+		font-size: 10px;
+	}
+	@media (max-width: 1400px) {
+		font-size: 9.7222px;
+	}
+	@media (max-width: 1368px) {
+		font-size: 9.5px;
+	}
+	@media (max-width: 1366px) {
+		font-size: 9.4861px;
+	}
+	@media (max-width: 1300px) {
+		font-size: 9.44444px;
+	}
+	@media (max-width: 1280px) {
+		font-size: 8.88889px;
+	}
+	@media (max-width: 1208px) {
+		font-size: 8.38889px;
+	}
+	@media (max-width: 1152px) {
+		font-size: 8px;
+	}
+	@media (max-width: 1024px) {
+		font-size: 7.1111px;
+	}
+	&::-webkit-scrollbar {
+		width: 0;
+	}
+	@at-root {
+		.text_prime {
+			color: var(--prime_color);
+		}
+		.text_second {
+			color: var(--second_color);
+		}
+		.blk {
+			@include block;
+		}
+		.input {
+			height: 6rem;
+			font-size: 1.6rem;
+		}
+	}
+}
+
+/*
+|----------------------------------------------------------------------
+|       Logo
+|----------------------------------------------------------------------
+*/
+
+.logo {
+	@include flex(center);
+	position: relative;
+	width: 100%;
+	max-width: 13rem;
+	height: 7rem;
+	> a {
+		@apply block w-full max-w-full h-full;
+		> img {
+			@apply h-full;
+			@include object(contain, left center);
+			@include trans;
+		}
+	}
+	#sidebar & {
+		height: auto;
+		margin-bottom: 4rem;
+	}
+}
+
+/*
+|----------------------------------------------------------------------
+|       Sidebar
+|----------------------------------------------------------------------
+*/
+
+#sidebar {
+	@include pos($pos: fixed, $r: null, $z: 10);
+	width: 30rem;
+	background: var(--light);
+	border-right: 2rem solid #fafafc;
+	.inside {
+		height: 100%;
+		padding: 5rem 2rem 4rem;
+		overflow: hidden;
+		overflow-y: auto;
+		ul {
+			@include list;
+			> li {
+				display: block;
+				&:not(:nth-last-child(1)) {
+					margin-bottom: 0.2rem;
+				}
+				> a {
+					display: block;
+					background: transparent;
+					color: rgba(var(--black_rgb), 0.4);
+					padding: 1.4rem 2rem;
+					border-radius: 1rem;
+					&:hover {
+						// background: rgba(var(--black_rgb), 0.02);
+						background: #fffaf9;
+					}
+					&.active {
+						background: var(--prime_color);
+						color: var(--light);
+					}
+				}
+			}
+		}
+	}
+}
+
+/*
+|----------------------------------------------------------------------
+|       Dashboard
+|----------------------------------------------------------------------
+*/
+
+#top_header {
+	@include flex(center, space-between);
+	margin-bottom: 4rem;
+	.header_side {
+		@include flex;
+		.form_blk {
+			width: 28rem;
+			min-width: 28rem;
+			input {
+				height: 4.8rem;
+				&:not(:hover) {
+					border-color: transparent;
+				}
+			}
+		}
+		.noti_btn {
+			position: relative;
+			@include i_flex(center, center);
+			width: 4.8rem;
+			min-width: 4.8rem;
+			height: 4.8rem;
+			margin-left: 2rem;
+			&:not(:hover) {
+				border-color: transparent;
+			}
+			> img {
+				width: 2.4rem;
+				min-width: 2.4rem;
+				height: 2.4rem;
+			}
+			> span {
+				position: absolute;
+				top: -0.6rem;
+				right: -0.6rem;
+				@include i_flex(center, center);
+				width: 2.4rem;
+				min-width: 2.4rem;
+				height: 2.4rem;
+				background: var(--red);
+				color: var(--light);
+				font-size: 1.2rem;
+				font-weight: 700;
+				border-radius: 75%;
+			}
+		}
+	}
+}
+
+#account_section {
+	@include flex;
+	padding: 0;
+	> .main_side {
+		width: calc(100% - 30rem);
+		margin-left: 30rem;
+		padding: 5rem;
+	}
+}
+
+#dash {
+	@at-root {
+		.dash_blk {
+			@include flex;
+			background: #fffaf9;
+			padding: 4rem 3rem;
+			border-radius: 2.5rem;
+			> .icon {
+				width: 6.8rem;
+				min-width: 6.8rem;
+				height: 6.8rem;
+				margin-right: 2rem;
+			}
+			> .txt {
+				.num {
+					color: var(--prime_color);
+					font-size: 6rem;
+					font-weight: 600;
+					line-height: 5rem;
+					margin-bottom: 1rem;
+				}
+			}
+		}
+	}
+}

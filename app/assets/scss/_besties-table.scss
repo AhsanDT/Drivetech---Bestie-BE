@@ -1,0 +1,235 @@
+#besties-table {
+	#top_header{
+		margin-bottom: 2rem;
+	}
+	.top_blk {
+		list-style-type: none;
+		padding-left: 0;
+		margin-bottom: 0;
+		display: -webkit-box;
+		display: -ms-flexbox;
+		display: flex;
+		-webkit-box-align: center;
+		-ms-flex-align: center;
+		align-items: center;
+		li {
+			margin-right: 1rem;
+			&:last-child {
+				margin-right: 0;
+			}
+			.filter {
+				background: #f1f3f6;
+				border-radius: 1rem;
+				border: transparent;
+				display: -webkit-box;
+				display: -ms-flexbox;
+				display: flex;
+				-webkit-box-align: center;
+				-ms-flex-align: center;
+				align-items: center;
+				-webkit-box-pack: center;
+				-ms-flex-pack: center;
+				justify-content: center;
+				width: 15rem;
+				height: 4.4rem;
+				font-weight: 500;
+				font-size: 1.4rem;
+				line-height: 1.8rem;
+
+				.img_blk {
+					width: 1.8rem;
+					min-width: 1.8rem;
+					height: 1.8rem;
+					margin-right: 1rem;
+
+					img {
+						width: 100%;
+						height: 100%;
+					}
+				}
+			}
+			.form_blk {
+				input {
+					width: 34.4rem;
+					min-width: 34.4rem;
+					height: 4.4rem;
+				}
+				.icon_blk {
+					width: 2rem;
+					min-width: 2rem;
+					height: 2rem;
+					position: absolute;
+					top: 50%;
+					bottom: 0;
+					left: 5%;
+					right: 0;
+					-webkit-transform: translate(0, -50%);
+					-ms-transform: translate(0, -50%);
+					transform: translate(0, -50%);
+
+					+ input {
+						padding-left: 5rem;
+						background: #F1F3F6;
+					}
+				}
+			}
+		}
+	}
+	.right_blk{
+		display: flex;
+		justify-content: end;
+		.filter {
+			background: #f1f3f6;
+			border-radius: 1rem;
+			border: transparent;
+			display: -webkit-box;
+			display: -ms-flexbox;
+			display: flex;
+			-webkit-box-align: center;
+			-ms-flex-align: center;
+			align-items: center;
+			-webkit-box-pack: center;
+			-ms-flex-pack: center;
+			justify-content: center;
+			width: 15rem;
+			height: 4.4rem;
+			font-weight: 500;
+			font-size: 1.4rem;
+			line-height: 1.8rem;
+
+			.img_blk {
+				width: 1.8rem;
+				min-width: 1.8rem;
+				height: 1.8rem;
+				margin-right: 1rem;
+
+				img {
+					width: 100%;
+					height: 100%;
+				}
+			}
+		}
+	}
+}
+
+#table {
+	.table__blk {
+		overflow-x: auto;
+		table {
+			min-width: 100%;
+			width: max-content;
+			thead {
+				font-size: 1.4rem;
+				font-weight: 500 ;
+                color: #09110E;
+
+				tr {
+					th {
+						padding: 2.7rem 0;
+                        border-top: .1rem solid #EFEFEF;
+                        border-bottom: .1rem solid #EFEFEF;
+					}
+				}
+			}
+
+			tbody {
+				font-size: 1.4rem;
+				font-weight: 400;
+                color: #000;
+				tr {
+					td {
+						padding: 2.7rem 0;
+                        border-top: .1rem solid #EFEFEF;
+                        border-bottom: .1rem solid #EFEFEF;
+
+                        
+					}
+                    .color-green{
+                        color: #00A66C;
+                    }
+				}
+			}
+		}
+	}
+}
+
+// pagination
+
+.paginate_sec {
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-align: center;
+	-ms-flex-align: center;
+	align-items: center;
+	-webkit-box-pack: justify;
+	-ms-flex-pack: justify;
+	justify-content: space-between;
+	width: 100%;
+    margin-top: 5rem;
+	p {
+		margin-bottom: 0;
+		font-size: 1.4rem;
+		line-height: 2rem;
+		color: rgba(0, 0, 0, 0.7);
+	}
+	nav {
+		.pagination {
+			-webkit-box-align: center;
+			-ms-flex-align: center;
+			align-items: center;
+			.page_no {
+				min-width: 3.6rem;
+				width: 3.6rem;
+				height: 3.6rem;
+				display: -webkit-box;
+				display: -ms-flexbox;
+				display: flex;
+				-webkit-box-align: center;
+				-ms-flex-align: center;
+				align-items: center;
+				-webkit-box-pack: center;
+				-ms-flex-pack: center;
+				justify-content: center;
+				background: #efefef;
+				border-radius: 1rem;
+				margin-right: 0.5rem;
+				// transition: $trans;
+				color: var(--dark);
+
+				&:hover {
+					background-color: #FF6933;
+					color: #ffff;
+				}
+				a {
+					font-weight: 400;
+					font-size: 1.4rem;
+					line-height: 2rem;
+					&:hover {
+						color: var(--light) !important;
+					}
+				}
+			}
+			.page_item {
+				&.disable {
+					color: #000000;
+					opacity: 0.4;
+				}
+				.page_link {
+					display: -webkit-box;
+					display: -ms-flexbox;
+					display: flex;
+					-webkit-box-align: center;
+					-ms-flex-align: center;
+					align-items: center;
+
+					.icon_blk {
+						width: .8rem;
+						min-width: .8rem;
+						// height: 1.2rem;
+					}
+				}
+			}
+		}
+	}
+}

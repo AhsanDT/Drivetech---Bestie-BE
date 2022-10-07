@@ -1,0 +1,196 @@
+#Besties {
+	#top_header {
+		h2 {
+			font-size: 3rem;
+			font-weight: 700;
+		}
+	}
+	.user_sec {
+		display: flex;
+		align-items: center;
+		.img {
+			width: 1.5rem;
+			min-width: 1.6rem;
+			height: 1.7rem;
+			img {
+				height: 100%;
+			}
+		}
+		h4 {
+			font-size: 2.2rem;
+			font-weight: 600;
+			margin-bottom: 0;
+			margin-left: 1.2rem;
+		}
+	}
+
+	.user_name_email {
+		margin-bottom: 4.7rem;
+		margin-top: 3.8rem;
+		display: flex;
+		align-items: center;
+		.img {
+			border-radius: 50%;
+			width: 5.5rem;
+			min-width: 5.5rem;
+			height: 5.5rem;
+		}
+		.right_text {
+			margin-left: 1.5rem;
+			h4 {
+				font-size: 1.8rem;
+				font-weight: 600;
+				margin-bottom: 0.9rem;
+			}
+			h5 {
+				font-size: 1.6rem;
+				font-weight: 400;
+				margin-bottom: 0;
+			}
+		}
+	}
+	.personal_details {
+		h4 {
+			font-size: 2rem;
+			font-weight: 600;
+		}
+		table {
+			margin-top: 2rem;
+			.pad_left {
+				padding-left: 2.8rem;
+			}
+
+			tbody {
+				tr {
+					td {
+						font-weight: 500;
+						font-size: 1.6rem;
+						line-height: 3.6rem;
+						color: #00000080;
+						.gray_bk {
+							background-color: #f0f0f0;
+							padding: 0.7rem 0.5rem 0.7rem 0.5rem;
+							height: 4rem;
+							border-radius: 0.8rem;
+							color: black;
+						}
+					}
+				}
+				.left {
+					text-align: start;
+					padding-left: 11.5rem;
+					color: black;
+				}
+			}
+		}
+	}
+
+	.experience_detail {
+		h4 {
+			font-size: 2rem;
+			font-weight: 600;
+			margin-top: 4.7rem;
+		}
+		table {
+			margin-top: 2rem;
+			.pad_left {
+				padding-left: 2.8rem;
+			}
+
+			tbody {
+				tr {
+					padding-bottom: 2.7rem;
+					td {
+						font-weight: 500;
+						font-size: 1.6rem;
+						line-height: 3.6rem;
+						color: #00000080;
+						.blk_bg {
+							background-color: #000000;
+							padding: 0.7rem 1rem 0.7rem 1rem;
+							height: 4rem;
+							border-radius: 2rem;
+							color: white;
+						}
+					}
+				}
+				.left {
+					text-align: start;
+					padding-left: 11.5rem;
+					color: black;
+				}
+				.col-green {
+					color: #00a66c;
+				}
+			}
+		}
+	}
+	.portfolio {
+		margin-bottom: 4.5rem;
+		h4 {
+			font-size: 2rem;
+			font-weight: 600;
+			margin-top: 4.7rem;
+			margin-bottom: 2.7rem;
+		}
+		.photos {
+			width: 40rem;
+			max-width: 40rem;
+			.img {
+				width: 11.3rem;
+				min-width: 11.3rem;
+				height: 11.3rem;
+				border-radius: 1rem;
+				overflow: hidden;
+				img {
+					height: 100%;
+					aspect-ratio: 1;
+					object-fit: cover;
+				}
+			}
+			.photos_inner {
+				display: flex;
+				align-items: center;
+				flex-wrap: wrap;
+				gap: 0.8rem;
+			}
+		}
+	}
+	.camera_detail {
+		h4 {
+			font-size: 2rem;
+			font-weight: 600;
+			margin-bottom: 2.7rem;
+			margin-top: 4.7rem;
+		}
+		h5 {
+			font-size: 1.6rem;
+			font-weight: 500;
+		}
+		h6 {
+			font-size: 1.6rem;
+			font-weight: 500;
+			margin-top: 2rem;
+		}
+		p {
+			font-size: 1.4rem;
+			font-weight: 400;
+			line-height: 2rem;
+			max-width: 35rem;
+		}
+		.cam_div {
+			display: flex;
+			align-items: flex-start;
+			.img {
+				width: 2.1rem;
+				height: 1.6rem;
+			}
+			p {
+				font-size: 1.4rem;
+				font-weight: 400;
+
+				margin-left: 1rem;
+			}
+		}
+	}
+}

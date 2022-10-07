@@ -1,0 +1,47 @@
+<section id="logon" style="background-image: url('/assets/Logon.jpg')">
+  <div class="contain">
+    <div class="log_blk">
+      <div class="form_wrapper">
+        <div class="logo">
+          <img src="/assets/logo-on.svg" alt="">
+        </div>
+        <h2 class="mb-4">Forgot Password?</h2>
+        <h5>Enter your details below</h5>
+        <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
+          <%= render "devise/shared/error_messages", resource: resource %>
+          <h6>Email Address</h6>
+          <div class="form_blk">
+            <input type="text" name="admin[email]" class="input" placeholder="Type here">
+          </div>
+          <div class="btn_blk pop_btn" data-popup="forget_pass">
+            <%= f.submit 'Reset Password', class: 'site_btn w-100' %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <div class="popup" data-popup="forget_pass">
+    <div class="table_dv overlay">
+      <div class="table_cell">
+        <div class="contain-fluid">
+          <div class="row justify-content-center">
+            <div class="col-3">
+              <div class="_inner">
+                <button type="button" class="x_btn"></button>
+                <div class="forget">
+                  <img src="/assets/icon-forget-success.svg" alt="">
+                </div>
+                <p class="fs_5 text-center">Your reset password link has been sent to your email.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Logon Section -->
+
+
+<!-- Main Js -->
+<script src="/assets/main.js"></script>
