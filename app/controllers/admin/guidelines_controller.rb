@@ -1,4 +1,5 @@
 class Admin::GuidelinesController < ApplicationController
+  before_action :authenticate_admin!
   before_action :get_page, only: [:index]
 
   def index; end
