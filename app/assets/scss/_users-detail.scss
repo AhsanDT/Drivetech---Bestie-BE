@@ -1,0 +1,74 @@
+#users{
+    #top_header{
+        margin-bottom: 4rem;
+        h1{
+            font-size: 3rem;
+        }
+    }
+    .user_details{
+        display: flex;
+        margin-bottom: 4rem;
+        .icon{
+            height: 2.2rem;
+            width: 1.5rem;
+            margin-right: 1rem;
+            img{
+                height: 100%;
+                object-fit: fill;
+            }
+        }
+        h4{
+            font-size: 2.2rem;
+            font-weight: 600;
+        }
+    }
+    .ellipse{
+        display: flex;
+        margin-bottom: 4rem;
+        .img{
+            height: 5.5rem;
+            width: 5.5rem;
+            margin-right: 1.5rem;
+            img{
+                height: 100%;
+                object-fit: contain;
+            }
+        }
+        .content{
+            span{
+                font-size: 1.8rem;
+                font-weight: 600;
+                margin: 0;
+            }
+            p{
+                font-size: 1.6rem;
+                font-weight: 400;
+            }
+        }
+
+    }
+    .personal_details{
+        h5{
+            font-weight: 600;
+            margin-bottom: 3rem;
+        }
+        ul{
+            list-style: none;
+            padding: 0;
+            font-size: 1.6rem;
+            font-weight: 500;
+            li{
+                padding: 1.4rem 0;
+            }
+            .interest_item{
+                display: flex;
+                gap: 1rem;
+                div{
+                    background: #F0F0F0;
+                    border-radius: .8rem;
+                    padding: .7rem .5rem;
+                }
+            }
+        }
+    }
+}

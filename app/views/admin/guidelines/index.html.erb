@@ -1,0 +1,53 @@
+<%= render 'shared/sidebar' %>
+<section id="account_section">
+  <div id="guidelines" class="main_side">
+    <div class="row">
+      <div class="col-md-3 ">
+        <div class="guid_side">
+          <h1>Guidelines</h1>
+          <ul>
+            <li>
+              <a href="<%= admin_guidelines_path(permalink: 'terms&condition') %>" class="site_btn trans">Terms & Conditions</a>
+            </li>
+            <li>
+              <a href="<%= admin_guidelines_path(permalink: 'privacy_policy') %>" class="site_btn trans">Privacy Policy</a>
+            </li>
+            <li>
+              <a href="<%= admin_guidelines_path(permalink: 'faq') %>" class="site_btn trans">FAQ</a>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+      <div class="col-md-9">
+        <div class="guid_top">
+          <div class="btn_blk">
+            <button type="button" class="site_btn top_btn trans">Cancel</button>
+            <button type="button" class="site_btn top_btn blue" id="customsubmitbutton">Save</button>
+          </div>
+        </div>
+        <div class="guideline_content">
+        <%= form_with(url: "/admin/guidelines/#{@page.id}", method: :put) do |f| %>
+          <div class="details my-4">
+            <div class="field">
+              <%= f.hidden_field :content %>
+              <%= f.rich_text_area :content, value: @page.content, required: true %>
+              <button type="submit" hidden id="customfaqsubmitbtns"></button>
+            </div>
+
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+</section>
+<script type="text/javascript">
+  $(document).ready(function(){
+    $("#customsubmitbutton").click(function(){
+       $("#customfaqsubmitbtns").trigger('click');
+    })
+  })
+</script>
