@@ -4,9 +4,10 @@ class SocialLoginService
   PASSWORD_DIGEST = SecureRandom.hex(10)
   APPLE_PEM_URL = 'https://appleid.apple.com/auth/keys'
 
-  def initialize(provider, token)
+  def initialize(provider, token, type)
     @token = token
     @provider = provider.downcase
+    @type = type
   end
 
   def social_logins
@@ -66,9 +67,9 @@ class SocialLoginService
     if (user = User.find_by(email: email))
       user
     elsif @provider == "apple"
-      User.create(email: response['email'], password: PASSWORD_DIGEST)
+      User.create(email: response['email'], password: PASSWORD_DIGEST, profile_type: @type)
     else
-      User.create(email: response['email'], first_name: response['name'].split(' ').first, last_name: response['name'].split(' ').last,  password: PASSWORD_DIGEST, login_type: 'social login')
+      User.create(email: response['email'], first_name: response['name'].split(' ').first, last_name: response['name'].split(' ').last,  password: PASSWORD_DIGEST, login_type: 'social login', profile_type: @type)
     end
   end
 end

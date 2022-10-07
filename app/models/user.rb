@@ -5,6 +5,7 @@ class User < ApplicationRecord
   validates :email, uniqueness: true, on: :create
   validates :password_digest, presence: true
   validates :password_digest, length: { minimum: 6 }, confirmation: true
+  validates_presence_of :profile_type, inclusion: {in: :profile_type}
 
   has_one_attached :profile_image, dependent: :destroy
   has_one_attached :id_front_image, dependent: :destroy

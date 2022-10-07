@@ -3,7 +3,14 @@ class Api::V1::AuthenticationController < Api::V1::ApiController
   before_action :find_user_by_email, only: [:forgot_password, :verify_token, :reset_password, :update_social_login]
 
   def sign_up
-    @user = User.create(sign_up_params.merge(profile_completed: true, login_type: 'manual'))
+    begin
+      @user = User.create(sign_up_params.merge(profile_completed: true, login_type: 'manual'))
+    rescue => e
+      return render json: {
+        message: 'There are error while creating user',
+        error: e.message
+      }, status: :unprocessable_entity
+    end
     if @user.errors.any?
       render json: {
         message: 'There are error while creating user',
