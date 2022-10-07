@@ -1,0 +1,88 @@
+#logon {
+	@include bg(cover, top center);
+	background-attachment: fixed;
+	padding: 0;
+	.log_blk {
+		min-height: 100vh;
+		@include flex(center);
+		color: var(--light);
+		max-width: 38rem;
+		padding: 6rem 0;
+		.form_wrapper {
+			width: 100%;
+			.logo {
+				width: 17.5rem;
+				min-width: 17.5rem;
+				height: 5.5rem;
+				margin-bottom: 3.5rem;
+			}
+			form {
+				margin-top: 5rem;
+				.form_blk {
+					overflow: hidden;
+					> img {
+						width: 2rem;
+						min-width: 2rem;
+						height: 2rem;
+					}
+					&.error {
+						border-color: #f00;
+						.input {
+							border-color: inherit;
+						}
+						& + .error_text {
+							display: block;
+						}
+					}
+					& + .error_text {
+						display: none;
+						color: #f00;
+						margin: -1.5rem 0 1.5rem;
+					}
+				}
+				.input {
+					background-color: #171e21;
+					border-color: transparent;
+					height: 5rem;
+					color: var(--light);
+					&::placeholder {
+						color: #ffffff80;
+					}
+				}
+				.btn_blk {
+					.site_btn {
+						background-color: var(--second_color);
+						&:hover {
+							background-color: #145da0cc;
+						}
+					}
+				}
+			}
+		}
+	}
+	.popup {
+		display: none;
+		._inner {
+			background-color: var(--black);
+			width: 36.5rem;
+			max-width: 36.5rem;
+			position: fixed;
+			padding: 2.5rem;
+			margin: auto;
+			border-radius: 1rem;
+			z-index: 3;
+			bottom: 5rem;
+			right: 6rem;
+			color: var(--light);
+			.x_btn {
+				background-color: transparent;
+			}
+			.forget {
+				margin: 1rem auto;
+				width: 7rem;
+				min-width: 7rem;
+				height: 6rem;
+			}
+		}
+	}
+}

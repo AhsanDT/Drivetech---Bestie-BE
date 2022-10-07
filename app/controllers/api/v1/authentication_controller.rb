@@ -1,5 +1,5 @@
 class Api::V1::AuthenticationController < Api::V1::ApiController
-  before_action :authorize_user, except: [:sign_up, :login, :forgot_password, :verify_token, :reset_password, :update_social_login]
+  before_action :authorize_user, except: [:sign_up, :login, :forgot_password, :verify_token, :reset_password, :update_social_login, :get_interests]
   before_action :find_user_by_email, only: [:forgot_password, :verify_token, :reset_password, :update_social_login]
 
   def sign_up
@@ -76,6 +76,16 @@ class Api::V1::AuthenticationController < Api::V1::ApiController
         message: 'There are error while updating user',
         error: @user.errors.full_messages
       }, status: :unprocessable_entity
+    end
+  end
+
+  def get_interests
+    @interest = Interest.all
+    if @interest.nil?
+      render json: {
+        message: 'All interests',
+        data: []
+      }, status: :ok
     end
   end
 
