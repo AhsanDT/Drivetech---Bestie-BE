@@ -80,7 +80,11 @@
               <td><%= sub_admin&.phone_number %></td>
               <td><%= sub_admin&.location %></td>
               <td class="interest">
-                <span><%= sub_admin&.status&.humanize %></span>
+                <% if sub_admin.status == 'active' %>
+                  <span><%= sub_admin&.status&.humanize %></span>
+                <% else %>
+                  <span class="danger"><%= sub_admin&.status&.humanize %></span>
+                <% end %>
                 <div class="dropdown">
                   <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                     <img src="/assets/dot-icon.svg" alt="">

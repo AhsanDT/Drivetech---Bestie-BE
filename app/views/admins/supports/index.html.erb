@@ -1,0 +1,164 @@
+<section id="account_section">
+  <%= render 'shared/sidebar' %>
+  <div id="support" class="main_side">
+    <div id="top_header">
+      <h2>Support</h2>
+    </div>
+    <div class="row">
+      <div class="col-5">
+        <div class="users_blk">
+          <div class="form_blk input search_blk">
+            <button type="button" class="btn">
+              <img src="/assets/icon-search.svg" alt="">
+            </button>
+            <input type="text" name="" class="input" placeholder="Search history">
+          </div>
+          <ul class="users_list">
+            <% @end_users.each do |user| %>
+              <li class="active">
+                <div class="user">
+                  <div class="img">
+                    <img src="/assets/support-user.png" alt="">
+                  </div>
+                  <div class="txt">
+                    <div class="d-flex justify-content-between">
+                      <h6 class="mb-0"><%= user&.support&.ticket_number %></h6>
+                      <p class="status"><%= user&.support&.status %></p>
+                    </div>
+                    <p class="mb-0"><%= user&.support&.user&.email %></p>
+                    <p class="msg">Lorem Ipsum is xcvxcmn vx simply dummy text of Lorem Ipsum is simply dummy text of Lorem Ipsum is simply dummy text of</p>
+                  </div>
+                </div>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+      <div class="col-7">
+        <div class="chat_blk">
+          <div class="selected_chat">
+            <div class="img">
+              <img src="/assets/icon-chat.svg" alt="">
+            </div>
+            <div class="txt">
+              <h5 class="mb-0">User name</h5>
+              <p class="mb-0">useremail@gmail.com</p>
+              <p class="status">• Pending</p>
+            </div>
+            <div class="form_blk">
+              <input type="checkbox" name="" id="complete">
+              <label for="complete">Mark as Complete</label>
+            </div>
+          </div>
+          <div class="msg_contain">
+            <div class="msg">
+              <div class="detail">
+                <div class="img">
+                  <img src="/assets/support-user.png" alt="">
+                </div>
+                <div class="txt">
+                  <h6 class="mb-0">User name</h6>
+                  <p>May 22, 2022 | 9:00am</p>
+                </div>
+              </div>
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam pretium sem
+               sit amet venenatis commodo. Nullam aliquam lacus nisl, varius luctus
+               mauris hendrerit ut. Etiam eros lectus, commodo nec nisl in, aliquet
+               congue quam. Morbi condimentum lectus id urna gravida, at facilisis
+               lectus consectetur. Lorem ipsum dolor sit amet, consectetur adipiscing
+               elit. Nullam pretium sem sit amet venenatis commodo. Nullam aliquam lacus
+               nisl, varius luctus mauris hendrerit ut. Etiam eros lectus, commodo nec
+               nisl in, aliquet congue quam. Morbi condimentum lectus id urna gravida,
+               at facilisis lectus consectetur.Lorem ipsum dolor sit amet, consectetur
+               adipiscing elit. Nullam pretium sem sit amet venenatis commodo. Nullam
+               aliquam lacus nisl, varius luctus mauris hendrerit ut. Etiam eros lectus,
+               commodo nec nisl in, aliquet congue quam. Morbi condimentum lectus id urna
+               gravida, at facilisis lectus consectetur.
+             </p>
+           </div>
+           <div class="msg">
+            <div class="detail">
+              <div class="img">
+                <img src="/assets/icon-chat.svg" alt="">
+              </div>
+              <div class="txt">
+                <h6 class="mb-0">User name</h6>
+                <p>May 22, 2022 | 9:00am</p>
+              </div>
+            </div>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam pretium
+             sem sit amet venenatis commodo. Nullam aliquam lacus nisl, varius luctus
+             mauris hendrerit ut. Etiam eros lectus, commodo nec nisl in, aliquet congue
+             quam. Morbi condimentum lectus id urna gravida, at facilisis lectus consectetur.
+             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam pretium sem sit
+             amet venenatis commodo. Nullam aliquam lacus nisl, varius luctus mauris hendrerit
+             ut. Etiam eros lectus, commodo nec nis.
+           </p>
+         </div>
+         <div class="msg">
+          <div class="detail">
+            <div class="img">
+              <img src="/assets/icon-chat.svg" alt="">
+            </div>
+            <div class="txt">
+              <h6 class="mb-0">User name</h6>
+              <p>May 22, 2022 | 9:00am</p>
+            </div>
+          </div>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam pretium
+           sem sit amet venenatis commodo. Nullam aliquam lacus nisl, varius luctus
+           mauris hendrerit ut. Etiam eros lectus, commodo nec nisl in, aliquet congue
+           quam. Morbi condimentum lectus id urna gravida, at facilisis lectus consectetur.
+           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam pretium sem sit
+           amet venenatis commodo. Nullam aliquam lacus nisl, varius luctus mauris hendrerit
+           ut. Etiam eros lectus, commodo nec nis.
+         </p>
+       </div>
+       <div class="msg">
+        <div class="detail">
+          <div class="img">
+            <img src="/assets/support-user.png" alt="">
+          </div>
+          <div class="txt">
+            <h6 class="mb-0">User name</h6>
+            <p>May 22, 2022 | 9:00am</p>
+          </div>
+        </div>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam pretium sem
+         sit amet venenatis commodo. Nullam aliquam lacus nisl, varius luctus
+         mauris hendrerit ut. Etiam eros lectus, commodo nec nisl in, aliquet
+         congue quam. Morbi condimentum lectus id urna gravida, at facilisis
+         lectus consectetur. Lorem ipsum dolor sit amet, consectetur adipiscing
+         elit. Nullam pretium sem sit amet venenatis commodo. Nullam aliquam lacus
+         nisl, varius luctus mauris hendrerit ut. Etiam eros lectus, commodo nec
+         nisl in, aliquet congue quam. Morbi condimentum lectus id urna gravida,
+         at facilisis lectus consectetur.Lorem ipsum dolor sit amet, consectetur
+         adipiscing elit. Nullam pretium sem sit amet venenatis commodo. Nullam
+         aliquam lacus nisl, varius luctus mauris hendrerit ut. Etiam eros lectus,
+         commodo nec nisl in, aliquet congue quam. Morbi condimentum lectus id urna
+         gravida, at facilisis lectus consectetur.
+       </p>
+     </div>
+   </div>
+   <div class="send_blk">
+    <button type="button" class="btn att-btn">
+      <img src="/assets/icon-attach.svg" alt="">
+    </button>
+
+    <input type="text" class="input" placeholder="Type your message here">
+    <button type="submit" class="btn send_btn">
+      <img src="/assets/icon-send.svg" alt="">
+    </button>
+  </div>
+</div>
+</div>
+</div>
+
+
+</div>
+</section>
+<!-- account_section -->
+
+
+<!-- Main Js -->
+<script src="/assets/main.js"></script>

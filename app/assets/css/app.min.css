@@ -25,3 +25,8 @@
 #content{
   min-height: 65rem;
 }
+
+#table_sub_admin .table__blk table tbody tr .interest .danger {
+  background: rgba(206, 30, 18, 0.22);
+  color: #CE1E12;
+}

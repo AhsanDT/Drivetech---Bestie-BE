@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_10_10_073734) do
+ActiveRecord::Schema.define(version: 2022_10_10_150014) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -98,6 +98,34 @@ ActiveRecord::Schema.define(version: 2022_10_10_073734) do
     t.index ["permalink"], name: "index_pages_on_permalink"
   end
 
+  create_table "support_conversations", force: :cascade do |t|
+    t.bigint "support_id"
+    t.integer "recipient_id"
+    t.integer "sender_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["support_id"], name: "index_support_conversations_on_support_id"
+  end
+
+  create_table "support_messages", force: :cascade do |t|
+    t.text "body"
+    t.integer "sender_id"
+    t.bigint "support_conversation_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["support_conversation_id"], name: "index_support_messages_on_support_conversation_id"
+  end
+
+  create_table "supports", force: :cascade do |t|
+    t.string "ticket_number"
+    t.text "description"
+    t.integer "status", default: 0
+    t.bigint "user_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_supports_on_user_id"
+  end
+
   create_table "user_interests", force: :cascade do |t|
     t.bigint "user_id"
     t.bigint "interest_id"
@@ -135,6 +163,9 @@ ActiveRecord::Schema.define(version: 2022_10_10_073734) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "camera_details", "users"
+  add_foreign_key "support_conversations", "supports"
+  add_foreign_key "support_messages", "support_conversations"
+  add_foreign_key "supports", "users"
   add_foreign_key "user_interests", "interests"
   add_foreign_key "user_interests", "users"
 end

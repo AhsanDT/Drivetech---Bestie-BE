@@ -20,6 +20,9 @@ Rails.application.routes.draw do
     resources :users, only: [:index, :show]
     resources :bestie, only: [:index, :show]
     resources :sub_admins, only: [:index, :update]
+    resources :supports, only: [:index, :new, :create] do
+      get 'user_chat'
+    end
   end
 
   namespace :api do
@@ -42,6 +45,16 @@ Rails.application.routes.draw do
         end
       end
       get 'static_page', to: 'static_page#static_page'
+
+      resources :supports, only: [:index, :create] do
+        post 'create_message'
+        get 'get_messages'
+      end
+
+      resources :support_conversations, only: [:index, :create, :destroy] do
+        post 'create_message'
+        get 'get_messages'
+      end
     end
   end
 end

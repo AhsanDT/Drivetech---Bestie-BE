@@ -4,6 +4,9 @@ class Admin < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
+  has_many :support_conversations, dependent: :destroy,foreign_key: :recipient_id
+  has_many :admin_support_messages, dependent: :destroy,foreign_key: :sender_id
+
   enum status: {
     active: 0,
     inactive: 1
