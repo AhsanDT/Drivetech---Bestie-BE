@@ -1,7 +1,9 @@
 #guidelines {
 	.guid_side {
 		border-right: 0.2rem solid #dedede;
-		height: 100vh;
+		display: flex;
+		flex-direction: column;
+		height: 100%;
 		h1 {
 			font-size: 3rem;
 			font-weight: 700;
@@ -16,13 +18,16 @@
 					font-weight: 600;
 					color: #00000080;
 					background: transparent;
+					border: 0.1rem solid #e8e8e8;
+					border-color: transparent;
 					width: 20rem;
 					height: 5.4rem;
 					padding: 0 0 0 1.5rem;
 					justify-content: start;
+					margin-bottom: 1rem;
 					&:hover {
 						color: black;
-						border: 0.1rem solid #e8e8e8;
+						border-color: #e8e8e8;
 						box-shadow: 0.4rem 0.4rem 3rem --1rem
 							rgba(185, 185, 185, 0.2);
 						border-radius: 1rem;
@@ -61,13 +66,12 @@
 		}
 		.blue {
 			background-color: #145da0;
+			color: white;
 		}
 	}
 	.guideline_content {
 		// height: 100%;
 		.img {
-			height: 70rem;
-			width: 75rem;
 			img {
 				height: 100%;
 			}

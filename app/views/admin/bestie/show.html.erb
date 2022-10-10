@@ -1,0 +1,158 @@
+<section id="account_section">
+  <%= render 'shared/sidebar' %>
+  <div id="Besties" class="main_side">
+    <div id="top_header">
+      <h2>Besties</h2>
+    </div>
+    <div class="user_sec">
+      <div class="img">
+        <a href="<%= admin_bestie_index_path %>" class="icon">
+          <img src="/assets/left arrow.svg" alt="">
+        </a>
+      </div>
+      <h4>Details</h4>
+    </div>
+    <div class="user_name_email">
+      <div class="img">
+        <% if @bestie.profile_image.attached? %>
+          <%= image_tag @bestie.profile_image %>
+        <% else %>
+          <img src="/assets/dummy.png" alt="">
+        <% end %>
+      </div>
+      <div class="right_text">
+        <h4><%= @bestie&.full_name %></h4>
+        <h5><%= @bestie&.email %></h5>
+      </div>
+    </div>
+    <div class="personal_details">
+      <h4>Personal Detail</h4>
+      <div class="row">
+        <div class="col-md-6">
+          <table class="w-full ">
+            <tbody>
+              <tr>
+                <td>Email Address</td>
+                <td class="left"><%= @bestie&.email %></td>
+              </tr>
+              <tr>
+                <td>Phone Number</td>
+                <td class="left"><%= @bestie&.phone_number %></td>
+              </tr>
+              <tr>
+                <td>Location</td>
+                <td class="left">United States</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="col-md-6">
+          <table class="w-full">
+            <tbody>
+              <tr>
+                <td class="pad_left">Age</td>
+                <td class="left"><%= @bestie&.age %></td>
+              </tr>
+              <tr>
+                <td class="pad_left">Sex</td>
+                <td class="left"><%= @bestie&.sex %></td>
+              </tr>
+              <tr>
+                <td class="pad_left">Interests</td>
+
+                <td class="left btn_blk">
+                  <% @bestie&.interests.each do |interest| %>
+                    <div class=" site_btn gray_bk">
+                      <%= interest&.title %>
+                    </div>
+                  <% end %>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="experience_detail">
+      <h4>Experience Detail</h4>
+      <div class="row">
+        <div class="col-md-6">
+          <table class="w-full ">
+            <tbody>
+              <tr>
+                <td>Rate/hour</td>
+                <td class="left col-green">$<%= @bestie&.rate %></td>
+              </tr>
+              <tr>
+                <td>Experience</td>
+                <td class="left"><%= @bestie&.experience %></td>
+              </tr>
+              <tr>
+                <td>Booked</td>
+                <td class="left">Booked</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="col-md-6">
+          <table class="w-full">
+            <tbody>
+              <tr>
+                <td class="pad_left">Talents</td>
+              </tr>
+              <tr>
+                <% @bestie&.interests.each do |interest| %>
+                  <td class="btn_blk pad_left">
+                  <div class=" site_btn blk_bg">
+                    <%= interest&.title %>
+                  </div>
+                </td>
+              <% end %>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="portfolio">
+    <h4>Portfolio</h4>
+    <div class="photos">
+      <div class="photos_inner">
+        <% if @bestie&.portfolio.attached? %>
+          <% @bestie&.portfolio.each do |portfolio|%>
+            <div class="img">
+              <%= image_tag portfolio %>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <div class="camera_detail">
+    <% if @bestie&.camera_detail.present? %>
+      <h4>Camera Details</h4>
+      <h5>Camera model</h5>
+      <p><%= @bestie&.camera_detail&.model %></p>
+      <h6>Type of Camera</h6>
+      <div class="cam_div">
+        <div class="img">
+          <img src="/assets/camera.svg" alt="">
+        </div>
+        <p><%= @bestie&.camera_detail&.camera_type %></p>
+      </div>
+      <h6>Equipments</h6>
+      <ul>
+        <% @bestie&.camera_detail&.equipment.each do |equipment| %>
+          <li><%= equipment %></li>
+        <% end %>
+        <!-- <li>Carrying Gear</li> -->
+      </ul>
+    <% end %>
+  </div>
+</div>
+</section>
+<!-- account_section -->
+
+
+<!-- Main Js -->
+<script src="/assets/main.js"></script>

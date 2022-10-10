@@ -1,0 +1,71 @@
+<section id="account_section">
+  <%= render 'shared/sidebar' %>
+  <div id="user_details" class="main_side">
+    <div id="top_header">
+      <h2>User</h2>
+    </div>
+    <div class="user_heading">
+      <a href="<%= admin_users_path %>" class="icon">
+        <img src="/assets/left arrow.svg" alt="">
+      </a>
+      <h4>User Details</h4>
+    </div>
+    <div class="ellipse">
+      <div class="img">
+        <% if @user.profile_image.attached? %>
+          <%= image_tag @user.profile_image %>
+        <% else %>
+          <img src="/assets/dummy.png" alt="">
+        <% end %>
+      </div>
+      <div class="content">
+        <span><%= @user&.full_name %></span>
+        <p><%= @user&.email %></p>
+      </div>
+    </div>
+    <div class="personal_details">
+      <h5>Personal Details</h5>
+      <div class="row">
+        <div class="col-3">
+          <ul>
+            <li>Email Address</li>
+            <li>Phone Number</li>
+            <li>Country</li>
+            <li>City</li>
+          </ul>
+        </div>
+        <div class="col-3">
+          <ul>
+            <li><%= @user&.email %></li>
+            <li><%= @user&.phone_number %></li>
+            <li><%= @user&.country %></li>
+            <li><%= @user&.city %></li>
+          </ul>
+        </div>
+        <div class="col-3">
+          <ul>
+            <li>Age</li>
+            <li>Sex</li>
+            <li>Interests</li>
+          </ul>
+        </div>
+        <div class="col-3">
+          <ul>
+            <li><%= @user&.age %></li>
+            <li><%= @user&.sex %></li>
+            <li class="interest_item">
+              <% @user.interests.each do |interest|%>
+                <div><%= interest&.title %></div>
+              <% end %>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- Main Js -->
+<script src="//assets/"></script>

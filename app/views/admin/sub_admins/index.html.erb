@@ -1,0 +1,328 @@
+<section id="account_section">
+  <%= render 'shared/sidebar' %>
+  <div id="sub_admins" class="main_side">
+    <div id="top_header">
+      <h2>Sub Admins</h2>
+    </div>
+
+    <div class="row">
+     <div class="col-6">
+      <ul class="top_blk">
+        <li>
+          <div class="dropdown">
+            <button class="filter text dropdown-toggle fs_5 fw_600" data-bs-toggle="dropdown">
+              <div class="img_blk">
+                <img src="/assets/filter-icon.svg" alt="">
+              </div>
+              filters
+            </button>
+            <ul class="dropdown-menu" >
+              <li><button type="button">All Data</button></li>
+              <li><button type="button">User's Info</button></li>
+              <li><button type="button">Vacant Land</button></li>
+              <li><button type="button"> Dream Address</button></li>
+              <li><button type="button">I Want to Buy</button></li>
+              <li><button type="button">I Want to Sell</button></li>
+            </ul>
+          </div>
+        </li>
+        <li>
+          <div class="form_blk">
+            <div class="icon_blk">
+              <img src="/assets/Search.svg" alt="">
+            </div>
+            <input type="search" placeholder="Search" class="input">
+          </div>
+        </li>
+      </ul>
+    </div>
+    <div class="col-6">
+
+      <ul class="right_blk">
+        <button type="button" class="filter pop_btn" data-popup="add_subadmin">
+          <div class="img_blk">
+            <img src="/assets/add-icon.svg" alt="">
+          </div>
+          Add
+        </button>
+
+        <button type="button" class="filter">
+          <div class="img_blk">
+            <img src="/assets/download.svg" alt="">
+          </div>
+          Download CSV
+        </button>
+      </ul>
+    </div>
+  </div>
+
+  <!-- table_section -->
+  <div id="table_sub_admin">
+    <div class="table__blk">
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 15rem;">Full Name</th>
+            <th style="width: 23rem;">Email</th>
+            <th style="width: 18rem;">Phone Number</th>
+            <th style="width: 19rem;">Country</th>
+            <th style="width: 16rem;">Location</th>
+            <th style="width: 16rem;">Status</th>
+          </tr>
+        </thead>
+        <tbody>
+         <tr>
+          <td class="fw-bold">Dave Chen</td>
+          <td>davechen@gmail.com</td>
+          <td>+123 456 789</td>
+          <td>United States</td>
+          <td>22</td>
+          <td class="interest">
+            <span>Nature</span>
+            <div class="dropdown">
+              <button class="btn  dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                <img src="/assets/dot-icon.svg" alt="">
+              </button>
+              <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                <li><a class="dropdown-item" href="#">Action</a></li>
+                <li><a class="dropdown-item" href="#">Another action</a></li>
+                <li><a class="dropdown-item" href="#">Something else here</a></li>
+              </ul>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="fw-bold">Dave Chen</td>
+          <td>davechen@gmail.com</td>
+          <td>+123 456 789</td>
+          <td>United States</td>
+          <td>22</td>
+          <td class="interest">
+            <span>Nature</span>
+            <div class="dropdown">
+              <button class="btn  dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                <img src="/assets/dot-icon.svg" alt="">
+              </button>
+              <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                <li><a class="dropdown-item" href="#">Action</a></li>
+                <li><a class="dropdown-item" href="#">Another action</a></li>
+                <li><a class="dropdown-item" href="#">Something else here</a></li>
+              </ul>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="fw-bold">Dave Chen</td>
+          <td>davechen@gmail.com</td>
+          <td>+123 456 789</td>
+          <td>United States</td>
+          <td>22</td>
+          <td class="interest">
+            <span class="inactive">Nature</span>
+            <div class="dropdown">
+              <button class="btn  dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                <img src="/assets/dot-icon.svg" alt="">
+              </button>
+              <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                <li><a class="dropdown-item" href="#">Action</a></li>
+                <li><a class="dropdown-item" href="#">Another action</a></li>
+                <li><a class="dropdown-item" href="#">Something else here</a></li>
+              </ul>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="fw-bold">Dave Chen</td>
+          <td>davechen@gmail.com</td>
+          <td>+123 456 789</td>
+          <td>United States</td>
+          <td>22</td>
+          <td class="interest">
+            <span>Nature</span>
+            <div class="dropdown">
+              <button class="btn  dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                <img src="/assets/dot-icon.svg" alt="">
+              </button>
+              <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                <li><a class="dropdown-item" href="#">Action</a></li>
+                <li><a class="dropdown-item" href="#">Another action</a></li>
+                <li><a class="dropdown-item" href="#">Something else here</a></li>
+              </ul>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="fw-bold">Dave Chen</td>
+          <td>davechen@gmail.com</td>
+          <td>+123 456 789</td>
+          <td>United States</td>
+          <td>22</td>
+          <td class="interest">
+            <span>Nature</span>
+            <div class="dropdown">
+              <button class="btn  dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                <img src="/assets/dot-icon.svg" alt="">
+              </button>
+              <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                <li><a class="dropdown-item" href="#">Action</a></li>
+                <li><a class="dropdown-item" href="#">Another action</a></li>
+                <li><a class="dropdown-item" href="#">Something else here</a></li>
+              </ul>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="fw-bold">Dave Chen</td>
+          <td>davechen@gmail.com</td>
+          <td>+123 456 789</td>
+          <td>United States</td>
+          <td>22</td>
+          <td class="interest">
+            <span>Nature</span>
+            <div class="dropdown">
+              <button class="btn  dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                <img src="/assets/dot-icon.svg" alt="">
+              </button>
+              <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                <li><a class="dropdown-item" href="#">Action</a></li>
+                <li><a class="dropdown-item" href="#">Another action</a></li>
+                <li><a class="dropdown-item" href="#">Something else here</a></li>
+              </ul>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="fw-bold">Dave Chen</td>
+          <td>davechen@gmail.com</td>
+          <td>+123 456 789</td>
+          <td>United States</td>
+          <td>22</td>
+          <td class="interest">
+            <span>Nature</span>
+            <div class="dropdown">
+              <button class="btn  dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                <img src="/assets/dot-icon.svg" alt="">
+              </button>
+              <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                <li><a class="dropdown-item" href="#">Action</a></li>
+                <li><a class="dropdown-item" href="#">Another action</a></li>
+                <li><a class="dropdown-item" href="#">Something else here</a></li>
+              </ul>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="fw-bold">Dave Chen</td>
+          <td>davechen@gmail.com</td>
+          <td>+123 456 789</td>
+          <td>United States</td>
+          <td>22</td>
+          <td class="interest">
+            <span>Nature</span>
+            <div class="dropdown">
+              <button class="btn  dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                <img src="/assets/dot-icon.svg" alt="">
+              </button>
+              <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                <li><a class="dropdown-item" href="#">Action</a></li>
+                <li><a class="dropdown-item" href="#">Another action</a></li>
+                <li><a class="dropdown-item" href="#">Something else here</a></li>
+              </ul>
+            </div>
+          </td>
+        </tr>
+
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- pagination_section -->
+<div class="paginate_sec">
+  <p>Showing 1 to 9 of 200 entries</p>
+  <nav aria-label="Page navigation example">
+    <ul class="pagination">
+      <li class="page_item disable me-4">
+        <a class="page_link" href="#" aria-label="Previous">
+          <div class="icon_blk me-2">
+            <img src="/assets/left arrow.svg" aria-hidden="true" alt="icon">
+          </div>
+          Previous
+        </a>
+      </li>
+      <li class="page_no "><a class="" href="#">1</a></li>
+      <li class="page_no"><a class="" href="#">2</a></li>
+      <li class="page_no"><a class="" href="#">3</a></li>
+      <li class="page_item ms-4">
+        <a class="page_link fw_600" href="#" aria-label="Previous">
+          Next
+          <div class="icon_blk ms-2">
+            <img src="/assets/right arrow.svg" aria-hidden="true" alt="icon">
+          </div>
+        </a>
+      </li>
+    </ul>
+  </nav>
+</div>
+
+<div class="popup" data-popup="add_subadmin">
+  <div class="overlay"></div>
+  <div class="table_dv">
+    <div class="table_cell">
+      <div class="contain-fluid">
+        <div class="row justify-content-center">
+          <div class="col-lg-5 col-md-8 col-sm-10">
+            <div class="_inner">
+              <!-- <button type="button" class="x_btn"></button> -->
+              <h4 class="heading mb-5">Add Sub Admins</h4>
+              <h5 class="mb-5">Personal Data</h5>
+              <!-- <hr class="hr"> -->
+              <form type="submit" class="sub_admin_form">
+                <div class="form_blk d-flex align-items-center justify-content-between">
+                  <label for="">First Name</label>
+                  <input type="text" class="input" placeholder="Input Here">
+                </div>
+                <div class="form_blk d-flex align-items-center justify-content-between">
+                  <label for="">Last Name</label>
+                  <input type="text" class="input" placeholder="Input Here">
+                </div>
+                <div class="form_blk d-flex align-items-center justify-content-between">
+                  <label for="">Date of Birth</label>
+                  <input type="text" class="input" placeholder="MM/DD/YY">
+                </div>
+                <div class="form_blk d-flex align-items-center justify-content-between">
+                  <label for="">Location</label>
+                  <input type="text" class="input" placeholder="Input Here">
+                </div>
+                <h5 class="mb-5">Personal Data</h5>
+                <!-- <hr class="hr"> -->
+                <div class="form_blk d-flex align-items-center justify-content-between">
+                  <label for="">Email Address</label>
+                  <input type="text" class="input" placeholder="@mail.com">
+                </div>
+                <div class="form_blk d-flex align-items-center justify-content-between">
+                  <label for="">Phone Number</label>
+                  <input type="text" class="input" placeholder="+123">
+                </div>
+                <div class="form_blk d-flex align-items-center justify-content-between">
+                  <label for="">Temporary Password</label>
+                  <input type="text" class="input" placeholder="hcihwiy7e">
+                </div>
+              </form>
+              <div class="btn_blk modal_btn">
+                <button type="button" class="cancel">cancel</button>
+                <button type="button" class="save site_btn">Save</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+</section>
+
+
+<!-- Main Js -->
+<script src="/assets/main.js"></script>
