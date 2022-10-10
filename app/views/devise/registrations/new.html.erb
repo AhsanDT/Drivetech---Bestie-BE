@@ -1,34 +1,4 @@
-<h2>Sign up</h2>
-
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-<%= render "devise/shared/error_messages", resource: resource %>
-
-<div class="field">
-  <%= f.label :email %><br />
-  <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
-</div>
-
-<div class="field">
-  <%= f.label :password %>
-  <% if @minimum_password_length %>
-  <em>(<%= @minimum_password_length %> characters minimum)</em>
-  <% end %><br />
-  <%= f.password_field :password, autocomplete: "new-password" %>
-</div>
-
-<div class="field">
-  <%= f.label :password_confirmation %><br />
-  <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
-</div>
-
-<div class="actions">
-  <%= f.submit "Sign up" %>
-</div>
-<% end %>
-
-<%= render "devise/shared/links" %>
-
-<div class="popup" data-popup="add_subadmin">
+<div class="popup d-block" data-popup="add_subadmin">
   <div class="overlay"></div>
   <div class="table_dv">
     <div class="table_cell">
@@ -38,48 +8,49 @@
             <div class="_inner">
               <!-- <button type="button" class="x_btn"></button> -->
               <h4 class="heading mb-5">Add Sub Admins</h4>
-              <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+              <%= form_for(resource, as: resource_name, :html => {:class => "sub_admin_form"}, url: registration_path(resource_name)) do |f| %>
                 <h5 class="mb-5">Personal Data</h5>
                 <!-- <hr class="hr"> -->
-                <form type="submit" class="sub_admin_form">
-                  <div class="form_blk d-flex align-items-center justify-content-between">
-                    <label for="">First Name</label>
-                    <input type="text" name="admin[first_name]" class="input" placeholder="Input Here">
-                  </div>
-                  <div class="form_blk d-flex align-items-center justify-content-between">
-                    <label for="">Last Name</label>
-                    <input type="text" name="admin[last_name]" class="input" placeholder="Input Here">
-                  </div>
-                  <div class="form_blk d-flex align-items-center justify-content-between">
-                    <label for="">Date of Birth</label>
-                    <input type="text" name="admin[date_of_birth]" class="input" placeholder="MM/DD/YY">
-                  </div>
-                  <div class="form_blk d-flex align-items-center justify-content-between">
-                    <label for="">Location</label>
-                    <input type="text" name="admin[location]" class="input" placeholder="Input Here">
-                  </div>
-                  <h5 class="mb-5">Personal Data</h5>
-                  <!-- <hr class="hr"> -->
-                  <div class="form_blk d-flex align-items-center justify-content-between">
-                    <label for="">Email Address</label>
-                    <input type="text" name="admin[email]" class="input" placeholder="@mail.com">
-                  </div>
-                  <div class="form_blk d-flex align-items-center justify-content-between">
-                    <label for="">Phone Number</label>
-                    <input type="text" name="admin[phone_number]" class="input" placeholder="+123">
-                  </div>
-                  <div class="form_blk d-flex align-items-center justify-content-between">
-                    <label for="">Temporary Password</label>
-                    <input type="text" name="admin[password]" class="input" placeholder="hcihwiy7e">
-                  </div>
-                </form>
+                <div class="form_blk d-flex align-items-center justify-content-between">
+                  <label for="">First Name</label>
+                  <input type="text" name="admin[first_name]" class="input" placeholder="Input Here" required>
+                </div>
+                <div class="form_blk d-flex align-items-center justify-content-between">
+                  <label for="">Last Name</label>
+                  <input type="text" name="admin[last_name]" class="input" placeholder="Input Here" required>
+                </div>
+                <div class="form_blk d-flex align-items-center justify-content-between">
+                  <label for="">Date of Birth</label>
+                  <input type="date" name="admin[date_of_birth]" class="input" placeholder="MM/DD/YY" required>
+                </div>
+                <div class="form_blk d-flex align-items-center justify-content-between">
+                  <label for="">Location</label>
+                  <input type="text" name="admin[location]" class="input" placeholder="Input Here" required>
+                </div>
+                <h5 class="mb-5">Personal Data</h5>
+                <!-- <hr class="hr"> -->
+                <div class="form_blk d-flex align-items-center justify-content-between">
+                  <label for="">Email Address</label>
+                  <input type="text" name="admin[email]" class="input" placeholder="@mail.com" required>
+                </div>
+                <div class="form_blk d-flex align-items-center justify-content-between">
+                  <label for="">Phone Number</label>
+                  <input type="text" name="admin[phone_number]" class="input" placeholder="+123" required>
+                </div>
+                <div class="form_blk d-flex align-items-center justify-content-between">
+                  <label for="">Username</label>
+                  <input type="text" name="admin[username]" class="input" placeholder="Input Here" required>
+                </div>
+                <div class="form_blk d-flex align-items-center justify-content-between">
+                  <label for="">Temporary Password</label>
+                  <input type="text" name="admin[password]" class="input" placeholder="hcihwiy7e" required>
+                </div>
+                <div class="btn_blk modal_btn">
+                  <%= button_to "cancel", "", {class: 'cancel', :onclick => "history.go(0)"}%>
+                  <%= f.submit class: "save site_btn", value: 'Submit' %>
+                </div>
+
               <% end %>
-              <div class="btn_blk modal_btn">
-                <button type="button" class="cancel">cancel</button>
-                <button type="button" class="save site_btn">Save</button>
-                <%= button_to "cancel", "", {class: 'cancel d-flex align-items-center', :onclick => "history.go(0)"}%>
-                <%= f.submit class: "save site_btn", value: 'Submit' %>
-              </div>
             </div>
           </div>
         </div>

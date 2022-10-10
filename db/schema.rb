@@ -67,7 +67,7 @@ ActiveRecord::Schema.define(version: 2022_10_10_073734) do
     t.string "location"
     t.string "username"
     t.string "phone_number"
-    t.integer "status"
+    t.integer "status", default: 0
     t.index ["email"], name: "index_admins_on_email", unique: true
     t.index ["reset_password_token"], name: "index_admins_on_reset_password_token", unique: true
   end

@@ -6,6 +6,6 @@ class AddColumnsToAdmins < ActiveRecord::Migration[6.1]
     add_column :admins, :location, :string
     add_column :admins, :username, :string
     add_column :admins, :phone_number, :string
-    add_column :admins, :status, :integer
+    add_column :admins, :status, :integer, default: 0
   end
 end

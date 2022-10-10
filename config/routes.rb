@@ -1,9 +1,13 @@
 Rails.application.routes.draw do
-  devise_for :admins
+  devise_for :admins,
+             controllers: {
+                 sessions: 'admins/sessions',
+                 registrations: 'admins/registrations'
+             }
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
-  root to: "admin/dashboard#index"
+  root to: "admins/dashboard#index"
 
-  namespace :admin do
+  namespace :admins do
     resources :dashboard do
       collection do
       end
@@ -15,7 +19,7 @@ Rails.application.routes.draw do
     end
     resources :users, only: [:index, :show]
     resources :bestie, only: [:index, :show]
-    resources :sub_admins, only: [:index, :new, :create]
+    resources :sub_admins, only: [:index, :update]
   end
 
   namespace :api do

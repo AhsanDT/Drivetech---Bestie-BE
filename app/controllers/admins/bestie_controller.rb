@@ -1,4 +1,4 @@
-class Admin::BestieController < ApplicationController
+class Admins::BestieController < ApplicationController
   before_action :authenticate_admin!
 
   def index

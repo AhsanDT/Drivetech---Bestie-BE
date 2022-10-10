@@ -66,7 +66,7 @@
         <tbody>
           <% @end_users&.each do |user| %>
             <tr>
-                <td class="fw-bold"><%= link_to user&.full_name, admin_user_path(id: user.id) %></td>
+                <td class="fw-bold"><%= link_to user&.full_name, admins_user_path(id: user.id) %></td>
                 <td><%= user&.email %></td>
                 <td><%= user&.phone_number %></td>
                 <td><%= user&.country %></td>

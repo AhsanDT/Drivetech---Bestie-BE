@@ -64,7 +64,7 @@
           <tbody>
             <% @besties.each do |bestie| %>
               <tr>
-                <td class="fw-bold"><%= link_to bestie&.full_name, admin_bestie_path(id: bestie.id) %></td>
+                <td class="fw-bold"><%= link_to bestie&.full_name, admins_bestie_path(id: bestie.id) %></td>
                 <td><%= bestie&.email %></td>
                 <td><%= bestie&.phone_number %></td>
                 <td>United States</td>
