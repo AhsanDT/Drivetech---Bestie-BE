@@ -5,7 +5,7 @@
       <h2>Support</h2>
     </div>
     <div class="row">
-      <div class="col-5">
+      <div class="col-4">
         <div class="users_blk">
           <div class="form_blk input search_blk">
             <button type="button" class="btn">
@@ -15,147 +15,128 @@
           </div>
           <ul class="users_list">
             <% @end_users.each do |user| %>
-              <li class="active">
-                <div class="user">
-                  <div class="img">
-                    <img src="/assets/support-user.png" alt="">
-                  </div>
-                  <div class="txt">
-                    <div class="d-flex justify-content-between">
-                      <h6 class="mb-0"><%= user&.support&.ticket_number %></h6>
-                      <p class="status"><%= user&.support&.status %></p>
+              <%= link_to user_chat_admins_supports_path(id: user) do %>
+                <li class="active">
+                  <div class="user">
+                    <div class="img">
+                      <% if user&.support&.user&.profile_image.attached? %>
+                        <%= image_tag(user&.support&.user&.profile_image, alt:'') %>
+                      <% else %>
+                        <img src="/assets/dummy.png" alt="">
+                      <% end %>
                     </div>
-                    <p class="mb-0"><%= user&.support&.user&.email %></p>
-                    <p class="msg">Lorem Ipsum is xcvxcmn vx simply dummy text of Lorem Ipsum is simply dummy text of Lorem Ipsum is simply dummy text of</p>
+                    <div class="txt">
+                      <div class="d-flex justify-content-between">
+                        <h6 class="mb-0"><%= user&.support&.ticket_number %></h6>
+                        <p class="status"><%= user&.support&.status&.humanize %></p>
+                      </div>
+                      <p class="mb-0"><%= user&.support&.user&.email %></p>
+                      <p class="msg"><%= user&.support_messages&.last&.body %></p>
+                    </div>
                   </div>
-                </div>
-              </li>
+                </li>
+              <% end %>
             <% end %>
           </ul>
         </div>
       </div>
-      <div class="col-7">
+      <div class="col-8">
         <div class="chat_blk">
           <div class="selected_chat">
             <div class="img">
-              <img src="/assets/icon-chat.svg" alt="">
+              <% if @user&.support&.user&.profile_image.attached? %>
+                <%= image_tag(@user&.support&.user&.profile_image, alt:'') %>
+              <% else %>
+                <img src="/assets/dummy.png" alt="">
+              <% end %>
             </div>
-            <div class="txt">
-              <h5 class="mb-0">User name</h5>
-              <p class="mb-0">useremail@gmail.com</p>
-              <p class="status">• Pending</p>
+            <div class="txt" <%= @user&.id %> data-id="<%= @user&.id %>" id="chatmessagebox">
+              <h5 class="mb-0"><%= @user&.support&.ticket_number %></h5>
+              <p class="mb-0"><%= @user&.support&.user&.email %></p>
+              <p class="status"><%= @user&.support&.status&.humanize %></p>
             </div>
             <div class="form_blk">
-              <input type="checkbox" name="" id="complete">
-              <label for="complete">Mark as Complete</label>
+              <div class="dropdown">
+                <button class="site_btn blank dropdown-toggle chevron" data-bs-toggle="dropdown">
+                    Mark as
+                </button>
+                <ul class="dropdown-menu" >
+                  <li><a class="dropdown-item" href="<%= update_ticket_status_admins_supports_path(support_id: @user&.support&.id, status: 'in_progress', id: @user&.id) %>">In Progress</a></li>
+                  <li><a class="dropdown-item" href="<%= update_ticket_status_admins_supports_path(support_id: @user&.support&.id, status: 'completed', id: @user&.id) %>">Completed</a></li>
+                </ul>
+              </div>
             </div>
           </div>
           <div class="msg_contain">
-            <div class="msg">
-              <div class="detail">
-                <div class="img">
-                  <img src="/assets/support-user.png" alt="">
+            <% @user&.support_messages.each do |message| %>
+              <% if message.sender_id != current_admin.id %>
+                <div class="msg">
+                  <div class="detail">
+                    <div class="img">
+                      <% if @user&.support&.user&.profile_image.attached? %>
+                        <%= image_tag(@user&.support&.user&.profile_image, alt:'') %>
+                      <% else %>
+                        <img src="/assets/dummy.png" alt="">
+                      <% end %>
+                    </div>
+                    <div class="txt">
+                      <h6 class="mb-0"><%= @user&.support&.ticket_number %></h6>
+                      <p class=""><%= message&.created_at&.strftime('%b %d, %Y') %> | <%= message&.created_at&.strftime('%H:%M%p') %></p>
+                    </div>
+                  </div>
+                  <p class="msg_body"><%= message.body %></p>
+                  <% if message.image.attached? %>
+                    <div class="img_url">
+                      <div class="atchmt_img">
+                        <%= link_to image_tag(message.image.url, alt: ""), download_admins_supports_path(id: message.id)%>
+                      </div>
+                    </div>
+                  <% end %>
                 </div>
-                <div class="txt">
-                  <h6 class="mb-0">User name</h6>
-                  <p>May 22, 2022 | 9:00am</p>
+              <% else %>
+                <div class="msg">
+                  <div class="detail">
+                    <div class="img">
+                      <img src="/assets/icon-chat.svg" alt="">
+                    </div>
+                    <div class="txt">
+                      <h6 class="mb-0">Bestie Support</h6>
+                      <p><%= message&.created_at&.strftime('%b %d, %Y') %> | <%= message&.created_at&.strftime('%H:%M%p') %></p>
+                    </div>
+                  </div>
+                  <p class="msg_body"><%= message.body %></p>
+                  <% if message.image.attached? %>
+                    <div class="img_url">
+                      <div class="atchmt_img">
+                        <%= link_to image_tag(message.image.url, alt: ""), download_admins_supports_path(id: message.id)%>
+                      </div>
+                    </div>
+                  <% end %>
                 </div>
-              </div>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam pretium sem
-               sit amet venenatis commodo. Nullam aliquam lacus nisl, varius luctus
-               mauris hendrerit ut. Etiam eros lectus, commodo nec nisl in, aliquet
-               congue quam. Morbi condimentum lectus id urna gravida, at facilisis
-               lectus consectetur. Lorem ipsum dolor sit amet, consectetur adipiscing
-               elit. Nullam pretium sem sit amet venenatis commodo. Nullam aliquam lacus
-               nisl, varius luctus mauris hendrerit ut. Etiam eros lectus, commodo nec
-               nisl in, aliquet congue quam. Morbi condimentum lectus id urna gravida,
-               at facilisis lectus consectetur.Lorem ipsum dolor sit amet, consectetur
-               adipiscing elit. Nullam pretium sem sit amet venenatis commodo. Nullam
-               aliquam lacus nisl, varius luctus mauris hendrerit ut. Etiam eros lectus,
-               commodo nec nisl in, aliquet congue quam. Morbi condimentum lectus id urna
-               gravida, at facilisis lectus consectetur.
-             </p>
-           </div>
-           <div class="msg">
-            <div class="detail">
-              <div class="img">
-                <img src="/assets/icon-chat.svg" alt="">
-              </div>
-              <div class="txt">
-                <h6 class="mb-0">User name</h6>
-                <p>May 22, 2022 | 9:00am</p>
-              </div>
-            </div>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam pretium
-             sem sit amet venenatis commodo. Nullam aliquam lacus nisl, varius luctus
-             mauris hendrerit ut. Etiam eros lectus, commodo nec nisl in, aliquet congue
-             quam. Morbi condimentum lectus id urna gravida, at facilisis lectus consectetur.
-             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam pretium sem sit
-             amet venenatis commodo. Nullam aliquam lacus nisl, varius luctus mauris hendrerit
-             ut. Etiam eros lectus, commodo nec nis.
-           </p>
-         </div>
-         <div class="msg">
-          <div class="detail">
-            <div class="img">
-              <img src="/assets/icon-chat.svg" alt="">
-            </div>
-            <div class="txt">
-              <h6 class="mb-0">User name</h6>
-              <p>May 22, 2022 | 9:00am</p>
-            </div>
+              <% end %>
+            <% end %>
           </div>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam pretium
-           sem sit amet venenatis commodo. Nullam aliquam lacus nisl, varius luctus
-           mauris hendrerit ut. Etiam eros lectus, commodo nec nisl in, aliquet congue
-           quam. Morbi condimentum lectus id urna gravida, at facilisis lectus consectetur.
-           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam pretium sem sit
-           amet venenatis commodo. Nullam aliquam lacus nisl, varius luctus mauris hendrerit
-           ut. Etiam eros lectus, commodo nec nis.
-         </p>
-       </div>
-       <div class="msg">
-        <div class="detail">
-          <div class="img">
-            <img src="/assets/support-user.png" alt="">
-          </div>
-          <div class="txt">
-            <h6 class="mb-0">User name</h6>
-            <p>May 22, 2022 | 9:00am</p>
-          </div>
+          <%= form_with(url: admins_supports_path, remote: true, local: false, method: :post) do |f| %>
+            <%= hidden_field_tag :id, @user&.id %>
+            <div class="send_blk">
+              <!-- <button type="button" class="btn att-btn">
+                <img src="/assets/icon-attach.svg" alt="">
+              </button> -->
+              <label class="btn att-btn">
+                <%= image_tag "/assets/icon-attach.svg", alt: "attachImage"%>
+                <%= f.file_field :file,accept: 'image/png,image/gif,image/jpeg', style: "opacity:0" %>
+              </label>
+
+              <input type="text" name="body" class="input" placeholder="Type your message here">
+              <button type="submit" class="btn send_btn">
+                <%= image_tag "/assets/icon-send.svg", alt:"" %>
+              </button>
+            </div>
+          <% end %>
         </div>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam pretium sem
-         sit amet venenatis commodo. Nullam aliquam lacus nisl, varius luctus
-         mauris hendrerit ut. Etiam eros lectus, commodo nec nisl in, aliquet
-         congue quam. Morbi condimentum lectus id urna gravida, at facilisis
-         lectus consectetur. Lorem ipsum dolor sit amet, consectetur adipiscing
-         elit. Nullam pretium sem sit amet venenatis commodo. Nullam aliquam lacus
-         nisl, varius luctus mauris hendrerit ut. Etiam eros lectus, commodo nec
-         nisl in, aliquet congue quam. Morbi condimentum lectus id urna gravida,
-         at facilisis lectus consectetur.Lorem ipsum dolor sit amet, consectetur
-         adipiscing elit. Nullam pretium sem sit amet venenatis commodo. Nullam
-         aliquam lacus nisl, varius luctus mauris hendrerit ut. Etiam eros lectus,
-         commodo nec nisl in, aliquet congue quam. Morbi condimentum lectus id urna
-         gravida, at facilisis lectus consectetur.
-       </p>
-     </div>
-   </div>
-   <div class="send_blk">
-    <button type="button" class="btn att-btn">
-      <img src="/assets/icon-attach.svg" alt="">
-    </button>
-
-    <input type="text" class="input" placeholder="Type your message here">
-    <button type="submit" class="btn send_btn">
-      <img src="/assets/icon-send.svg" alt="">
-    </button>
+      </div>
+    </div>
   </div>
-</div>
-</div>
-</div>
-
-
-</div>
 </section>
 <!-- account_section -->
 

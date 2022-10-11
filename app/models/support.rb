@@ -5,7 +5,7 @@ class Support < ApplicationRecord
 
   enum status: {
     pending: 0,
-    inprogress: 1,
+    in_progress: 1,
     completed: 2
   }
 end

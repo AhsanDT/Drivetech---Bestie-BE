@@ -21,7 +21,11 @@ Rails.application.routes.draw do
     resources :bestie, only: [:index, :show]
     resources :sub_admins, only: [:index, :update]
     resources :supports, only: [:index, :new, :create] do
-      get 'user_chat'
+      collection do
+        get 'user_chat'
+        get 'download'
+        get 'update_ticket_status'
+      end
     end
   end
 
@@ -52,8 +56,10 @@ Rails.application.routes.draw do
       end
 
       resources :support_conversations, only: [:index, :create, :destroy] do
-        post 'create_message'
-        get 'get_messages'
+        collection do
+          post 'create_message'
+          get 'get_messages'
+        end
       end
     end
   end

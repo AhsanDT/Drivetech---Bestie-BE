@@ -30,3 +30,38 @@
   background: rgba(206, 30, 18, 0.22);
   color: #CE1E12;
 }
+
+#support .img_url {
+   background: #fcad90;
+   border-radius: 1.6rem;
+   max-width: 16rem;
+   padding: 1.6rem;
+   display: flex;
+   align-items: center;
+}
+ /*#support .img_url .atchmt_img {
+   width: 7rem;
+   min-width: 7rem;
+   height: 7rem;
+   overflow: hidden;
+   border-radius: 1.5rem;
+}*/
+#support .img_url .atchmt_img img {
+   object-fit: cover;
+   height: 100%;
+}
+
+#support .msg_body {
+  font-size: 18px;
+  margin-left: 1.5rem;
+}
+
+#support .dropdown {
+  margin-left: auto;
+}
+#support .dropdown .dropdown-menu {
+  top: 0 !important;
+  min-width: 100%;
+}
+
+

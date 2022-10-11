@@ -2,31 +2,27 @@ class Api::V1::SupportConversationsController < Api::V1::ApiController
   before_action :authorize_user
   before_action :find_conversation_by_support_id, only: :create
   before_action :find_support_conversation, only: [:create_message, :get_messages]
+  before_action :find_support_by_id, only: :create
 
   def create
     if @conversation.present?
       render json: { conversation: @conversation }
     else
-      support = Support.find_by(id: params[:support_id])
-      if support.present?
-        @conversation = @current_user.support_conversations.create(
-          support_id: params[:support_id],
-          sender_id: @current_user.id,
-          recipient_id: Admin.last.id
-        )
-        if @conversation.save
-          render json: {
-            message: "support conversation created successfully",
-            support_conversation: @conversation
-          }, status: :ok
-        else
-          render json: {
-            message: 'There are errors while creating support conversation',
-            error: @conversation.errors.full_messages
-          }, status: :unprocessable_entity
-        end
+      @conversation = @current_user.support_conversations.create(
+        support_id: params[:support_id],
+        sender_id: @current_user.id,
+        recipient_id: Admin.last.id
+      )
+      if @conversation.save
+        render json: {
+          message: "support conversation created successfully",
+          support_conversation: @conversation
+        }, status: :ok
       else
-        render json: { message: "support id not found" }, status: 404
+        render json: {
+          message: 'There are errors while creating support conversation',
+          error: @conversation.errors.full_messages
+        }, status: :unprocessable_entity
       end
     end
   end
@@ -52,37 +48,28 @@ class Api::V1::SupportConversationsController < Api::V1::ApiController
   end
 
   def create_message
-    if @support_conversation.present?
-      @message = @support_conversation.user_support_messages.new(message_params)
-      @message.sender_id = @current_user.id
-      if @message.save
-        data = {}
-          data["id"] = @message.id
-          data["support_conversation_id"] = @message.support_conversation_id
-          data["body"] = @message.body
-          data["sender_id"] = @message.support_conversation.sender.id
-          data["recipient_id"] = @message.support_conversation.recipient_id
-          data["created_at"] = @message.created_at
-          data["updated_at"] = @message.updated_at
-          data["image"] = @message&.image&.url
-          data["user_id"] = @message.sender_id
-          data["user_profile"] = @message&.sender&.image&.url
-          data["message_type"] = @message.type
-          ActionCable.server.broadcast "support_conversations_#{@message.support_conversation_id}", { title: 'dsadasdas', body: data.as_json }
-      end
-      render json: { message: @message}
-    else
-      render json: { message: "support conversation id not found"}, status: 404
+    @message = @support_conversation.user_support_messages.new(message_params)
+    @message.sender_id = @current_user.id
+    if @message.save
+      data = {}
+        data["id"] = @message.id
+        data["support_conversation_id"] = @message.support_conversation_id
+        data["body"] = @message.body
+        data["sender_id"] = @message.support_conversation.sender.id
+        data["recipient_id"] = @message.support_conversation.recipient_id
+        data["created_at"] = @message.created_at
+        data["updated_at"] = @message.updated_at
+        data["image"] = @message&.image&.url
+        data["user_id"] = @message.sender_id
+        data["user_profile"] = @message&.user&.profile_image&.url
+        ActionCable.server.broadcast "support_conversations_#{@message.support_conversation_id}", { title: 'Support Message', body: data.as_json }
     end
+    render json: { message: @message}
   end
 
   def get_messages
-    if @support_conversation.present?
-      messages = UserSupportMessage.where(sender_id: @current_user.id).order(created_at: :desc)
-      render json: { messages: messages }, status: :ok
-    else
-      render json: { message: "user not have any message" }, status: 404
-    end
+    messages = UserSupportMessage.where(sender_id: @current_user.id).order(created_at: :desc)
+    render json: { messages: messages }, status: :ok
   end
 
 
@@ -108,6 +95,16 @@ class Api::V1::SupportConversationsController < Api::V1::ApiController
 
   def find_support_conversation
     @support_conversation = SupportConversation.find_by(id: params[:support_conversation_id])
+    return render json: {
+      message: 'Support Conversation not against this support conversation id'
+    }, status: :unprocessable_entity unless @support_conversation.present?
+  end
+
+  def find_support_by_id
+    @support = Support.find_by_id(params[:support_id])
+    return render json: {
+      message: 'Support not found against this id'
+    }, status: :unprocessable_entity unless @support.present?
   end
 
   def message_params

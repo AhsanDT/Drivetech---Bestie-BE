@@ -34,6 +34,7 @@ gem 'dotenv-rails', groups: [:development, :test]
 gem 'securerandom'
 gem "letter_opener", group: :development
 gem 'devise'
+gem 'redis'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
