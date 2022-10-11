@@ -63,5 +63,7 @@
   top: 0 !important;
   min-width: 100%;
 }
-
+#dash #table_users .table__blk table tbody tr .interest span {
+  padding: .7rem .7rem;
+}
 
