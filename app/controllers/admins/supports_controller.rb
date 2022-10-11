@@ -54,7 +54,11 @@ class Admins::SupportsController < ApplicationController
   private
 
   def find_end_user
-    @end_users = SupportConversation.all.order(created_at: :desc)
+    if params[:search].present?
+      @end_users = SupportConversation.custom_search(params[:search]).order(created_at: :desc)
+    else
+      @end_users = SupportConversation.all.order(created_at: :desc)
+    end
   end
 
   def find_support_by_id

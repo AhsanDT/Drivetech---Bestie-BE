@@ -1,7 +1,9 @@
 class User < ApplicationRecord
 
   has_secure_password
-
+  include PgSearch::Model
+     pg_search_scope :custom_search,
+                  against: [:first_name, :last_name, :email, :phone_number]
   validates :email, uniqueness: true, on: :create
   validates :password_digest, presence: true
   validates :password_digest, length: { minimum: 6 }, confirmation: true
@@ -37,6 +39,7 @@ class User < ApplicationRecord
   scope :count_female_user, -> { where('sex = (?)','female').count }
   scope :end_users, -> {where('profile_type = (?)', '0')}
   scope :bestie_users, -> {where('profile_type = (?)', '1')}
+  self.per_page = 10
 
   def full_name
     first_name + ' ' + last_name

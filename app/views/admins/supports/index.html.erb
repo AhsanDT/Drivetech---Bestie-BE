@@ -7,12 +7,19 @@
     <div class="row">
       <div class="col-4">
         <div class="users_blk">
-          <div class="form_blk input search_blk">
+          <!-- <div class="form_blk input search_blk">
             <button type="button" class="btn">
               <img src="/assets/icon-search.svg" alt="">
             </button>
             <input type="text" name="" class="input" placeholder="Search history">
-          </div>
+          </div> -->
+          <%= form_for :sub_admin, :url => { :controller => 'supports', :action => 'index' }, :html => { :method => 'get', class: 'form_blk input search_blk' } do |f| %>
+              <div class="icon_blk">
+                <%= image_tag '/assets/icon-search.svg' %>
+              </div>
+              <%= text_field_tag :search, nil, placeholder: 'Search', id: "csearchbtn", class: 'input', value: params[:search] %>
+              <input type="submit" id="searchformc" hidden>
+            <% end %>
           <ul class="users_list">
             <% @end_users.each do |user| %>
               <%= link_to user_chat_admins_supports_path(id: user) do %>
@@ -44,7 +51,7 @@
         <div class="chat_blk">
           <div class="selected_chat">
             <div class="img">
-              <% if @user&.support&.user&.profile_image.attached? %>
+              <% if @user&.support&.user&.profile_image&.attached? %>
                 <%= image_tag(@user&.support&.user&.profile_image, alt:'') %>
               <% else %>
                 <img src="/assets/dummy.png" alt="">
@@ -68,7 +75,7 @@
             </div>
           </div>
           <div class="msg_contain">
-            <% @user&.support_messages.each do |message| %>
+            <% @user&.support_messages&.each do |message| %>
               <% if message.sender_id != current_admin.id %>
                 <div class="msg">
                   <div class="detail">

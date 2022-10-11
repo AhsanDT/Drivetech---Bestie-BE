@@ -5,4 +5,11 @@ class SupportConversation < ApplicationRecord
   belongs_to :sender, class_name: "User", foreign_key: :sender_id
   belongs_to :recipient, class_name: "Admin", foreign_key: :recipient_id
   has_many :support_messages, dependent: :destroy
+
+  include PgSearch::Model
+    pg_search_scope :custom_search,
+                  associated_against: {
+                    support: [:ticket_number],
+                    sender: [:email]
+                  }
 end
