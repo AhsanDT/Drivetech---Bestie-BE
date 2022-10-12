@@ -12,4 +12,11 @@ class Admins::UsersController < ApplicationController
   def show
     @user = User.find_by_id(params[:id])
   end
+
+  def export_to_csv
+    @end_users = User.end_users
+    respond_to do |format|
+      format.csv { send_data @end_users.to_csv, filename: "end-users.csv" }
+    end
+  end
 end

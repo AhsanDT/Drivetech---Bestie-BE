@@ -8,12 +8,12 @@
       </div>
     </div>
     <ul>
-      <li><a href="<%= admins_dashboard_index_path %>" class="active">Dashboard</a></li>
-      <li><a href="<%= admins_users_path %>">Users</a></li>
-      <li><a href="<%= admins_bestie_index_path %>">Besties</a></li>
-      <li><a href="<%= admins_sub_admins_path %>">Sub Admins</a></li>
-      <li><a href="<%= admins_guidelines_path %>">Guidelines</a></li>
-      <li><a href="<%= admins_supports_path %>">Support</a></li>
+      <li><a href="<%= admins_dashboard_index_path %>" class="<%= check_controller('dashboard') %>">Dashboard</a></li>
+      <li><a href="<%= admins_users_path %>" class="<%= check_controller('users') %>">Users</a></li>
+      <li><a href="<%= admins_bestie_index_path %>" class="<%= check_controller('bestie') %>">Besties</a></li>
+      <li><a href="<%= admins_sub_admins_path %>" class="<%= check_controller('sub_admins') %>">Sub Admins</a></li>
+      <li><a href="<%= admins_guidelines_path %>" class="<%= check_controller('guidelines') %>">Guidelines</a></li>
+      <li><a href="<%= admins_supports_path %>" class="<%= check_controller('supports') %>">Support</a></li>
     </ul>
     <div class="log_blk">
       <a href="<%=destroy_admin_session_path%>" data-method="delete">

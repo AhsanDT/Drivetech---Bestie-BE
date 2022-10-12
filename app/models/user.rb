@@ -1,5 +1,5 @@
 class User < ApplicationRecord
-
+  require 'csv'
   has_secure_password
   include PgSearch::Model
      pg_search_scope :custom_search,
@@ -43,6 +43,18 @@ class User < ApplicationRecord
 
   def full_name
     first_name + ' ' + last_name
+  end
+
+  def self.to_csv
+    attributes = %w{full_name email phone_number country location age sex}
+
+    CSV.generate(headers: true) do |csv|
+      csv << attributes
+
+      all.find_each do |user|
+        csv << attributes.map{ |attr| user.send(attr) }
+      end
+    end
   end
 
 end

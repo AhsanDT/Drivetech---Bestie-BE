@@ -12,4 +12,11 @@ class Admins::BestieController < ApplicationController
   def show
     @bestie = User.find_by_id(params[:id])
   end
+
+  def export_to_csv
+    @besties = User.bestie_users
+    respond_to do |format|
+      format.csv { send_data @besties.to_csv, filename: "bestie.csv" }
+    end
+  end
 end

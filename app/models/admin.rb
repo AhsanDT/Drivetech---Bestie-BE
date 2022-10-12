@@ -1,6 +1,7 @@
 class Admin < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
+  require 'csv'
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
   include PgSearch::Model
@@ -19,5 +20,17 @@ class Admin < ApplicationRecord
 
   def full_name
     first_name + ' ' + last_name
+  end
+
+  def self.to_csv
+    attributes = %w{full_name email username phone_number location status}
+
+    CSV.generate(headers: true) do |csv|
+      csv << attributes
+
+      all.find_each do |user|
+        csv << attributes.map{ |attr| user.send(attr) }
+      end
+    end
   end
 end

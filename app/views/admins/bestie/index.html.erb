@@ -26,12 +26,6 @@
             </div>
           </li>
           <li>
-            <!-- <div class="form_blk">
-              <div class="icon_blk">
-                <img src="/assets/Search.svg" alt="">
-              </div>
-              <input type="search" placeholder="Search" class="input">
-            </div> -->
             <%= form_for :sub_admin, :url => { :controller => 'bestie', :action => 'index' }, :html => { :method => 'get', class: 'form_blk' } do |f| %>
               <div class="icon_blk">
                 <%= image_tag '/assets/Search.svg' %>
@@ -48,7 +42,7 @@
             <div class="img_blk">
               <img src="/assets/download.svg" alt="">
             </div>
-            Download CSV
+            <%= link_to 'Download CSV', export_to_csv_admins_bestie_index_path %>
           </button>
         </ul>
       </div>

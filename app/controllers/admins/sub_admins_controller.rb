@@ -23,4 +23,11 @@ class Admins::SubAdminsController < ApplicationController
       end
     end
   end
+
+  def export_to_csv
+    @sub_admins = Admin.all
+    respond_to do |format|
+      format.csv { send_data @sub_admins.to_csv, filename: "sub-admins.csv" }
+    end
+  end
 end
