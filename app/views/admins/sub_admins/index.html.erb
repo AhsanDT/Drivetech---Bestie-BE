@@ -1,0 +1,142 @@
+<section id="account_section">
+  <%= render 'shared/sidebar' %>
+  <div id="sub_admins" class="main_side">
+    <div id="top_header">
+      <h2>Sub Admins</h2>
+    </div>
+
+    <div class="row">
+     <div class="col-6">
+      <ul class="top_blk">
+        <li>
+          <div class="dropdown">
+            <button class="filter text dropdown-toggle fs_5 fw_600" data-bs-toggle="dropdown">
+              <div class="img_blk">
+                <img src="/assets/filter-icon.svg" alt="">
+              </div>
+              filters
+            </button>
+            <ul class="dropdown-menu" >
+              <li><button type="button">All Data</button></li>
+              <li><button type="button">User's Info</button></li>
+              <li><button type="button">Vacant Land</button></li>
+              <li><button type="button"> Dream Address</button></li>
+              <li><button type="button">I Want to Buy</button></li>
+              <li><button type="button">I Want to Sell</button></li>
+            </ul>
+          </div>
+        </li>
+        <li>
+          <%= form_for :sub_admin, :url => { :controller => 'sub_admins', :action => 'index' }, :html => { :method => 'get', class: 'form_blk' } do |f| %>
+            <div class="icon_blk">
+              <%= image_tag '/assets/Search.svg' %>
+            </div>
+            <%= text_field_tag :search, nil, placeholder: 'Search', id: "csearchbtn", class: 'input', value: params[:search] %>
+            <input type="submit" id="searchformc" hidden>
+          <% end %>
+        </li>
+      </ul>
+    </div>
+    <div class="col-6">
+
+      <ul class="right_blk">
+        <button type="button" class="add_sub_admin filter pop_btn" data-popup="add_subadmin">
+          <div class="img_blk">
+            <img src="/assets/add-icon.svg" alt="">
+          </div>
+          Add
+        </button>
+
+        <button type="button" class="filter">
+          <div class="img_blk">
+            <img src="/assets/download.svg" alt="">
+          </div>
+          <%= link_to 'Download CSV', export_to_csv_admins_sub_admins_path %>
+        </button>
+      </ul>
+    </div>
+  </div>
+
+  <!-- table_section -->
+  <div id="table_sub_admin">
+    <div class="table__blk">
+      <div class="add_popup_div"></div>
+      <table>
+        <thead>
+          <tr>
+            <th style="width: 15rem;">Full Name</th>
+            <th style="width: 23rem;">Email</th>
+            <th style="width: 18rem;">Username</th>
+            <th style="width: 18rem;">Phone Number</th>
+            <th style="width: 16rem;">Location</th>
+            <th style="width: 16rem;">Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @sub_admins.each do |sub_admin| %>
+            <tr>
+              <td class="fw-bold"><%= sub_admin&.full_name %></td>
+              <td><%= sub_admin&.email %></td>
+              <td><%= sub_admin&.username %></td>
+              <td><%= sub_admin&.phone_number %></td>
+              <td><%= sub_admin&.location %></td>
+              <td class="interest">
+                <% if sub_admin.status == 'active' %>
+                  <span><%= sub_admin&.status&.humanize %></span>
+                <% else %>
+                  <span class="danger"><%= sub_admin&.status&.humanize %></span>
+                <% end %>
+                <div class="dropdown">
+                  <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                    <img src="/assets/dot-icon.svg" alt="">
+                  </button>
+                  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                    <% if sub_admin.status == 'active' %>
+                      <li><button class="dropdown-item pop_btn" data-popup="change_status">In Active</button></li>
+                    <% else %>
+                      <li><button class="dropdown-item pop_btn" data-popup="change_status">Active</button></li>
+                    <% end %>
+                  </ul>
+                </div>
+                <!-- Change status for sub admin   -->
+                <div class="popup" data-popup="change_status">
+                  <div class="table_dv overlay">
+                    <div class="table_cell">
+                      <div class="contain-fluid">
+                        <div class="row justify-content-center">
+                          <div class="col-3">
+                            <div class="_inner">
+                              <button type="button" class="x_btn"></button>
+                              <h4 class="text-center">Are you sure?</h4>
+                              <div class="btn_blk justify-content-center">
+                                <%= link_to 'Save', admins_sub_admin_path(id: sub_admin.id), method: :put, class: 'site_btn sm'%>
+                                <!-- <button type="button" class="site_btn sm">Save</button> -->
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+      <%if @sub_admins.present? %>
+        <div class="digg_pagination mt-5">
+          <p class="me-auto"><%= page_entries_info @sub_admins %></p>
+          <%= will_paginate @sub_admins %>
+        </div>
+      <%end%>
+    </div>
+  </div>
+
+</div>
+</div>
+</section>
+
+
+<!-- Main Js -->
+<script src="/assets/main.js"></script>

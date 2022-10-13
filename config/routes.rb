@@ -1,9 +1,13 @@
 Rails.application.routes.draw do
-  devise_for :admins
+  devise_for :admins,
+             controllers: {
+                 sessions: 'admins/sessions',
+                 registrations: 'admins/registrations'
+             }
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
-  root to: "admin/dashboard#index"
+  root to: "admins/dashboard#index"
 
-  namespace :admin do
+  namespace :admins do
     resources :dashboard do
       collection do
       end
@@ -13,9 +17,28 @@ Rails.application.routes.draw do
         get :get_page
       end
     end
-    resources :users, only: [:index, :show]
-    resources :bestie, only: [:index, :show]
-    resources :sub_admins, only: [:index, :new, :create]
+    resources :users, only: [:index, :show] do
+      collection do
+        get 'export_to_csv', defaults: { format: :csv }
+      end
+    end
+    resources :bestie, only: [:index, :show] do
+      collection do
+        get 'export_to_csv', defaults: { format: :csv }
+      end
+    end
+    resources :sub_admins, only: [:index, :update] do
+      collection do
+        get 'export_to_csv', defaults: { format: :csv }
+      end
+    end
+    resources :supports, only: [:index, :new, :create] do
+      collection do
+        get 'user_chat'
+        get 'download'
+        get 'update_ticket_status'
+      end
+    end
   end
 
   namespace :api do
@@ -38,6 +61,18 @@ Rails.application.routes.draw do
         end
       end
       get 'static_page', to: 'static_page#static_page'
+
+      resources :supports, only: [:index, :create] do
+        post 'create_message'
+        get 'get_messages'
+      end
+
+      resources :support_conversations, only: [:index, :create, :destroy] do
+        collection do
+          post 'create_message'
+          get 'get_messages'
+        end
+      end
     end
   end
 end

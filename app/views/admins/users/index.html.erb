@@ -27,12 +27,13 @@
           </div>
         </li>
         <li>
-          <div class="form_blk">
-            <div class="icon_blk">
-              <img src="/assets/Search.svg" alt="">
-            </div>
-            <input type="search" placeholder="Search" class="input">
-          </div>
+          <%= form_for :sub_admin, :url => { :controller => 'users', :action => 'index' }, :html => { :method => 'get', class: 'form_blk' } do |f| %>
+              <div class="icon_blk">
+                <%= image_tag '/assets/Search.svg' %>
+              </div>
+              <%= text_field_tag :search, nil, placeholder: 'Search', id: "csearchbtn", class: 'input', value: params[:search] %>
+              <input type="submit" id="searchformc" hidden>
+            <% end %>
         </li>
       </ul>
     </div>
@@ -42,7 +43,7 @@
           <div class="img_blk">
             <img src="/assets/download.svg" alt="">
           </div>
-          Download CSV
+          <%= link_to 'Download CSV', export_to_csv_admins_users_path %>
         </button>
       </ul>
     </div>
@@ -66,7 +67,7 @@
         <tbody>
           <% @end_users&.each do |user| %>
             <tr>
-                <td class="fw-bold"><%= link_to user&.full_name, admin_user_path(id: user.id) %></td>
+                <td class="fw-bold"><%= link_to user&.full_name, admins_user_path(id: user.id) %></td>
                 <td><%= user&.email %></td>
                 <td><%= user&.phone_number %></td>
                 <td><%= user&.country %></td>
@@ -81,11 +82,17 @@
           <% end %>
         </tbody>
       </table>
+       <%if @end_users.present? %>
+        <div class="digg_pagination mt-5">
+          <p class="me-auto"><%= page_entries_info @end_users %></p>
+          <%= will_paginate @end_users %>
+        </div>
+      <%end%>
     </div>
   </div>
 
 <!-- pagination_section -->
-  <div class="paginate_sec">
+  <!-- <div class="paginate_sec">
     <p>Showing 1 to 9 of 200 entries</p>
     <nav aria-label="Page navigation example">
       <ul class="pagination">
@@ -110,7 +117,7 @@
         </li>
       </ul>
     </nav>
-  </div>
+  </div> -->
 </div>
 </section>
 <!-- account_section -->

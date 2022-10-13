@@ -46,7 +46,7 @@
       <div class="col-sm-4">
         <div class="dash_blk">
           <div class="txt">
-            <div class="num">1.2k</div>
+            <div class="num"><%= @male %></div>
             <p>Total Male</p>
           </div>
         </div>
@@ -54,7 +54,7 @@
       <div class="col-sm-4">
         <div class="dash_blk">
           <div class="txt">
-            <div class="num">1.2k</div>
+            <div class="num"><%= @female %></div>
             <p>Total Female</p>
           </div>
         </div>
@@ -100,103 +100,34 @@
               <th style="width: 14rem;">Country</th>
               <th style="width: 7rem;">Age</th>
               <th style="width: 11rem;">Sex</th>
-              <th style="width: 28rem;">Interest</th>
+              <th style="width: 30rem;">Interest</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td class="fw-bold">Dave Chen</td>
-              <td>davechen@gmail.com</td>
-              <td>+123 456 789</td>
-              <td>United States</td>
-              <td>22</td>
-              <td>Male</td>
-              <td class="interest">
-                <span>Nature</span>
-                <span>Road Trip</span>
-                <span>Travel</span>
-              </td>
-            </tr>
-            <tr>
-              <td class="fw-bold">Nicola Adler</td>
-              <td>nicolaadler@gmail.com</td>
-              <td>+123 534 657</td>
-              <td>Canada</td>
-              <td>23</td>
-              <td>Female</td>
-              <td class="interest">
-                <span>Socializing</span>
-                <span>Sports</span>
-              </td>
-            </tr>
-            <tr>
-              <td class="fw-bold">Jordyn Madsen</td>
-              <td>jorfynmadsen@gmail.com</td>
-              <td>+123 645 095</td>
-              <td>Canada</td>
-              <td>24</td>
-              <td>Female</td>
-              <td class="interest">
-                <span>Collecting</span>
-                <span>Gaming</span>
-              </td>
-            </tr>
-            <tr>
-              <td class="fw-bold">Erin Donin</td>
-              <td>erindonin@gmail.com</td>
-              <td>+123 736 185</td>
-              <td>Canada</td>
-              <td>24</td>
-              <td>Female</td>
-              <td class="interest">
-                <span>Collecting</span>
-                <span>Gaming</span>
-                <span>Collecting</span>
-
-              </td>
-            </tr>
-            <tr>
-              <td class="fw-bold">Jordyn Madsen</td>
-              <td>jorfynmadsen@gmail.com</td>
-              <td>+123 645 095</td>
-              <td>Canada</td>
-              <td>24</td>
-              <td>Female</td>
-              <td class="interest">
-                <span>Collecting</span>
-              </td>
-            </tr>
+            <% @users.each do |user| %>
+              <tr>
+                <td class="fw-bold"><%= user&.full_name %></td>
+                <td><%= user&.email %></td>
+                <td><%= user&.phone_number %></td>
+                <td><%= user&.country %></td>
+                <td><%= user&.age %></td>
+                <td><%= user&.sex %></td>
+                <td class="interest">
+                  <% user&.interests.each do |interest|%>
+                    <span><%= interest&.title %></span>
+                  <%end%>
+                </td>
+              </tr>
+            <% end %>
           </tbody>
         </table>
+        <%if @users.present? %>
+        <div class="digg_pagination mt-5">
+          <p class="me-auto"><%= page_entries_info @users %></p>
+          <%= will_paginate @users %>
+        </div>
+      <%end%>
       </div>
-    </div>
-
-    <!-- pagination_section -->
-    <div class="paginate_sec">
-      <p>Showing 1 to 9 of 200 entries</p>
-      <nav aria-label="Page navigation example">
-        <ul class="pagination">
-          <li class="page_item disable me-4">
-            <a class="page_link" href="#" aria-label="Previous">
-              <div class="icon_blk me-2">
-                <img src="/assets/left arrow.svg" aria-hidden="true" alt="icon">
-              </div>
-              Previous
-            </a>
-          </li>
-          <li class="page_no "><a class="" href="#">1</a></li>
-          <li class="page_no"><a class="" href="#">2</a></li>
-          <li class="page_no"><a class="" href="#">3</a></li>
-          <li class="page_item ms-4">
-            <a class="page_link fw_600" href="#" aria-label="Previous">
-              Next
-              <div class="icon_blk ms-2">
-                <img src="/assets/right arrow.svg" aria-hidden="true" alt="icon">
-              </div>
-            </a>
-          </li>
-        </ul>
-      </nav>
     </div>
   </div>
 </section>

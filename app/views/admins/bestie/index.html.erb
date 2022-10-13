@@ -26,12 +26,13 @@
             </div>
           </li>
           <li>
-            <div class="form_blk">
+            <%= form_for :sub_admin, :url => { :controller => 'bestie', :action => 'index' }, :html => { :method => 'get', class: 'form_blk' } do |f| %>
               <div class="icon_blk">
-                <img src="/assets/Search.svg" alt="">
+                <%= image_tag '/assets/Search.svg' %>
               </div>
-              <input type="search" placeholder="Search" class="input">
-            </div>
+              <%= text_field_tag :search, nil, placeholder: 'Search', id: "csearchbtn", class: 'input', value: params[:search] %>
+              <input type="submit" id="searchformc" hidden>
+            <% end %>
           </li>
         </ul>
       </div>
@@ -41,7 +42,7 @@
             <div class="img_blk">
               <img src="/assets/download.svg" alt="">
             </div>
-            Download CSV
+            <%= link_to 'Download CSV', export_to_csv_admins_bestie_index_path %>
           </button>
         </ul>
       </div>
@@ -64,7 +65,7 @@
           <tbody>
             <% @besties.each do |bestie| %>
               <tr>
-                <td class="fw-bold"><%= link_to bestie&.full_name, admin_bestie_path(id: bestie.id) %></td>
+                <td class="fw-bold"><%= link_to bestie&.full_name, admins_bestie_path(id: bestie.id) %></td>
                 <td><%= bestie&.email %></td>
                 <td><%= bestie&.phone_number %></td>
                 <td>United States</td>
@@ -74,35 +75,13 @@
             <% end %>
           </tbody>
       </table>
+      <%if @besties.present? %>
+        <div class="digg_pagination mt-5">
+          <p class="me-auto"><%= page_entries_info @besties %></p>
+          <%= will_paginate @besties %>
+        </div>
+      <%end%>
     </div>
-  </div>
-
-  <!-- pagination_section -->
-  <div class="paginate_sec">
-    <p>Showing 1 to 9 of 200 entries</p>
-    <nav aria-label="Page navigation example">
-      <ul class="pagination">
-        <li class="page_item disable me-4">
-          <a class="page_link" href="#" aria-label="Previous">
-            <div class="icon_blk me-2">
-              <img src="/assets/left arrow.svg" aria-hidden="true" alt="icon">
-            </div>
-            Previous
-          </a>
-        </li>
-        <li class="page_no "><a class="" href="#">1</a></li>
-        <li class="page_no"><a class="" href="#">2</a></li>
-        <li class="page_no"><a class="" href="#">3</a></li>
-        <li class="page_item ms-4">
-          <a class="page_link fw_600" href="#" aria-label="Previous">
-            Next
-            <div class="icon_blk ms-2">
-              <img src="/assets/right arrow.svg" aria-hidden="true" alt="icon">
-            </div>
-          </a>
-        </li>
-      </ul>
-    </nav>
   </div>
 </div>
 </section>

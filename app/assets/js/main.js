@@ -1,4 +1,4 @@
-$(window).on("load", function () {
+$(document).on('turbolinks:load', function() {
 	/*_____ Toggle _____*/
 	$(document).on("click", ".toggle", function () {
 		$(".toggle").toggleClass("active");
@@ -69,6 +69,17 @@ $(window).on("load", function () {
 			$(this).removeClass("icon-eye-slash");
 			$(this).parent().find(".input").attr("type", "password");
 		}
+	});
+
+	$('.add_sub_admin').on('click', function(){
+		$.ajax({
+			url: `/admins/sign_up`,
+			type: 'get',
+			data: this.data,
+			success: function(response) {
+				$('.add_popup_div').html(response)
+			}
+		})
 	});
 
 	/*_____ FAQ's _____*/
