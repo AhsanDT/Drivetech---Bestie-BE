@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_10_10_150014) do
+ActiveRecord::Schema.define(version: 2022_10_13_074236) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -82,6 +82,22 @@ ActiveRecord::Schema.define(version: 2022_10_10_150014) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["user_id"], name: "index_camera_details_on_user_id"
+  end
+
+  create_table "cards", force: :cascade do |t|
+    t.string "token"
+    t.string "number"
+    t.string "exp_month"
+    t.integer "exp_year"
+    t.integer "cvc"
+    t.string "brand"
+    t.string "country"
+    t.string "card_holder_name"
+    t.boolean "default", default: false
+    t.bigint "user_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_cards_on_user_id"
   end
 
   create_table "interests", force: :cascade do |t|
@@ -158,11 +174,13 @@ ActiveRecord::Schema.define(version: 2022_10_10_150014) do
     t.datetime "otp_expiry"
     t.string "login_type"
     t.boolean "profile_completed", default: false
+    t.string "stripe_customer_id"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "camera_details", "users"
+  add_foreign_key "cards", "users"
   add_foreign_key "support_conversations", "supports"
   add_foreign_key "support_messages", "support_conversations"
   add_foreign_key "supports", "users"

@@ -21,6 +21,7 @@ class User < ApplicationRecord
   has_many :supports, dependent: :destroy
   has_many :support_conversations, dependent: :destroy,foreign_key: :sender_id
   has_many :user_support_messages, dependent: :destroy,foreign_key: :sender_id
+  has_many :cards, dependent: :destroy
 
   accepts_nested_attributes_for :camera_detail, allow_destroy: true
   accepts_nested_attributes_for :user_interests, allow_destroy: true

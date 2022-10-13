@@ -73,6 +73,8 @@ Rails.application.routes.draw do
           get 'get_messages'
         end
       end
+      resources :cards
+
     end
   end
 end
