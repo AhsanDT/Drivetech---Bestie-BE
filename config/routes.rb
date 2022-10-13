@@ -52,6 +52,7 @@ Rails.application.routes.draw do
           post :reset_password
           put :update_social_login
           get :get_interests
+          get :get_talents
         end
       end
 
