@@ -21,9 +21,12 @@ class User < ApplicationRecord
   has_many :supports, dependent: :destroy
   has_many :support_conversations, dependent: :destroy,foreign_key: :sender_id
   has_many :user_support_messages, dependent: :destroy,foreign_key: :sender_id
+  has_many :user_talents, dependent: :destroy
+  has_many :talents, through: :user_talents
 
-  accepts_nested_attributes_for :camera_detail, allow_destroy: true
+  accepts_nested_attributes_for :camera_detail, allow_destroy: true, :reject_if => :which_profile_type
   accepts_nested_attributes_for :user_interests, allow_destroy: true
+  accepts_nested_attributes_for :user_talents, allow_destroy: true, :reject_if => :which_profile_type
 
   enum profile_type: {
     user: 0,
@@ -43,6 +46,10 @@ class User < ApplicationRecord
 
   def full_name
     first_name + ' ' + last_name
+  end
+
+  def which_profile_type
+    profile_type == 'user'
   end
 
   def self.to_csv

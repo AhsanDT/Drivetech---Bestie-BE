@@ -8,3 +8,4 @@ json.portfolio(@user.portfolio) do |portfolio|
 end
 json.camera_detail @user.camera_detail
 json.interest @user.interests
+json.talent @user.talents

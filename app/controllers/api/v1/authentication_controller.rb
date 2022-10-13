@@ -1,5 +1,5 @@
 class Api::V1::AuthenticationController < Api::V1::ApiController
-  before_action :authorize_user, except: [:sign_up, :login, :forgot_password, :verify_token, :reset_password, :update_social_login, :get_interests]
+  before_action :authorize_user, except: [:sign_up, :login, :forgot_password, :verify_token, :reset_password, :update_social_login, :get_interests, :get_talents]
   before_action :find_user_by_email, only: [:forgot_password, :verify_token, :reset_password, :update_social_login]
 
   def sign_up
@@ -96,12 +96,23 @@ class Api::V1::AuthenticationController < Api::V1::ApiController
     end
   end
 
+  def get_talents
+    @talent = Talent.all
+    if @talent.nil?
+      render json: {
+        message: 'All talents',
+        data: []
+      }, status: :ok
+    end
+  end
+
   private
   def sign_up_params
     params.require(:user).permit(:email, :password, :first_name, :last_name, :location, :city, :country, :experience, :age,
                                  :sex, :rate, :phone_number, :pronoun, :latitude, :longitude, :profile_type, :profile_image,
                                  :id_front_image, :id_back_image, :selfie, portfolio: [], camera_detail_attributes: [ :id,
-                                 :model, :camera_type, :others, equipment: [], talent: [] ], user_interests_attributes: [:id, :interest_id])
+                                 :model, :camera_type, others: [] , equipment: [] ], user_interests_attributes: [:id, :interest_id],
+                                 user_talents_attributes: [:id, :talent_id])
   end
 
   def login_params
