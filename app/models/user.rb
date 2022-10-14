@@ -23,6 +23,8 @@ class User < ApplicationRecord
   has_many :user_support_messages, dependent: :destroy,foreign_key: :sender_id
   has_many :user_talents, dependent: :destroy
   has_many :talents, through: :user_talents
+  has_many :notifications, dependent: :destroy
+  has_many :mobile_devices, dependent: :destroy
 
   accepts_nested_attributes_for :camera_detail, allow_destroy: true, :reject_if => :which_profile_type
   accepts_nested_attributes_for :user_interests, allow_destroy: true
