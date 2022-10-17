@@ -1,5 +1,5 @@
 class Api::V1::StaticPageController < Api::V1::ApiController
-  before_action :authorize_user
+  # before_action :authorize_user
 
   def static_page
     page = Page.find_by(permalink: params[:permalink])
