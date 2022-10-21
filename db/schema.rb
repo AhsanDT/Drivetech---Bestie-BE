@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_10_13_121450) do
+ActiveRecord::Schema.define(version: 2022_10_21_130240) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -83,22 +83,6 @@ ActiveRecord::Schema.define(version: 2022_10_13_121450) do
     t.index ["user_id"], name: "index_camera_details_on_user_id"
   end
 
-  create_table "cards", force: :cascade do |t|
-    t.string "token"
-    t.string "number"
-    t.string "exp_month"
-    t.integer "exp_year"
-    t.integer "cvc"
-    t.string "brand"
-    t.string "country"
-    t.string "card_holder_name"
-    t.boolean "default", default: false
-    t.bigint "user_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["user_id"], name: "index_cards_on_user_id"
-  end
-
   create_table "interests", force: :cascade do |t|
     t.string "title"
     t.datetime "created_at", precision: 6, null: false
@@ -111,6 +95,15 @@ ActiveRecord::Schema.define(version: 2022_10_13_121450) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["permalink"], name: "index_pages_on_permalink"
+  end
+
+  create_table "social_media", force: :cascade do |t|
+    t.string "title"
+    t.string "link"
+    t.bigint "user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_social_media_on_user_id"
   end
 
   create_table "support_conversations", force: :cascade do |t|
@@ -188,13 +181,12 @@ ActiveRecord::Schema.define(version: 2022_10_13_121450) do
     t.datetime "otp_expiry"
     t.string "login_type"
     t.boolean "profile_completed", default: false
-    t.string "stripe_customer_id"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "camera_details", "users"
-  add_foreign_key "cards", "users"
+  add_foreign_key "social_media", "users"
   add_foreign_key "support_conversations", "supports"
   add_foreign_key "support_messages", "support_conversations"
   add_foreign_key "supports", "users"

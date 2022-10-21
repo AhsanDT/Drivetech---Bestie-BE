@@ -23,10 +23,13 @@ class User < ApplicationRecord
   has_many :user_support_messages, dependent: :destroy,foreign_key: :sender_id
   has_many :user_talents, dependent: :destroy
   has_many :talents, through: :user_talents
+  has_many :social_media, dependent: :destroy
 
   accepts_nested_attributes_for :camera_detail, allow_destroy: true, :reject_if => :which_profile_type
   accepts_nested_attributes_for :user_interests, allow_destroy: true
   accepts_nested_attributes_for :user_talents, allow_destroy: true, :reject_if => :which_profile_type
+  accepts_nested_attributes_for :social_media
+
 
   enum profile_type: {
     user: 0,
