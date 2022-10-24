@@ -1,4 +1,4 @@
-def fcm_push_notification
+class FcmNotificationsService
   require 'fcm'
   def self.push_notification(notification)
     fcm_client = FCM.new(ENV['FIREBASE_SECRET_KEY']) # set your FCM_SERVER_KEY
