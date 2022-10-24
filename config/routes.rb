@@ -47,6 +47,7 @@ Rails.application.routes.draw do
         collection do
           post :login
           post :uniq_email_and_phone
+          post :uniq_phone_number
           post :sign_up
           post :forgot_password
           post :verify_token

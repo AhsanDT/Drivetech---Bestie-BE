@@ -1,5 +1,5 @@
 class Api::V1::AuthenticationController < Api::V1::ApiController
-  before_action :authorize_user, except: [:sign_up, :uniq_email_and_phone, :login, :forgot_password, :verify_token, :reset_password, :update_social_login, :get_interests, :get_talents]
+  before_action :authorize_user, except: [:sign_up, :uniq_email_and_phone, :uniq_phone_number, :login, :forgot_password, :verify_token, :reset_password, :update_social_login, :get_interests, :get_talents]
   before_action :find_user_by_email, only: [:forgot_password, :verify_token, :reset_password, :update_social_login]
 
   def sign_up
@@ -31,7 +31,13 @@ class Api::V1::AuthenticationController < Api::V1::ApiController
     else
       render json: { message: 'Unique email and phone number' }, status: 200
     end
+  end
 
+  def uniq_phone_number
+    @phone = User.find_by(phone_number: params[:user][:phone_number]) if params[:user][:phone_number]
+    if @phone.present?
+      render json: { error: 'Phone number has already been taken' }, status: :unprocessable_entity
+    end
   end
 
   def login
