@@ -25,6 +25,8 @@ class User < ApplicationRecord
   has_many :cards, dependent: :destroy
   has_many :user_talents, dependent: :destroy
   has_many :talents, through: :user_talents
+  has_many :notifications, dependent: :destroy
+  has_many :mobile_devices, dependent: :destroy
   has_many :social_media, dependent: :destroy
 
   accepts_nested_attributes_for :camera_detail, allow_destroy: true, :reject_if => :which_profile_type

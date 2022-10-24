@@ -105,6 +105,24 @@ ActiveRecord::Schema.define(version: 2022_10_21_130240) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "mobile_devices", force: :cascade do |t|
+    t.string "mobile_token"
+    t.bigint "user_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_mobile_devices_on_user_id"
+  end
+
+  create_table "notifications", force: :cascade do |t|
+    t.string "subject"
+    t.text "body"
+    t.boolean "is_read", default: false
+    t.bigint "user_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_notifications_on_user_id"
+  end
+
   create_table "pages", force: :cascade do |t|
     t.string "title"
     t.string "permalink"
@@ -204,6 +222,8 @@ ActiveRecord::Schema.define(version: 2022_10_21_130240) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "camera_details", "users"
   add_foreign_key "cards", "users"
+  add_foreign_key "mobile_devices", "users"
+  add_foreign_key "notifications", "users"
   add_foreign_key "social_media", "users"
   add_foreign_key "support_conversations", "supports"
   add_foreign_key "support_messages", "support_conversations"

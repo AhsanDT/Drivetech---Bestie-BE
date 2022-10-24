@@ -38,6 +38,7 @@ gem 'redis'
 gem 'will_paginate'
 gem 'will_paginate-bootstrap'
 gem 'pg_search'
+gem 'fcm'
 gem 'stripe'
 
 group :development, :test do
