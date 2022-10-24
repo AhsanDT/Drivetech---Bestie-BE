@@ -5,7 +5,7 @@ def fcm_push_notification
     options = { priority: 'high',
                 # data: { message: message, icon: image },
                 notification: {
-                  title: notification.subject
+                  title: notification.subject,
                   body: notification.body,
                 }
               }
