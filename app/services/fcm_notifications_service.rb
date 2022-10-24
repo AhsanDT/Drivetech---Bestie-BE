@@ -1,7 +1,7 @@
 def fcm_push_notification
   require 'fcm'
   def self.push_notification(notification)
-    fcm_client = FCM.new(FCM_SEVER_KEY) # set your FCM_SERVER_KEY
+    fcm_client = FCM.new(ENV['FIREBASE_SECRET_KEY']) # set your FCM_SERVER_KEY
     options = { priority: 'high',
                 # data: { message: message, icon: image },
                 notification: {
