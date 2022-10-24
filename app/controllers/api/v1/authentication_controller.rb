@@ -20,11 +20,11 @@ class Api::V1::AuthenticationController < Api::V1::ApiController
   end
 
   def uniq_email_and_phone
-    @phone = User.find_by(phone_number: sign_up_params[:phone_number])
-    @email = User.find_by(email: sign_up_params[:email])
+    @phone = User.find_by(phone_number: params[:user][:phone_number]) if params[:user][:phone_number]
+    @email = User.find_by(email: params[:user][:email]) if params[:user][:email]
     if @phone.present? && @email.present?
       render json: { error: 'Both email and phone number are not unique'}, status: :unprocessable_entity
-      elsif @email.present?
+    elsif @email.present?
       render json: {error: 'Email has already been taken' }, status: :unprocessable_entity
     elsif @phone.present?
       render json: { error: 'Phone number has already been taken' }, status: :unprocessable_entity
