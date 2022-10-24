@@ -46,6 +46,7 @@ Rails.application.routes.draw do
       resources :authentication, only: [] do
         collection do
           post :login
+          post :uniq_email_and_phone
           post :sign_up
           post :forgot_password
           post :verify_token
