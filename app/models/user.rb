@@ -28,7 +28,7 @@ class User < ApplicationRecord
   accepts_nested_attributes_for :camera_detail, allow_destroy: true, :reject_if => :which_profile_type
   accepts_nested_attributes_for :user_interests, allow_destroy: true
   accepts_nested_attributes_for :user_talents, allow_destroy: true, :reject_if => :which_profile_type
-  accepts_nested_attributes_for :social_media
+  accepts_nested_attributes_for :social_media, allow_destroy: true, :reject_if => :which_profile_type
 
 
   enum profile_type: {
