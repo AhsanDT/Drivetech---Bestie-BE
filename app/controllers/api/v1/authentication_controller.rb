@@ -1,5 +1,5 @@
 class Api::V1::AuthenticationController < Api::V1::ApiController
-  before_action :authorize_user, except: [:sign_up, :login, :forgot_password, :verify_token, :reset_password, :update_social_login, :get_interests, :get_talents]
+  before_action :authorize_user, except: [:sign_up, :uniq_email_and_phone, :login, :forgot_password, :verify_token, :reset_password, :update_social_login, :get_interests, :get_talents]
   before_action :find_user_by_email, only: [:forgot_password, :verify_token, :reset_password, :update_social_login]
 
   def sign_up
@@ -17,6 +17,21 @@ class Api::V1::AuthenticationController < Api::V1::ApiController
         error: @user.errors.full_messages
       }, status: :unprocessable_entity
     end
+  end
+
+  def uniq_email_and_phone
+    @phone = User.find_by(phone_number: sign_up_params[:phone_number])
+    @email = User.find_by(email: sign_up_params[:email])
+    if @phone.present? && @email.present?
+      render json: { error: 'Both email and phone number are not unique'}, status: :unprocessable_entity
+      elsif @email.present?
+      render json: {error: 'Email is not unique' }, status: :unprocessable_entity
+    elsif @phone.present?
+      render json: { error: 'Phone number is not unique' }, status: :unprocessable_entity
+    else
+      render json: { message: 'Unique email and phone number' }, status: 200
+    end
+
   end
 
   def login
@@ -112,7 +127,7 @@ class Api::V1::AuthenticationController < Api::V1::ApiController
                                  :sex, :rate, :phone_number, :pronoun, :latitude, :longitude, :profile_type, :profile_image,
                                  :id_front_image, :id_back_image, :selfie, portfolio: [], camera_detail_attributes: [ :id,
                                  :model, :camera_type, others: [] , equipment: [] ], user_interests_attributes: [:id, :interest_id],
-                                 user_talents_attributes: [:id, :talent_id])
+                                 user_talents_attributes: [:id, :talent_id], social_media_attributes: [:id, :title, :link])
   end
 
   def login_params

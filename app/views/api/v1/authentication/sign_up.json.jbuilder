@@ -9,3 +9,4 @@ end
 json.camera_detail @user.camera_detail
 json.interest @user.interests
 json.talent @user.talents
+json.social_media @user.social_media

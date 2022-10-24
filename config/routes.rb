@@ -46,6 +46,7 @@ Rails.application.routes.draw do
       resources :authentication, only: [] do
         collection do
           post :login
+          post :uniq_email_and_phone
           post :sign_up
           post :forgot_password
           post :verify_token
@@ -74,6 +75,9 @@ Rails.application.routes.draw do
           get 'get_messages'
         end
       end
+      resources :cards
+      put 'update_media', to: 'media#update_media'
+
     end
   end
 end

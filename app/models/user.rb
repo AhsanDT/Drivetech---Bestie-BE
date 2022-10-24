@@ -5,6 +5,7 @@ class User < ApplicationRecord
      pg_search_scope :custom_search,
                   against: [:first_name, :last_name, :email, :phone_number]
   validates :email, uniqueness: true, on: :create
+  validates :phone_number, format: { with: /\A^\+?\d+$\z/ }, uniqueness: true, presence: true
   validates :password_digest, presence: true
   validates :password_digest, length: { minimum: 6 }, confirmation: true
   validates_presence_of :profile_type, inclusion: {in: :profile_type}
@@ -21,14 +22,18 @@ class User < ApplicationRecord
   has_many :supports, dependent: :destroy
   has_many :support_conversations, dependent: :destroy,foreign_key: :sender_id
   has_many :user_support_messages, dependent: :destroy,foreign_key: :sender_id
+  has_many :cards, dependent: :destroy
   has_many :user_talents, dependent: :destroy
   has_many :talents, through: :user_talents
   has_many :notifications, dependent: :destroy
   has_many :mobile_devices, dependent: :destroy
+  has_many :social_media, dependent: :destroy
 
   accepts_nested_attributes_for :camera_detail, allow_destroy: true, :reject_if => :which_profile_type
   accepts_nested_attributes_for :user_interests, allow_destroy: true
   accepts_nested_attributes_for :user_talents, allow_destroy: true, :reject_if => :which_profile_type
+  accepts_nested_attributes_for :social_media, allow_destroy: true, :reject_if => :which_profile_type
+
 
   enum profile_type: {
     user: 0,
