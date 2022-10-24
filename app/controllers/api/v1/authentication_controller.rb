@@ -127,7 +127,7 @@ class Api::V1::AuthenticationController < Api::V1::ApiController
                                  :sex, :rate, :phone_number, :pronoun, :latitude, :longitude, :profile_type, :profile_image,
                                  :id_front_image, :id_back_image, :selfie, portfolio: [], camera_detail_attributes: [ :id,
                                  :model, :camera_type, others: [] , equipment: [] ], user_interests_attributes: [:id, :interest_id],
-                                 user_talents_attributes: [:id, :talent_id])
+                                 user_talents_attributes: [:id, :talent_id], social_media_attributes: [:id, :title, :link])
   end
 
   def login_params
