@@ -6,7 +6,7 @@ class Api::V1::SupportConversationsController < Api::V1::ApiController
 
   def create
     if @conversation.present?
-      render json: { conversation: @conversation }
+      render json: { message: 'Support Conversation is already created', data: @conversation }
     else
       @conversation = @current_user.support_conversations.create(
         support_id: params[:support_id],
@@ -16,7 +16,7 @@ class Api::V1::SupportConversationsController < Api::V1::ApiController
       if @conversation.save
         render json: {
           message: "support conversation created successfully",
-          support_conversation: @conversation
+          data: @conversation
         }, status: :ok
       else
         render json: {
@@ -68,8 +68,8 @@ class Api::V1::SupportConversationsController < Api::V1::ApiController
   end
 
   def get_messages
-    messages = UserSupportMessage.where(sender_id: @current_user.id).order(created_at: :desc)
-    render json: { messages: messages }, status: :ok
+    @messages = SupportMessage.where(support_conversation_id: @support_conversation.id).order(created_at: :desc)
+    render json: { message: 'No messages found', data: [] }, status: :ok if @messages.nil?
   end
 
 
@@ -94,7 +94,7 @@ class Api::V1::SupportConversationsController < Api::V1::ApiController
   end
 
   def find_support_conversation
-    @support_conversation = SupportConversation.find_by(id: params[:support_conversation_id])
+    @support_conversation = SupportConversation.find_by(id: params[:message][:support_conversation_id])
     return render json: {
       message: 'Support Conversation not against this support conversation id'
     }, status: :unprocessable_entity unless @support_conversation.present?

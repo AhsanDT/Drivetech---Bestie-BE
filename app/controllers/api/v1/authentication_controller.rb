@@ -25,9 +25,9 @@ class Api::V1::AuthenticationController < Api::V1::ApiController
     if @phone.present? && @email.present?
       render json: { error: 'Both email and phone number are not unique'}, status: :unprocessable_entity
       elsif @email.present?
-      render json: {error: 'Email is not unique' }, status: :unprocessable_entity
+      render json: {error: 'Email has already been taken' }, status: :unprocessable_entity
     elsif @phone.present?
-      render json: { error: 'Phone number is not unique' }, status: :unprocessable_entity
+      render json: { error: 'Phone number has already been taken' }, status: :unprocessable_entity
     else
       render json: { message: 'Unique email and phone number' }, status: 200
     end
