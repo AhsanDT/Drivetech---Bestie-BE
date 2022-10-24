@@ -83,6 +83,22 @@ ActiveRecord::Schema.define(version: 2022_10_21_130240) do
     t.index ["user_id"], name: "index_camera_details_on_user_id"
   end
 
+  create_table "cards", force: :cascade do |t|
+    t.string "token"
+    t.string "number"
+    t.string "exp_month"
+    t.integer "exp_year"
+    t.integer "cvc"
+    t.string "brand"
+    t.string "country"
+    t.string "card_holder_name"
+    t.boolean "default", default: false
+    t.bigint "user_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_cards_on_user_id"
+  end
+
   create_table "interests", force: :cascade do |t|
     t.string "title"
     t.datetime "created_at", precision: 6, null: false
@@ -181,11 +197,13 @@ ActiveRecord::Schema.define(version: 2022_10_21_130240) do
     t.datetime "otp_expiry"
     t.string "login_type"
     t.boolean "profile_completed", default: false
+    t.string "stripe_customer_id"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "camera_details", "users"
+  add_foreign_key "cards", "users"
   add_foreign_key "social_media", "users"
   add_foreign_key "support_conversations", "supports"
   add_foreign_key "support_messages", "support_conversations"

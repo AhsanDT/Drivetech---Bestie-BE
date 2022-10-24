@@ -75,7 +75,9 @@ Rails.application.routes.draw do
           get 'get_messages'
         end
       end
+      resources :cards
       put 'update_media', to: 'media#update_media'
+
     end
   end
 end

@@ -22,6 +22,7 @@ class User < ApplicationRecord
   has_many :supports, dependent: :destroy
   has_many :support_conversations, dependent: :destroy,foreign_key: :sender_id
   has_many :user_support_messages, dependent: :destroy,foreign_key: :sender_id
+  has_many :cards, dependent: :destroy
   has_many :user_talents, dependent: :destroy
   has_many :talents, through: :user_talents
   has_many :social_media, dependent: :destroy
