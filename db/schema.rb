@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_10_13_074236) do
+ActiveRecord::Schema.define(version: 2022_10_21_130240) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -73,14 +73,13 @@ ActiveRecord::Schema.define(version: 2022_10_13_074236) do
   end
 
   create_table "camera_details", force: :cascade do |t|
-    t.text "talent", default: [], array: true
     t.string "model"
     t.integer "camera_type"
     t.text "equipment", default: [], array: true
-    t.text "others"
     t.bigint "user_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.text "others", default: [], array: true
     t.index ["user_id"], name: "index_camera_details_on_user_id"
   end
 
@@ -114,6 +113,15 @@ ActiveRecord::Schema.define(version: 2022_10_13_074236) do
     t.index ["permalink"], name: "index_pages_on_permalink"
   end
 
+  create_table "social_media", force: :cascade do |t|
+    t.string "title"
+    t.string "link"
+    t.bigint "user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_social_media_on_user_id"
+  end
+
   create_table "support_conversations", force: :cascade do |t|
     t.bigint "support_id"
     t.integer "recipient_id"
@@ -142,6 +150,12 @@ ActiveRecord::Schema.define(version: 2022_10_13_074236) do
     t.index ["user_id"], name: "index_supports_on_user_id"
   end
 
+  create_table "talents", force: :cascade do |t|
+    t.string "title"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "user_interests", force: :cascade do |t|
     t.bigint "user_id"
     t.bigint "interest_id"
@@ -149,6 +163,15 @@ ActiveRecord::Schema.define(version: 2022_10_13_074236) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["interest_id"], name: "index_user_interests_on_interest_id"
     t.index ["user_id"], name: "index_user_interests_on_user_id"
+  end
+
+  create_table "user_talents", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "talent_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["talent_id"], name: "index_user_talents_on_talent_id"
+    t.index ["user_id"], name: "index_user_talents_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -181,9 +204,12 @@ ActiveRecord::Schema.define(version: 2022_10_13_074236) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "camera_details", "users"
   add_foreign_key "cards", "users"
+  add_foreign_key "social_media", "users"
   add_foreign_key "support_conversations", "supports"
   add_foreign_key "support_messages", "support_conversations"
   add_foreign_key "supports", "users"
   add_foreign_key "user_interests", "interests"
   add_foreign_key "user_interests", "users"
+  add_foreign_key "user_talents", "talents"
+  add_foreign_key "user_talents", "users"
 end

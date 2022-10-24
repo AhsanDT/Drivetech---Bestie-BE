@@ -47,101 +47,105 @@
           </ul>
         </div>
       </div>
-      <div class="col-8">
-        <div class="chat_blk">
-          <div class="selected_chat">
-            <div class="img">
-              <% if @user&.support&.user&.profile_image&.attached? %>
-                <%= image_tag(@user&.support&.user&.profile_image, alt:'') %>
-              <% else %>
-                <img src="/assets/dummy.png" alt="">
-              <% end %>
-            </div>
-            <div class="txt" <%= @user&.id %> data-id="<%= @user&.id %>" id="chatmessagebox">
-              <h5 class="mb-0"><%= @user&.support&.ticket_number %></h5>
-              <p class="mb-0"><%= @user&.support&.user&.email %></p>
-              <p class="status"><%= @user&.support&.status&.humanize %></p>
-            </div>
-            <div class="form_blk">
-              <div class="dropdown">
-                <button class="site_btn blank dropdown-toggle chevron" data-bs-toggle="dropdown">
-                    Mark as
-                </button>
-                <ul class="dropdown-menu" >
-                  <li><a class="dropdown-item" href="<%= update_ticket_status_admins_supports_path(support_id: @user&.support&.id, status: 'in_progress', id: @user&.id) %>">In Progress</a></li>
-                  <li><a class="dropdown-item" href="<%= update_ticket_status_admins_supports_path(support_id: @user&.support&.id, status: 'completed', id: @user&.id) %>">Completed</a></li>
-                </ul>
+      <% if @user.present? %>
+        <div class="col-8">
+          <div class="chat_blk">
+            <div class="selected_chat">
+              <div class="img">
+                <% if @user&.support&.user&.profile_image&.attached? %>
+                  <%= image_tag(@user&.support&.user&.profile_image, alt:'') %>
+                <% else %>
+                  <img src="/assets/dummy.png" alt="">
+                <% end %>
+              </div>
+              <div class="txt" <%= @user&.id %> data-id="<%= @user&.id %>" id="chatmessagebox">
+                <h5 class="mb-0"><%= @user&.support&.ticket_number %></h5>
+                <p class="mb-0"><%= @user&.support&.user&.email %></p>
+                <p class="status"><%= @user&.support&.status&.humanize %></p>
+              </div>
+              <div class="form_blk">
+                <div class="dropdown">
+                  <button class="site_btn blank dropdown-toggle chevron" data-bs-toggle="dropdown">
+                      Mark as
+                  </button>
+                  <ul class="dropdown-menu" >
+                    <li><a class="dropdown-item" href="<%= update_ticket_status_admins_supports_path(support_id: @user&.support&.id, status: 'in_progress', id: @user&.id) %>">In Progress</a></li>
+                    <li><a class="dropdown-item" href="<%= update_ticket_status_admins_supports_path(support_id: @user&.support&.id, status: 'completed', id: @user&.id) %>">Completed</a></li>
+                  </ul>
+                </div>
               </div>
             </div>
-          </div>
-          <div class="msg_contain">
-            <% @user&.support_messages&.each do |message| %>
-              <% if message.sender_id != current_admin.id %>
-                <div class="msg">
-                  <div class="detail">
-                    <div class="img">
-                      <% if @user&.support&.user&.profile_image.attached? %>
-                        <%= image_tag(@user&.support&.user&.profile_image, alt:'') %>
-                      <% else %>
-                        <img src="/assets/dummy.png" alt="">
-                      <% end %>
-                    </div>
-                    <div class="txt">
-                      <h6 class="mb-0"><%= @user&.support&.ticket_number %></h6>
-                      <p class=""><%= message&.created_at&.strftime('%b %d, %Y') %> | <%= message&.created_at&.strftime('%H:%M%p') %></p>
-                    </div>
-                  </div>
-                  <p class="msg_body"><%= message.body %></p>
-                  <% if message.image.attached? %>
-                    <div class="img_url">
-                      <div class="atchmt_img">
-                        <%= link_to image_tag(message.image.url, alt: ""), download_admins_supports_path(id: message.id)%>
+            <div class="msg_contain">
+              <% @user&.support_messages&.each do |message| %>
+                <% if message.sender_id != current_admin.id %>
+                  <div class="msg">
+                    <div class="detail">
+                      <div class="img">
+                        <% if @user&.support&.user&.profile_image.attached? %>
+                          <%= image_tag(@user&.support&.user&.profile_image, alt:'') %>
+                        <% else %>
+                          <img src="/assets/dummy.png" alt="">
+                        <% end %>
+                      </div>
+                      <div class="txt">
+                        <h6 class="mb-0"><%= @user&.support&.ticket_number %></h6>
+                        <p class=""><%= message&.created_at&.strftime('%b %d, %Y') %> | <%= message&.created_at&.strftime('%H:%M%p') %></p>
                       </div>
                     </div>
-                  <% end %>
-                </div>
-              <% else %>
-                <div class="msg">
-                  <div class="detail">
-                    <div class="img">
-                      <img src="/assets/icon-chat.svg" alt="">
-                    </div>
-                    <div class="txt">
-                      <h6 class="mb-0">Bestie Support</h6>
-                      <p><%= message&.created_at&.strftime('%b %d, %Y') %> | <%= message&.created_at&.strftime('%H:%M%p') %></p>
-                    </div>
+                    <p class="msg_body"><%= message.body %></p>
+                    <% if message.image.attached? %>
+                      <div class="img_url">
+                        <div class="atchmt_img">
+                          <%= link_to image_tag(message.image.url, alt: ""), download_admins_supports_path(id: message.id)%>
+                        </div>
+                      </div>
+                    <% end %>
                   </div>
-                  <p class="msg_body"><%= message.body %></p>
-                  <% if message.image.attached? %>
-                    <div class="img_url">
-                      <div class="atchmt_img">
-                        <%= link_to image_tag(message.image.url, alt: ""), download_admins_supports_path(id: message.id)%>
+                <% else %>
+                  <div class="msg">
+                    <div class="detail">
+                      <div class="img">
+                        <img src="/assets/icon-chat.svg" alt="">
+                      </div>
+                      <div class="txt">
+                        <h6 class="mb-0">Bestie Support</h6>
+                        <p><%= message&.created_at&.strftime('%b %d, %Y') %> | <%= message&.created_at&.strftime('%H:%M%p') %></p>
                       </div>
                     </div>
-                  <% end %>
-                </div>
+                    <p class="msg_body"><%= message.body %></p>
+                    <% if message.image.attached? %>
+                      <div class="img_url">
+                        <div class="atchmt_img">
+                          <%= link_to image_tag(message.image.url, alt: ""), download_admins_supports_path(id: message.id)%>
+                        </div>
+                      </div>
+                    <% end %>
+                  </div>
+                <% end %>
               <% end %>
+            </div>
+            <%= form_with(url: admins_supports_path, remote: true, local: false, method: :post) do |f| %>
+              <%= hidden_field_tag :id, @user&.id %>
+              <div class="send_blk">
+                <!-- <button type="button" class="btn att-btn">
+                  <img src="/assets/icon-attach.svg" alt="">
+                </button> -->
+                <label class="btn att-btn">
+                  <%= image_tag "/assets/icon-attach.svg", alt: "attachImage"%>
+                  <%= f.file_field :file,accept: 'image/png,image/gif,image/jpeg', style: "opacity:0" %>
+                </label>
+
+                <input type="text" name="body" class="input" placeholder="Type your message here">
+                <button type="submit" class="btn send_btn">
+                  <%= image_tag "/assets/icon-send.svg", alt:"" %>
+                </button>
+              </div>
             <% end %>
           </div>
-          <%= form_with(url: admins_supports_path, remote: true, local: false, method: :post) do |f| %>
-            <%= hidden_field_tag :id, @user&.id %>
-            <div class="send_blk">
-              <!-- <button type="button" class="btn att-btn">
-                <img src="/assets/icon-attach.svg" alt="">
-              </button> -->
-              <label class="btn att-btn">
-                <%= image_tag "/assets/icon-attach.svg", alt: "attachImage"%>
-                <%= f.file_field :file,accept: 'image/png,image/gif,image/jpeg', style: "opacity:0" %>
-              </label>
-
-              <input type="text" name="body" class="input" placeholder="Type your message here">
-              <button type="submit" class="btn send_btn">
-                <%= image_tag "/assets/icon-send.svg", alt:"" %>
-              </button>
-            </div>
-          <% end %>
         </div>
-      </div>
+      <% else %>
+        No ticket present
+      <% end %>
     </div>
   </div>
 </section>

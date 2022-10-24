@@ -46,12 +46,14 @@ Rails.application.routes.draw do
       resources :authentication, only: [] do
         collection do
           post :login
+          post :uniq_email_and_phone
           post :sign_up
           post :forgot_password
           post :verify_token
           post :reset_password
           put :update_social_login
           get :get_interests
+          get :get_talents
         end
       end
 
@@ -74,6 +76,7 @@ Rails.application.routes.draw do
         end
       end
       resources :cards
+      put 'update_media', to: 'media#update_media'
 
     end
   end
