@@ -37,6 +37,8 @@ class Api::V1::AuthenticationController < Api::V1::ApiController
     @phone = User.find_by(phone_number: params[:user][:phone_number]) if params[:user][:phone_number]
     if @phone.present?
       render json: { error: 'Phone number has already been taken' }, status: :unprocessable_entity
+    else
+      render json: { error: 'Unique phone number' }, status: :ok
     end
   end
 
