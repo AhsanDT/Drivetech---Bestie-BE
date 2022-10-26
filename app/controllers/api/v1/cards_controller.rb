@@ -14,6 +14,10 @@ class Api::V1::CardsController < Api::V1::ApiController
     customer = check_stripe_customer
     stripe_token = card_params[:token]
     holder_name = card_params[:card_holder_name]
+    retrieve_token = Stripe::Token.retrieve(stripe_token)
+    card_token = retrieve_token.card.id
+    cards = Card.where(token: card_token)
+    return render json: { message: 'Token is expired' }, status: :ok if cards.any?
     card = StripeService.create_card(customer.id, stripe_token)
     return render json: { message: "Card is not created on Stripe" }, status: :unprocessable_entity if card.blank?
     @card = create_user_card(card)
