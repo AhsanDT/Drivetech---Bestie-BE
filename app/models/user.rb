@@ -5,7 +5,7 @@ class User < ApplicationRecord
      pg_search_scope :custom_search,
                   against: [:first_name, :last_name, :email, :phone_number]
   validates :email, uniqueness: true, on: :create
-  validates :phone_number, uniqueness: true, if: :phone_number?
+  validates :phone_number, uniqueness: true, on: :craete, if: :phone_number?
   validates :password_digest, presence: true
   validates :password_digest, length: { minimum: 6 }, confirmation: true
   validates_presence_of :profile_type, inclusion: {in: :profile_type}
