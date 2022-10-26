@@ -78,7 +78,11 @@ Rails.application.routes.draw do
       end
       resources :cards
       put 'update_media', to: 'media#update_media'
-
+      resources :profile, only: [] do
+        collection do
+          put 'update_profile'
+        end
+      end
     end
   end
 end
