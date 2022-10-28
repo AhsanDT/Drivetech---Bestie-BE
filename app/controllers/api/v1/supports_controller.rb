@@ -8,7 +8,7 @@ class Api::V1::SupportsController < Api::V1::ApiController
       #   message: 'All Support Queries',
       #   data: []
       # }, status: :ok if @support.empty?
-    end
+    # end
   end
 
   def create
