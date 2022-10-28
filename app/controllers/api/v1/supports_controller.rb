@@ -4,10 +4,11 @@ class Api::V1::SupportsController < Api::V1::ApiController
 
   def index
     @support = @current_user.supports.order("created_at desc")
-    render json: {
-      message: 'All Support Queries',
-      data: @support
-    }, status: :ok
+      # render json: {
+      #   message: 'All Support Queries',
+      #   data: []
+      # }, status: :ok if @support.empty?
+    end
   end
 
   def create
@@ -15,7 +16,8 @@ class Api::V1::SupportsController < Api::V1::ApiController
     if @support.save
       render json: {
         message: 'Support Query created',
-        data: @support
+        data: @support,
+        support_image: @support.image.attached? ? @support.image.blob.url : ''
       }, status: :ok
     else
       render json: {
