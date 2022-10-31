@@ -4,6 +4,12 @@ class Admins::BestieController < ApplicationController
   def index
     if params[:search].present?
       @besties = User.bestie_users.custom_search(params[:search]).paginate(page: params[:page])
+    elsif params[:user] == "Sex"
+      @besties = User.bestie_users.ordered_by_sex.paginate(page: params[:page])
+    elsif params[:user] == "Age"
+      @besties = User.bestie_users.ordered_by_age.paginate(page: params[:page])
+    elsif params[:user] == "Country"
+      @besties = User.bestie_users.ordered_by_country.paginate(page: params[:page])
     else
       @besties = User.bestie_users.paginate(page: params[:page])
     end

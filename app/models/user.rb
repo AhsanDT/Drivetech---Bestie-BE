@@ -49,6 +49,11 @@ class User < ApplicationRecord
   scope :count_female_user, -> { where('sex = (?)','female').count }
   scope :end_users, -> {where('profile_type = (?)', '0')}
   scope :bestie_users, -> {where('profile_type = (?)', '1')}
+
+  scope :ordered_by_age, -> { reorder(age: :asc) }
+  scope :ordered_by_sex, -> { reorder(sex: :asc) }
+  scope :ordered_by_country, -> { reorder(country: :asc) }
+
   self.per_page = 10
 
   def full_name

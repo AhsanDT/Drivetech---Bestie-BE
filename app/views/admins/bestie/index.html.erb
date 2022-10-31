@@ -8,22 +8,13 @@
        <div class="col-6">
         <ul class="top_blk">
           <li>
-            <div class="dropdown">
-              <button class="filter text dropdown-toggle fs_5 fw_600" data-bs-toggle="dropdown">
-                <div class="img_blk">
-                  <img src="/assets/filter-icon.svg" alt="">
-                </div>
-                filters
-              </button>
-              <ul class="dropdown-menu">
-                <li><button type="button">All Data</button></li>
-                <li><button type="button">User's Info</button></li>
-                <li><button type="button">Vacant Land</button></li>
-                <li><button type="button"> Dream Address</button></li>
-                <li><button type="button">I Want to Buy</button></li>
-                <li><button type="button">I Want to Sell</button></li>
-              </ul>
+           <%= form_for :user, :url => { :controller => 'bestie', :action => 'index' }, :html => { :method => 'get', class: 'form_blk filter_form filter' } do |f| %>
+            <div class="img_blk">
+              <img src="/assets/filter-icon.svg" alt="">
             </div>
+            Filter
+            <%= select_tag(:user, options_for_select([[ ],["Age"],["Sex"],["Country"]] ), class:"select dropdow-menu") %>
+          <% end %>
           </li>
           <li>
             <%= form_for :sub_admin, :url => { :controller => 'bestie', :action => 'index' }, :html => { :method => 'get', class: 'form_blk' } do |f| %>
@@ -58,6 +49,8 @@
               <th style="width: 22rem;">Email</th>
               <th style="width: 15rem;">Phone Number</th>
               <th style="width: 18rem;">Country</th>
+              <th style="width: 16rem;">Age</th>
+              <th style="width: 16rem;">Sex</th>
               <th style="width: 13rem;">Experience</th>
               <th style="width: 16rem;">Rate</th>
             </tr>
@@ -68,7 +61,9 @@
                 <td class="fw-bold"><%= link_to bestie&.full_name, admins_bestie_path(id: bestie.id) %></td>
                 <td><%= bestie&.email %></td>
                 <td><%= bestie&.phone_number %></td>
-                <td>United States</td>
+                <td><%= bestie&.country %></td>
+                <td><%= bestie&.age %></td>
+                <td><%= bestie&.sex %></td>
                 <td><%= bestie&.experience %></td>
                 <td class="color-green">$<%= bestie&.rate %>/h</td>
               </tr>

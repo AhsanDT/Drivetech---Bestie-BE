@@ -8,32 +8,23 @@
     <div class="row">
      <div class="col-6">
       <ul class="top_blk">
-        <li>
-          <div class="dropdown">
-            <button class="filter text dropdown-toggle fs_5 fw_600" data-bs-toggle="dropdown">
-              <div class="img_blk">
-                <img src="/assets/filter-icon.svg" alt="">
-              </div>
-              filters
-            </button>
-            <ul class="dropdown-menu" >
-              <li><button type="button">All Data</button></li>
-              <li><button type="button">User's Info</button></li>
-              <li><button type="button">Vacant Land</button></li>
-              <li><button type="button"> Dream Address</button></li>
-              <li><button type="button">I Want to Buy</button></li>
-              <li><button type="button">I Want to Sell</button></li>
-            </ul>
-          </div>
+        <li>    
+          <%= form_for :user, :url => { :controller => 'users', :action => 'index' }, :html => { :method => 'get', class: 'form_blk filter_form filter' } do |f| %>
+            <div class="img_blk">
+              <img src="/assets/filter-icon.svg" alt="">
+            </div>
+            Filter
+            <%= select_tag(:user, options_for_select([[ ],["Age"],["Sex"],["Country"]] ), class:"select dropdow-menu") %>
+          <% end %>
         </li>
         <li>
-          <%= form_for :sub_admin, :url => { :controller => 'users', :action => 'index' }, :html => { :method => 'get', class: 'form_blk' } do |f| %>
-              <div class="icon_blk">
-                <%= image_tag '/assets/Search.svg' %>
-              </div>
-              <%= text_field_tag :search, nil, placeholder: 'Search', id: "csearchbtn", class: 'input', value: params[:search] %>
-              <input type="submit" id="searchformc" hidden>
-            <% end %>
+        <%= form_for :sub_admin, :url => { :controller => 'users', :action => 'index' }, :html => { :method => 'get', class: 'form_blk' } do |f| %>
+          <div class="icon_blk">
+            <%= image_tag '/assets/Search.svg' %>
+          </div>
+          <%= text_field_tag :search, nil, placeholder: 'Search', id: "csearchbtn", class: 'input', value: params[:search] %>
+          <input type="submit" id="searchformc" hidden>
+        <% end %>
         </li>
       </ul>
     </div>
@@ -125,3 +116,16 @@
 
 <!-- Main Js -->
 <script src="/assets/main.js"></script>
+
+<style>
+.filter > select {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: transparent;
+  border: 0;
+  -webkit-appearance: none;
+}
+</style>
