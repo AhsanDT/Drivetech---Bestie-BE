@@ -49,6 +49,7 @@ class Api::V1::AuthenticationController < Api::V1::ApiController
         render json: {
           message: 'User logged in successfully',
           data: @user,
+          profile_image: @user.profile_image.attached? ? @user.profile_image.blob.url : '',
           auth_token: JsonWebToken.encode(user_id: @user.id)
         }, status: :ok
       else
