@@ -73,7 +73,7 @@ Rails.application.routes.draw do
       resources :support_conversations, only: [:index, :create, :destroy] do
         collection do
           post 'create_message'
-          get 'get_messages'
+          post 'get_messages'
         end
       end
       resources :cards
