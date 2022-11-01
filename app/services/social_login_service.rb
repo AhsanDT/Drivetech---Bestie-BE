@@ -71,15 +71,14 @@ class SocialLoginService
     if (user = User.find_by(email: email))
       user
     elsif @provider == "apple"
-      User.create(email: response['email'], password: PASSWORD_DIGEST, profile_type: @type)
+      user = User.create(email: response['email'], password: PASSWORD_DIGEST, profile_type: @type)
     else
-      User.create(email: response['email'], first_name: response['name'].split(' ').first, last_name: response['name'].split(' ').last,  password: PASSWORD_DIGEST, login_type: 'social login', profile_type: @type)
-    end
-
-    if profile_image.present?
-      download = URI.open(profile_image)
-      filename = "profile-#{user.id}-picture"
-      user.profile_image.attach(io: download, filename: filename, content_type: download.content_type)
+      user = User.create(email: response['email'], first_name: response['name'].split(' ').first, last_name: response['name'].split(' ').last,  password: PASSWORD_DIGEST, login_type: 'social login', profile_type: @type)
+      if profile_image.present?
+        download = URI.open(profile_image)
+        filename = "profile-#{user.id}-picture"
+        user.profile_image.attach(io: download, filename: filename, content_type: download.content_type)
+      end
     end
 
     user
