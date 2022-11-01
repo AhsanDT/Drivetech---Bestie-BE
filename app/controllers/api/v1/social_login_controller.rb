@@ -6,7 +6,6 @@ class Api::V1::SocialLoginController < Api::V1::ApiController
     return render json: {message: "Invalid profile type"} unless %w[user bestie].include? params['profile_type']
     return render json: {message: 'Please provide social login token'}, status: :unprocessable_entity unless params['token'].present?
     response = SocialLoginService.new(params['provider'], params['token'], params['profile_type']).social_logins
-    debugger
     if response[0]&.class&.to_s == "User"
       render json: {
         message: 'user created',
