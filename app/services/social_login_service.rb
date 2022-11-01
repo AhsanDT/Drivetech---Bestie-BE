@@ -60,7 +60,7 @@ class SocialLoginService
     end
 
     data = token_data.with_indifferent_access
-    user = create_user(data['email'], data['sub'], data, data['name'])
+    user = create_user(data['email'], data['sub'], data, data['name'], nil)
     token_apple = WJsonWebToken.encode(user_id: user.id)
     [user, token_apple]
   end
