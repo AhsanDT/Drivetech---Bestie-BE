@@ -7,7 +7,7 @@ class Api::V1::SocialLoginController < Api::V1::ApiController
     return render json: {message: 'Please provide social login token'}, status: :unprocessable_entity unless params['token'].present?
     response = SocialLoginService.new(params['provider'], params['token'], params['profile_type']).social_logins
     if response[0]&.class&.to_s == "User"
-      @user = respons[0]
+      @user = response[0]
       render json: {
         message: 'user created',
         data: response[0],
