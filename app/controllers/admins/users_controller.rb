@@ -4,11 +4,11 @@ class Admins::UsersController < ApplicationController
   def index
     if params[:search].present?
       @end_users = User.end_users.custom_search(params[:search]).paginate(page: params[:page])
-    elsif params[:user] == "Sex"
+    elsif params[:key] == "sex"
       @end_users = User.end_users.ordered_by_sex.paginate(page: params[:page])
-    elsif params[:user] == "Age"
+    elsif params[:key] == "age"
       @end_users = User.end_users.ordered_by_age.paginate(page: params[:page])
-    elsif params[:user] == "Country"
+    elsif params[:key] == "country"
       @end_users = User.end_users.ordered_by_country.paginate(page: params[:page])
     else
       @end_users = User.end_users.paginate(page: params[:page])

@@ -113,12 +113,6 @@ $(document).on('turbolinks:load', function() {
 		}
 	});
 
-
-	$(".filter").on("change", function(e) {
-		$('.filter_form').submit();
-
-	})
-
 	/*
 	|----------------------------------------------------------------------
 	|       OTHER JAVASCRIPT

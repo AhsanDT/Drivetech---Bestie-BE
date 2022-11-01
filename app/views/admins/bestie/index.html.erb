@@ -8,14 +8,20 @@
        <div class="col-6">
         <ul class="top_blk">
           <li>
-           <%= form_for :user, :url => { :controller => 'bestie', :action => 'index' }, :html => { :method => 'get', class: 'form_blk filter_form filter' } do |f| %>
-            <div class="img_blk">
-              <img src="/assets/filter-icon.svg" alt="">
-            </div>
-            Filter
-            <%= select_tag(:user, options_for_select([[ ],["Age"],["Sex"],["Country"]] ), class:"select dropdow-menu") %>
-          <% end %>
-          </li>
+          <div class="dropdown">
+            <button class="filter text dropdown-toggle fs_5 fw_600" data-bs-toggle="dropdown">
+              <div class="img_blk">
+                <img src="/assets/filter-icon.svg" alt="">
+              </div>
+              filters
+            </button>
+            <ul class="dropdown-menu" >
+              <li><a href="bestie?key=sex">Sex</a></li>
+              <li><a href="bestie?key=age">Age</a></li>
+              <li><a href="bestie?key=country">Country</a></li>
+            </ul>
+          </div>
+        </li>
           <li>
             <%= form_for :sub_admin, :url => { :controller => 'bestie', :action => 'index' }, :html => { :method => 'get', class: 'form_blk' } do |f| %>
               <div class="icon_blk">
