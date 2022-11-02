@@ -66,7 +66,7 @@ class Api::V1::BanksController < Api::V1::ApiController
   end
 
   def bank_params
-    params.permit(:id, :country, :currency, :account_holder_name, :account_holder_type, :routing_number, :account_number)
+    params.permit(:id, :country, :currency, :account_holder_name, :account_holder_type, :routing_number, :account_number, :bank_name)
   end
 
   def get_stripe_customer
