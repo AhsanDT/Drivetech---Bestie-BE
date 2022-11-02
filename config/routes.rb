@@ -83,6 +83,8 @@ Rails.application.routes.draw do
           put 'update_profile'
         end
       end
+
+      resources :banks
     end
   end
 end

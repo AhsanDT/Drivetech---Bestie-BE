@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_10_21_130240) do
+ActiveRecord::Schema.define(version: 2022_11_02_130228) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -70,6 +70,21 @@ ActiveRecord::Schema.define(version: 2022_10_21_130240) do
     t.integer "status", default: 0
     t.index ["email"], name: "index_admins_on_email", unique: true
     t.index ["reset_password_token"], name: "index_admins_on_reset_password_token", unique: true
+  end
+
+  create_table "banks", force: :cascade do |t|
+    t.bigint "user_id"
+    t.string "country"
+    t.string "currency"
+    t.string "account_holder_name"
+    t.string "account_holder_type"
+    t.string "routing_number"
+    t.string "account_number"
+    t.string "bank_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "bank_name"
+    t.index ["user_id"], name: "index_banks_on_user_id"
   end
 
   create_table "camera_details", force: :cascade do |t|
