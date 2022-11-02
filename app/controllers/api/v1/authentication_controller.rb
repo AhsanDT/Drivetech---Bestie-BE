@@ -22,7 +22,7 @@ class Api::V1::AuthenticationController < Api::V1::ApiController
 
   def uniq_email_and_phone
     if params[:user][:phone_number] =~ PHONE_NUMBER_REGEX
-      render json: { message: "Please enter the valid phone number" }, status: :unprocessable_entity
+      render json: { error: "Please enter the valid phone number" }, status: :unprocessable_entity
     else
       @phone = User.find_by(phone_number: params[:user][:phone_number]) if params[:user][:phone_number]
       @email = User.find_by(email: params[:user][:email]) if params[:user][:email]
