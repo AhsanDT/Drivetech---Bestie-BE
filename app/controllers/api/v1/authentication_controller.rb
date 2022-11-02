@@ -1,6 +1,7 @@
 class Api::V1::AuthenticationController < Api::V1::ApiController
   before_action :authorize_user, except: [:sign_up, :uniq_email_and_phone, :uniq_phone_number, :login, :forgot_password, :verify_token, :reset_password, :update_social_login, :get_interests, :get_talents]
   before_action :find_user_by_email, only: [:forgot_password, :verify_token, :reset_password, :update_social_login]
+  PHONE_NUMBER_REGEX = /[!@#$%^&*(),.?":{}|<>]/
 
   def sign_up
     begin
@@ -20,16 +21,20 @@ class Api::V1::AuthenticationController < Api::V1::ApiController
   end
 
   def uniq_email_and_phone
-    @phone = User.find_by(phone_number: params[:user][:phone_number]) if params[:user][:phone_number]
-    @email = User.find_by(email: params[:user][:email]) if params[:user][:email]
-    if @phone.present? && @email.present?
-      render json: { error: 'Both email and phone number are not unique'}, status: :unprocessable_entity
-    elsif @email.present?
-      render json: {error: 'Email has already been taken' }, status: :unprocessable_entity
-    elsif @phone.present?
-      render json: { error: 'Phone number has already been taken' }, status: :unprocessable_entity
+    if params[:user][:phone_number] =~ PHONE_NUMBER_REGEX
+      render json: { message: "Please enter the valid phone number" }, status: :unprocessable_entity
     else
-      render json: { message: 'Unique email and phone number' }, status: 200
+      @phone = User.find_by(phone_number: params[:user][:phone_number]) if params[:user][:phone_number]
+      @email = User.find_by(email: params[:user][:email]) if params[:user][:email]
+      if @phone.present? && @email.present?
+        render json: { error: 'Both email and phone number are not unique'}, status: :unprocessable_entity
+      elsif @email.present?
+        render json: {error: 'Email has already been taken' }, status: :unprocessable_entity
+      elsif @phone.present?
+        render json: { error: 'Phone number has already been taken' }, status: :unprocessable_entity
+      else
+        render json: { message: 'Unique email and phone number' }, status: 200
+      end
     end
   end
 
