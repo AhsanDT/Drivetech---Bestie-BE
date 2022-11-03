@@ -81,6 +81,7 @@ Rails.application.routes.draw do
       resources :profile, only: [] do
         collection do
           put 'update_profile'
+          post 'switch_user'
         end
       end
     end
