@@ -1,1 +1,1 @@
-json.partial! "sign_up_and_update_social_login", user: @user
+json.partial! "api/v1/shared/user", user: @user
