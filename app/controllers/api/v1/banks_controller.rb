@@ -1,7 +1,6 @@
 class Api::V1::BanksController < Api::V1::ApiController
-
   before_action :authorize_user
-  before_action :set_bank, only: %i[ show update destroy verify ]
+  before_action :set_bank, only: %i[ show update destroy ]
 
   def index
     banks = @current_user.banks.all
@@ -15,15 +14,20 @@ class Api::V1::BanksController < Api::V1::ApiController
   def create
     customer = get_stripe_customer
     bank = create_customer_bank(customer)
+
+    if ['true', true].include? params[:default] 
+      bank.user.banks.where.not(id: bank.id).update_all(default: false)
+      bank.update(default: true)
+    end
     if !bank[:message].present?
       begin
-        bank_account = Stripe::Customer.retrieve_source(bank.user.stripe_customer_id, bank.bank_id)
+        bank_account = StripeService.retrive_bank(bank.user.stripe_customer_id, bank.bank_id)
         response = bank_account.verify({ amounts: [32, 45] })
       rescue => e
         return render json: e.message
       end
 
-      render json: { bank: bank, message: "Bank has been saved successfully." }
+      return render json: { bank: bank, message: "Bank has been saved successfully." }
     else
       render json: { message: bank[:message] }, status: :unprocessable_entity
     end
@@ -40,13 +44,11 @@ class Api::V1::BanksController < Api::V1::ApiController
 
   def destroy
     customer = get_stripe_customer
-    token = @bank.bank_id
+    bank_id = @bank.bank_id
     if @bank.destroy
       begin
-        Stripe::Customer.delete_source(
-          customer.id,
-          token,
-        )
+        @current_user.banks.first.update(default: true) if @current_user.banks.present? && @bank.default
+        Stripe::Customer.delete_source(customer.id, bank_id)
       rescue => e
         return render json: { message: e.message }, status: :unprocessable_entity
       end
@@ -66,7 +68,7 @@ class Api::V1::BanksController < Api::V1::ApiController
   end
 
   def bank_params
-    params.permit(:id, :country, :currency, :account_holder_name, :account_holder_type, :routing_number, :account_number, :bank_name)
+    params.permit(:id, :country, :currency, :account_holder_name, :account_holder_type, :routing_number, :account_number, :bank_name, :default)
   end
 
   def get_stripe_customer
@@ -92,7 +94,7 @@ class Api::V1::BanksController < Api::V1::ApiController
     account_holder_type = "individual"
 
     begin
-      @token = Stripe::Token.create({
+      bank_id = Stripe::Token.create({
         bank_account: {
           country: params[:country],
           currency: params[:currency],
@@ -102,23 +104,17 @@ class Api::V1::BanksController < Api::V1::ApiController
           account_number: params[:account_number],
         },
       })
-      data = Stripe::Customer.create_source(customer.id, { source: @token })
+      data = StripeService.create_bank(customer.id, bank_id)
     rescue => e
       return { message: e.message }
     end
 
-    country = data.country
-    currency = data.currency
-    account_holder_name = data.account_holder_name
-    routing_number = data.routing_number
-    token = data.id
-    bank_name = data.bank_name
-    account_number = params[:account_number]
+    bank = Bank.create(country: data.country, currency: data.currency, account_holder_name: data.account_holder_name,
+                       account_holder_type: account_holder_type, routing_number: data.routing_number,
+                       user_id: @current_user.id, bank_id: data.id, account_number: params[:account_number],
+                       bank_name: data.bank_name)
 
-    bank = Bank.create(country: country, currency: currency, account_holder_name: account_holder_name,
-                       account_holder_type: account_holder_type, routing_number: routing_number,
-                       user_id: @current_user.id, bank_id: token, account_number: account_number,
-                       bank_name: bank_name)
+    bank.update(default: true) if [true, "true"].include? params[:default] || @current_user.banks.count == 1
 
     bank
   end

@@ -10,4 +10,14 @@ class StripeService
     card = Stripe::Customer.create_source(customer_id, {source: token})
     return card
   end
+
+  def self.create_bank(customer_id, bank_id)
+    data = Stripe::Customer.create_source(customer_id, { source: bank_id })
+    return data
+  end
+
+  def self.retrive_bank(customer_id, bank_id)
+    bank_account = Stripe::Customer.retrieve_source(customer_id, bank_id)
+    return bank_account
+  end
 end
