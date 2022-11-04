@@ -54,14 +54,7 @@ class Api::V1::AuthenticationController < Api::V1::ApiController
   def login
     @user = User.find_by(email: login_params[:email])
     if @user&.authenticate(login_params[:password])
-      if @user.profile_completed?
-        render json: {
-          message: 'User logged in successfully',
-          data: @user,
-          profile_image: @user.profile_image.attached? ? @user.profile_image.blob.url : '',
-          auth_token: JsonWebToken.encode(user_id: @user.id)
-        }, status: :ok
-      else
+      if !@user.profile_completed?
         render json: {
           message: 'Please complete your profile first'
         },status: :ok
