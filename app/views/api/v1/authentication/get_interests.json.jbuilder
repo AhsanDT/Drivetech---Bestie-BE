@@ -1,6 +1,1 @@
-json.data do
-  json.(@interest) do |interest|
-    json.id interest.id
-    json.title interest.title
-  end
-end
+json.partial! "get_interests_and_talents", interest_or_talent: @interest
