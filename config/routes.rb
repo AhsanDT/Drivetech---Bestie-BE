@@ -76,8 +76,18 @@ Rails.application.routes.draw do
           get 'get_messages'
         end
       end
+
+      resources :conversations, only: [:index, :create, :destroy] do
+        collection do
+          post 'create_message'
+          get 'get_messages'
+        end
+      end
+
       resources :cards
+
       put 'update_media', to: 'media#update_media'
+
       resources :profile, only: [] do
         collection do
           put 'update_profile'
