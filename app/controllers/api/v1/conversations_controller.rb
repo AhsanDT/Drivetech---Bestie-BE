@@ -16,17 +16,17 @@ class Api::V1::ConversationsController < Api::V1::ApiController
   end
 
   def index
-    @conversations = Conversation.find_by(sender_id: @current_user.id)
-    render json: {
-      message: "Current user conversations",
-      data: @conversations
-    }
+    @conversations = Conversation.where(sender_id: @current_user.id)
   end
 
   def destroy
     @conversation = Conversation.find_by(id: params[:id])
-    @conversation.destroy
-    render json: { message: "Conversation has been deleted" }
+    if @conversation.present?
+      @conversation.destroy
+      render json: { message: "Conversation has been deleted" }
+    else
+      render json: { message: "This conversation is not present" }
+    end
   end
 
   def create_message
@@ -37,9 +37,12 @@ class Api::V1::ConversationsController < Api::V1::ApiController
 
   def get_messages
     @conversation = Conversation.find_by(id: params[:conversation_id])
-    @messages = Message.where(conversation_id: @conversation.id).order(created_at: :desc)
-    render json: {data: @messages}
-    render json: { message: 'No messages found', data: [] }, status: :ok if @messages.nil?
+    if @conversation.present?
+      @messages = Message.where(conversation_id: @conversation.id).order(created_at: :desc)
+      render json: { message: 'No messages found', data: [] }, status: :ok if @messages.nil?
+    else
+      render json: { message: "This conversation is not present" }
+    end
   end
 
   private
