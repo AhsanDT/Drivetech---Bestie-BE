@@ -14,15 +14,10 @@
               <div class="img_blk">
                 <img src="/assets/filter-icon.svg" alt="">
               </div>
-              filters
+              Filters
             </button>
             <ul class="dropdown-menu" >
-              <li><button type="button">All Data</button></li>
-              <li><button type="button">User's Info</button></li>
-              <li><button type="button">Vacant Land</button></li>
-              <li><button type="button"> Dream Address</button></li>
-              <li><button type="button">I Want to Buy</button></li>
-              <li><button type="button">I Want to Sell</button></li>
+              <li><a href="sub_admins?key=location">Location</a></li>
             </ul>
           </div>
         </li>
@@ -46,13 +41,12 @@
           </div>
           Add
         </button>
-
-        <button type="button" class="filter">
+        <a class="filter" href="/admins/sub_admins/export_to_csv">
           <div class="img_blk">
-            <img src="/assets/download.svg" alt="">
+            <img src="/assets/download.svg" alt="">   
           </div>
-          <%= link_to 'Download CSV', export_to_csv_admins_sub_admins_path %>
-        </button>
+          Download CSV
+        </a>
       </ul>
     </div>
   </div>

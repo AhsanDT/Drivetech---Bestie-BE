@@ -16,6 +16,8 @@ class Admin < ApplicationRecord
     inactive: 1
   }
 
+  scope :ordered_by_country, -> { reorder(location: :asc) }
+
   self.per_page = 10
 
   def full_name

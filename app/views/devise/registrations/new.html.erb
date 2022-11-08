@@ -1,4 +1,4 @@
-<div class="popup d-block" data-popup="add_subadmin">
+<div class="popup d-block" data-popup="add_subadmin" id="add_subadmin">
   <div class="overlay"></div>
   <div class="table_dv">
     <div class="table_cell">
@@ -10,7 +10,7 @@
               <h4 class="heading mb-5">Add Sub Admins</h4>
               <%= form_for(resource, as: resource_name, :html => {:class => "sub_admin_form"}, url: registration_path(resource_name)) do |f| %>
                 <h5 class="mb-5">Personal Data</h5>
-                <!-- <hr class="hr"> -->
+                <hr class="hr">
                 <div class="form_blk d-flex align-items-center justify-content-between">
                   <label for="">First Name</label>
                   <input type="text" name="admin[first_name]" class="input" placeholder="Input Here" required>
@@ -27,8 +27,8 @@
                   <label for="">Location</label>
                   <input type="text" name="admin[location]" class="input" placeholder="Input Here" required>
                 </div>
-                <h5 class="mb-5">Personal Data</h5>
-                <!-- <hr class="hr"> -->
+                <h5 class="mb-5">Account Information</h5>
+                <hr class="hr">
                 <div class="form_blk d-flex align-items-center justify-content-between">
                   <label for="">Email Address</label>
                   <input type="text" name="admin[email]" class="input" placeholder="@mail.com" required>
@@ -46,7 +46,7 @@
                   <input type="text" name="admin[password]" class="input" placeholder="hcihwiy7e" required>
                 </div>
                 <div class="btn_blk modal_btn">
-                  <%= button_to "cancel", "", {class: 'cancel', :onclick => "history.go(0)"}%>
+                  <button type="button" class="cancel" onclick={history.go(0)}>Cancel</button>
                   <%= f.submit class: "save site_btn", value: 'Submit' %>
                 </div>
 
