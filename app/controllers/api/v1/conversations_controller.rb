@@ -32,7 +32,6 @@ class Api::V1::ConversationsController < Api::V1::ApiController
   def create_message
     @message = @current_user.messages.create(message_params)
     @message.user_id = @current_user.id
-    render json: { message: @message}
   end
 
   def get_messages
@@ -48,7 +47,7 @@ class Api::V1::ConversationsController < Api::V1::ApiController
   private
 
   def message_params
-    params.require(:message).permit(:body, :user_id, :conversation_id)
+    params.require(:message).permit(:body, :user_id, :conversation_id, :image)
   end
 
   def find_conversation
