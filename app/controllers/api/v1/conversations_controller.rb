@@ -5,7 +5,7 @@ class Api::V1::ConversationsController < Api::V1::ApiController
 
   def create
     if Conversation.find_by(sender_id: @current_user.id ,recipient_id: params[:recipient_id]).present?
-      render json: { message: "Conversation has already been created!" }
+      render json: { message: "Conversation has already been created!" }, status: :unprocessable_entity
     else
       @conversation = Conversation.create!(sender_id: @current_user.id, recipient_id: params[:recipient_id])
       render json: {
@@ -25,7 +25,7 @@ class Api::V1::ConversationsController < Api::V1::ApiController
       @conversation.destroy
       render json: { message: "Conversation has been deleted" }
     else
-      render json: { message: "This conversation is not present" }
+      render json: { message: "This conversation is not present" }, status: :not_found
     end
   end
 
@@ -40,7 +40,7 @@ class Api::V1::ConversationsController < Api::V1::ApiController
       @messages = Message.where(conversation_id: @conversation.id).order(created_at: :desc)
       render json: { message: 'No messages found', data: [] }, status: :ok if @messages.nil?
     else
-      render json: { message: "This conversation is not present" }
+      render json: { message: "This conversation is not present" }, status: :not_found
     end
   end
 
