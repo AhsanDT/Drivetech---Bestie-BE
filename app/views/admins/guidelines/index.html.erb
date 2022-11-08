@@ -7,13 +7,13 @@
           <h1>Guidelines</h1>
           <ul>
             <li>
-              <a href="<%= admins_guidelines_path(permalink: 'terms&condition') %>" class="site_btn trans">Terms & Conditions</a>
+              <a href="<%= admins_guidelines_path(permalink: 'terms&condition') %>" class="site_btn trans <%=params[:permalink] == 'terms&condition' ?  'active' : '' %>">Terms & Conditions</a>
             </li>
             <li>
-              <a href="<%= admins_guidelines_path(permalink: 'privacy_policy') %>" class="site_btn trans">Privacy Policy</a>
+              <a href="<%= admins_guidelines_path(permalink: 'privacy_policy') %>" class="site_btn trans <%=params[:permalink] == 'privacy_policy' ?  'active' : '' %>">Privacy Policy</a>
             </li>
             <li>
-              <a href="<%= admins_guidelines_path(permalink: 'faq') %>" class="site_btn trans">FAQ</a>
+              <a href="<%= admins_guidelines_path(permalink: 'faq') %>" class="site_btn trans <%=params[:permalink] == 'faq' ?  'active' : '' %>">FAQ</a>
             </li>
           </ul>
         </div>

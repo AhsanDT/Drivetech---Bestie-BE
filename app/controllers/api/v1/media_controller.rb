@@ -14,6 +14,5 @@ class Api::V1::MediaController < Api::V1::ApiController
 
   def media_params
     params.require(:media).permit(link: [], title: [])
-    
   end
 end
