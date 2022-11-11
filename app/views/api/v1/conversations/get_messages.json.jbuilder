@@ -1,3 +1,5 @@
+json.unread_messages @count
+json.conversation @conversation
 json.data do
   json.(@messages)  do |message|
     json.message message

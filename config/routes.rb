@@ -83,6 +83,8 @@ Rails.application.routes.draw do
         collection do
           post 'create_message'
           get 'get_messages'
+          put 'change_read_status'
+          get 'get_unread_messages'
         end
       end
 
