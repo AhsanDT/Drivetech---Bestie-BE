@@ -31,6 +31,19 @@ class Api::V1::ProfileController < Api::V1::ApiController
     end
   end
 
+  def update_user_interests
+    if @current_user.interests.present?
+      user_interest_ids = @current_user.interests.ids - params[:interest_ids].split(',')
+      user_interest_ids.each do |delete_user_interest|
+        delete_user_interest = UserInterest.find_by(interest_id: delete_user_interest)
+        delete_user_interest.destroy
+      end
+    end
+    params[:interest_ids].split(',').each do |interest_id|
+      @user_interests = @current_user.user_interests.find_or_create_by(interest_id: interest_id)
+    end
+  end
+
   private
 
   def profile_params
@@ -40,5 +53,4 @@ class Api::V1::ProfileController < Api::V1::ApiController
                                     :model, :camera_type, others: [] , equipment: [] ], user_interests_attributes: [:id, :interest_id],
                                     user_talents_attributes: [:id, :talent_id], social_media_attributes: [:id, :title, :link])
   end
-
 end
