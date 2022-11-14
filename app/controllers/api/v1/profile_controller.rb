@@ -3,7 +3,6 @@ class Api::V1::ProfileController < Api::V1::ApiController
 
   def update_profile
     @profile = @current_user
-    debugger
     unless @profile.update(profile_params)
       render json: {
         message: 'There are error while updating profile',
