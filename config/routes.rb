@@ -97,6 +97,7 @@ Rails.application.routes.draw do
           put 'update_profile'
           post 'switch_user'
           post 'update_user_interests'
+          post 'update_user_talents'
         end
       end
 

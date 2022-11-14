@@ -3,6 +3,7 @@ class Api::V1::ProfileController < Api::V1::ApiController
 
   def update_profile
     @profile = @current_user
+    debugger
     unless @profile.update(profile_params)
       render json: {
         message: 'There are error while updating profile',
@@ -33,14 +34,27 @@ class Api::V1::ProfileController < Api::V1::ApiController
 
   def update_user_interests
     if @current_user.interests.present?
-      user_interest_ids = @current_user.interests.ids - params[:interest_ids].split(',')
+      user_interest_ids = @current_user.interests.ids - params[:interest_ids]
       user_interest_ids.each do |delete_user_interest|
         delete_user_interest = UserInterest.find_by(interest_id: delete_user_interest)
         delete_user_interest.destroy
       end
     end
-    params[:interest_ids].split(',').each do |interest_id|
+    params[:interest_ids].each do |interest_id|
       @user_interests = @current_user.user_interests.find_or_create_by(interest_id: interest_id)
+    end
+  end
+
+  def update_user_talents
+    if @current_user.talents.present?
+      user_talent_ids = @current_user.talents.ids - params[:talent_ids]
+      user_talent_ids.each do |delete_user_talent|
+        delete_user_talent = UserTalent.find_by(talent_id: delete_user_talent)
+        delete_user_talent.destroy
+      end
+    end
+    params[:talent_ids].each do |talent_id|
+      @user_talents = @current_user.user_talents.find_or_create_by(talent_id: talent_id)
     end
   end
 
