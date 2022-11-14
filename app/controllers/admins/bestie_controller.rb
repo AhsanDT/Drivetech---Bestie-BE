@@ -3,10 +3,18 @@ class Admins::BestieController < ApplicationController
 
   def index
     if params[:search].present?
-      @besties = User.bestie_users.custom_search(params[:search]).paginate(page: params[:page])
+      @besties = besties.custom_search(params[:search])
+    elsif params[:key] == "sex"
+      @besties = besties.ordered_by_sex
+    elsif params[:key] == "age"
+      @besties = besties.ordered_by_age
+    elsif params[:key] == "country"
+      @besties = besties.ordered_by_country
     else
-      @besties = User.bestie_users.paginate(page: params[:page])
+      @besties = besties
     end
+
+    @besties = @besties.paginate(page: params[:page])
   end
 
   def show
@@ -14,9 +22,15 @@ class Admins::BestieController < ApplicationController
   end
 
   def export_to_csv
-    @besties = User.bestie_users
+    @besties = besties
     respond_to do |format|
       format.csv { send_data @besties.to_csv, filename: "bestie.csv" }
     end
+  end
+
+  private
+
+  def besties
+    User.bestie_users
   end
 end

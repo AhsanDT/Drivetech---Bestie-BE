@@ -1,0 +1,146 @@
+#sidebar > div > div:nth-child(3) > a {
+  gap: 1rem;
+  display: flex;
+}
+
+#sidebar > div > div:nth-child(3) > a img {
+  width: 24px;
+}
+
+#sidebar {
+  > .inside {
+    display: flex;
+    flex-direction: column;
+    .log_blk {
+      margin-top: auto;
+      padding: 1.4rem 2rem;
+    }
+  }
+}
+
+
+#table_sub_admin .table__blk{
+  overflow-x: unset;
+}
+
+#content{
+  min-height: 65rem;
+}
+
+#table_sub_admin .table__blk table tbody tr .interest .danger {
+  background: rgba(206, 30, 18, 0.22);
+  color: #CE1E12;
+}
+
+
+#support{
+  .img_url {
+    background: #fcad90;
+    border-radius: 1.6rem;
+    max-width: 16rem;
+    padding: 1.6rem;
+    display: flex;
+    align-items: center;
+    .atchmt_img  {
+      >img{
+        object-fit: cover;
+        height: 100%;
+      }
+   }
+  }
+  .msg_body {
+    font-size: 18px;
+    margin-left: 1.5rem;
+  }
+  .dropdown {
+    margin-left: auto;
+    .dropdown-menu {
+      top: 0 !important;
+      min-width: 100%;
+    }
+  }
+} 
+ /*#support .img_url .atchmt_img {
+   width: 7rem;
+   min-width: 7rem;
+   height: 7rem;
+   overflow: hidden;
+   border-radius: 1.5rem;
+}*/
+
+
+
+.table__blk {
+  table {
+    tbody tr {
+      .interest {
+        flex-wrap: wrap;
+        span {
+          padding: .7rem .7rem;
+        }
+      }
+    }
+  }
+}
+
+
+#dash{
+  .dash_blk{
+    .txt{
+      p{
+        color: #757575;
+      }
+    }
+  }
+}
+
+
+.table__blk{
+  table{
+    thead{
+      tr{
+        th{
+          color: rgba(9, 17, 14, 0.4);
+        }
+      }
+    }
+    tbody{
+      tr{
+        border-bottom: 0.1rem solid #efefef;
+        border-top: 0.1rem solid #efefef;
+        td{
+          border: transparent !important;
+        }
+      }
+    }
+  }
+}
+
+#user_details{
+  .personal_details{
+    .d-list{
+      li{
+        color: rgba(0, 0, 0, 0.5);
+      }
+    }
+  }
+}
+
+#user_details {
+  .personal_details {
+    ul {
+      .interest_item{
+        flex-wrap: wrap;
+      }
+    }
+  }
+}
+
+#add_subadmin{
+  ._inner{
+    .hr{
+      background: #EFEFEF;
+      opacity: 1;
+    }
+  }
+}

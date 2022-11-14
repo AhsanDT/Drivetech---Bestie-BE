@@ -11,7 +11,28 @@ class Api::V1::ProfileController < Api::V1::ApiController
     end
   end
 
+  def switch_user
+    if params[:profile_type] == "user"
+      if @current_user.profile_type == "bestie"
+        @current_user.update(profile_type: "user")
+      else
+        render json: { message: "User type is already end user" }
+      end
+    elsif params[:profile_type] == "bestie"
+      if @current_user.profile_type == "user"
+        if @current_user.camera_detail.present? && @current_user.user_talents.present? && @current_user.social_media.present? && @current_user.portfolio.present? && @current_user.rate.present?
+          @current_user.update(profile_type: "bestie")
+        else
+          @current_user.update(profile_type: "bestie", profile_completed: "false")
+        end
+      else
+        render json: { message: "User type is already bestie" }
+      end
+    end
+  end
+
   private
+
   def profile_params
     params.require(:profile).permit(:email, :password, :first_name, :last_name, :location, :city, :country, :experience, :age,
                                     :sex, :rate, :phone_number, :pronoun, :latitude, :longitude, :profile_image,

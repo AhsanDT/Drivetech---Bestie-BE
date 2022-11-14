@@ -5,7 +5,7 @@ class User < ApplicationRecord
      pg_search_scope :custom_search,
                   against: [:first_name, :last_name, :email, :phone_number]
   validates :email, uniqueness: true, on: :create
-  validates :phone_number, uniqueness: true, on: :craete, if: :phone_number?
+  validates :phone_number, uniqueness: true, on: :create, if: :phone_number?
   validates :password_digest, presence: true
   validates :password_digest, length: { minimum: 6 }, confirmation: true
   validates_presence_of :profile_type, inclusion: {in: :profile_type}
@@ -31,6 +31,7 @@ class User < ApplicationRecord
   has_many :conversations, dependent: :destroy, foreign_key: :sender_id
   has_many :conversations, dependent: :destroy, foreign_key: :recipient_id
   has_many :messages
+  has_many :banks, dependent: :destroy
 
   accepts_nested_attributes_for :camera_detail, allow_destroy: true, :reject_if => :which_profile_type
   accepts_nested_attributes_for :user_interests, allow_destroy: true
@@ -52,6 +53,11 @@ class User < ApplicationRecord
   scope :count_female_user, -> { where('sex = (?)','female').count }
   scope :end_users, -> {where('profile_type = (?)', '0')}
   scope :bestie_users, -> {where('profile_type = (?)', '1')}
+
+  scope :ordered_by_age, -> { reorder(age: :asc) }
+  scope :ordered_by_sex, -> { reorder(sex: :asc) }
+  scope :ordered_by_country, -> { reorder(country: :asc) }
+
   self.per_page = 10
 
   def full_name

@@ -1,6 +1,8 @@
 class SocialLoginService
   require 'net/http'
   require 'net/https'
+  require 'open-uri'
+
   PASSWORD_DIGEST = SecureRandom.hex(10)
   APPLE_PEM_URL = 'https://appleid.apple.com/auth/keys'
 
@@ -25,9 +27,10 @@ class SocialLoginService
     response = Net::HTTP.get_response(uri)
     return JSON.parse(response.body) if response.code != '200'
     json_response = JSON.parse(response.body)
-    user = create_user(json_response['email'], json_response['sub'], json_response, json_response['name'])
+    user = create_user(json_response['email'], json_response['sub'], json_response, json_response['name'], json_response['picture'])
     token = JsonWebToken.encode(user_id: user.id)
-    [user, token]
+    image_url = Rails.application.routes.url_helpers.url_for(user.profile_image) rescue nil
+    [user, token, image_url]
   end
 
   def facebook_signup(token)
@@ -35,9 +38,10 @@ class SocialLoginService
     response = Net::HTTP.get_response(uri)
     return JSON.parse(response.body) if response.code != '200'
     json_response = JSON.parse(response.body)
-    user = create_user(json_response['email'], json_response['sub'], json_response , json_response['name'])
+    user = create_user(json_response['email'], json_response['sub'], json_response , json_response['name'], json_response['picture'])
     token =JsonWebToken.encode(user_id: user.id)
-    [user, token]
+    image_url = Rails.application.routes.url_helpers.url_for(user.profile_image) rescue nil
+    [user, token, image_url]
   end
 
   def apple_signup(token)
@@ -56,20 +60,27 @@ class SocialLoginService
     end
 
     data = token_data.with_indifferent_access
-    user = create_user(data['email'], data['sub'], data, data['name'])
+    user = create_user(data['email'], data['sub'], data, data['name'], nil)
     token_apple = WJsonWebToken.encode(user_id: user.id)
     [user, token_apple]
   end
 
   private
 
-  def create_user(email, provider_id, response, name)
+  def create_user(email, provider_id, response, name, profile_image)
     if (user = User.find_by(email: email))
       user
     elsif @provider == "apple"
-      User.create(email: response['email'], password: PASSWORD_DIGEST, profile_type: @type)
+      user = User.create(email: response['email'], password: PASSWORD_DIGEST, profile_type: @type)
     else
-      User.create(email: response['email'], first_name: response['name'].split(' ').first, last_name: response['name'].split(' ').last,  password: PASSWORD_DIGEST, login_type: 'social login', profile_type: @type)
+      user = User.create(email: response['email'], first_name: response['name'].split(' ').first, last_name: response['name'].split(' ').last,  password: PASSWORD_DIGEST, login_type: 'social login', profile_type: @type)
+      if profile_image.present?
+        download = URI.open(profile_image)
+        filename = "profile-#{user.id}-picture"
+        user.profile_image.attach(io: download, filename: filename, content_type: download.content_type)
+      end
     end
+
+    user
   end
 end

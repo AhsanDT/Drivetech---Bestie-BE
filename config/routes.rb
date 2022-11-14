@@ -75,7 +75,7 @@ Rails.application.routes.draw do
       resources :support_conversations, only: [:index, :create, :destroy] do
         collection do
           post 'create_message'
-          get 'get_messages'
+          post 'get_messages'
         end
       end
 
@@ -95,8 +95,11 @@ Rails.application.routes.draw do
       resources :profile, only: [] do
         collection do
           put 'update_profile'
+          post 'switch_user'
         end
       end
+
+      resources :banks
     end
   end
 end
