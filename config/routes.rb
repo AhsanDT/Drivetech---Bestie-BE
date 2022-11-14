@@ -82,8 +82,11 @@ Rails.application.routes.draw do
         collection do
           put 'update_profile'
           post 'switch_user'
+          post 'update_user_interests'
         end
       end
+
+      post "notification_mobile_token", to: "notifications#notification_mobile_token"
 
       resources :banks
     end
