@@ -98,6 +98,7 @@ Rails.application.routes.draw do
           post 'switch_user'
           post 'update_user_interests'
           post 'update_user_talents'
+          put 'update_social_media'
         end
       end
 

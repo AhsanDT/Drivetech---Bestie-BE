@@ -58,6 +58,17 @@ class Api::V1::ProfileController < Api::V1::ApiController
     end
   end
 
+  def update_social_media
+    social_media = @current_user.social_media.find_by(id: params[:social_medium_id])
+    debugger
+    if social_media.present?
+      social_media.update(social_media_params)
+      @current_user
+    else
+      @current_user
+    end
+  end
+
   private
 
   def profile_params
@@ -66,5 +77,9 @@ class Api::V1::ProfileController < Api::V1::ApiController
                                     :id_front_image, :id_back_image, :selfie, portfolio: [], camera_detail_attributes: [ :id,
                                     :model, :camera_type, others: [] , equipment: [] ], user_interests_attributes: [:id, :interest_id],
                                     user_talents_attributes: [:id, :talent_id], social_media_attributes: [:id, :title, :link])
+  end
+
+  def social_media_params
+    params.require(:social_media).permit(:title, :link, :user_id)
   end
 end
