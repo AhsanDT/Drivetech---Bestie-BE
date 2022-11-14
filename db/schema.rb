@@ -115,10 +115,33 @@ ActiveRecord::Schema.define(version: 2022_11_03_085906) do
     t.index ["user_id"], name: "index_cards_on_user_id"
   end
 
+  create_table "conversations", force: :cascade do |t|
+    t.integer "sender_id"
+    t.integer "recipient_id"
+    t.integer "unread_messages", default: 0
+    t.boolean "is_blocked", default: false
+    t.integer "blocked_by"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["recipient_id"], name: "index_conversations_on_recipient_id"
+    t.index ["sender_id"], name: "index_conversations_on_sender_id"
+  end
+
   create_table "interests", force: :cascade do |t|
     t.string "title"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "messages", force: :cascade do |t|
+    t.text "body"
+    t.bigint "user_id"
+    t.bigint "conversation_id"
+    t.boolean "is_read", default: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["conversation_id"], name: "index_messages_on_conversation_id"
+    t.index ["user_id"], name: "index_messages_on_user_id"
   end
 
   create_table "mobile_devices", force: :cascade do |t|
@@ -238,6 +261,8 @@ ActiveRecord::Schema.define(version: 2022_11_03_085906) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "camera_details", "users"
   add_foreign_key "cards", "users"
+  add_foreign_key "messages", "conversations"
+  add_foreign_key "messages", "users"
   add_foreign_key "mobile_devices", "users"
   add_foreign_key "notifications", "users"
   add_foreign_key "social_media", "users"

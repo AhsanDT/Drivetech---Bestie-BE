@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  mount ActionCable.server => "/cable"
+
   devise_for :admins,
              controllers: {
                  sessions: 'admins/sessions',
@@ -76,8 +78,20 @@ Rails.application.routes.draw do
           post 'get_messages'
         end
       end
+
+      resources :conversations, only: [:index, :create, :destroy] do
+        collection do
+          post 'create_message'
+          get 'get_messages'
+          put 'change_read_status'
+          get 'get_unread_messages'
+        end
+      end
+
       resources :cards
+
       put 'update_media', to: 'media#update_media'
+
       resources :profile, only: [] do
         collection do
           put 'update_profile'
