@@ -99,6 +99,7 @@ Rails.application.routes.draw do
           post 'update_user_interests'
           post 'update_user_talents'
           put 'update_social_media'
+          put 'update_portfolio'
         end
       end
 

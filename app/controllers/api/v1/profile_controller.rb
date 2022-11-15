@@ -72,6 +72,35 @@ class Api::V1::ProfileController < Api::V1::ApiController
     end
   end
 
+  def update_portfolio
+    portfolios = @current_user.portfolio
+    if portfolios.present?
+      portfolios.destroy_all
+      params[:profile][:portfolio].each do |image|
+        if image.class == String
+          upload_image_to_cloundinary(image)
+        else
+          @current_user.portfolio.attach(image)
+        end
+      end
+      @current_user.reload
+    end
+    @current_user
+  end
+
+  def upload_image_to_cloundinary(image)
+    begin
+      image_arr = image.split(".")
+      require "down"
+      tempfile = Down.download(image)
+      name = image_arr[2]
+      type  = image_arr.last
+      @current_user.portfolio.attach(io: tempfile, filename: name, content_type: type)
+    rescue => e
+      render json: { error: e.message }, status: 404
+    end
+  end
+
   private
 
   def profile_params
