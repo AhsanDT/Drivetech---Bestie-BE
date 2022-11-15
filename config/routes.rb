@@ -43,6 +43,7 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
+      mount StripeEvent::Engine, at: '/webhooks'
       resources :authentication, only: [] do
         collection do
           post :login
