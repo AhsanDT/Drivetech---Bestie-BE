@@ -59,7 +59,6 @@ class Api::V1::ProfileController < Api::V1::ApiController
 
   def update_social_media
     social_media = @current_user.social_media.find_by(id: params[:social_medium_id])
-    debugger
     if social_media.present?
       social_media.update(social_media_params)
       @current_user
