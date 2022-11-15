@@ -96,6 +96,8 @@ GEM
     dotenv-rails (2.8.1)
       dotenv (= 2.8.1)
       railties (>= 3.2)
+    down (5.3.1)
+      addressable (~> 2.8)
     erubi (1.11.0)
     faraday (2.5.2)
       faraday-net_http (>= 2.0, < 3.1)
@@ -295,6 +297,7 @@ DEPENDENCIES
   cloudinary
   devise
   dotenv-rails
+  down (~> 5.0)
   fcm
   image_processing (~> 1.2)
   jbuilder (~> 2.7)

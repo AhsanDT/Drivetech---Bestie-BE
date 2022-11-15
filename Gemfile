@@ -40,6 +40,7 @@ gem 'will_paginate-bootstrap'
 gem 'pg_search'
 gem 'fcm'
 gem 'stripe'
+gem "down", "~> 5.0"
 # gem 'stripe_event'
 
 group :development, :test do
