@@ -42,6 +42,7 @@ class Api::V1::ProfileController < Api::V1::ApiController
     params[:interest_ids].map(&:to_i).each do |interest_id|
       @user_interests = @current_user.user_interests.find_or_create_by(interest_id: interest_id)
     end
+    @current_user.reload
   end
 
   def update_user_talents
@@ -55,13 +56,17 @@ class Api::V1::ProfileController < Api::V1::ApiController
     params[:talent_ids].map(&:to_i).each do |talent_id|
       @user_talents = @current_user.user_talents.find_or_create_by(talent_id: talent_id)
     end
+    @current_user.reload
   end
 
   def update_social_media
-    social_media = @current_user.social_media.find_by(id: params[:social_medium_id])
+    social_media = @current_user.social_media
     if social_media.present?
-      social_media.update(social_media_params)
-      @current_user
+      params[:social_media].each do |social|
+        social_medium = @current_user.social_media.find_by(title: social[:title])
+        social_medium.update(link: social[:link])
+      end
+      @current_user.reload
     else
       @current_user
     end
