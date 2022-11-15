@@ -54,10 +54,8 @@ class Api::V1::AuthenticationController < Api::V1::ApiController
   def login
     @user = User.find_by(email: login_params[:email])
     if @user&.authenticate(login_params[:password])
-      if !@user.profile_completed?
-        render json: {
-          message: 'Please complete your profile first'
-        },status: :ok
+      unless @user.profile_completed?
+        @user
       end
     else
       render json:{
