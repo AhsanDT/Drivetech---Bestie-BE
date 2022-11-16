@@ -14,9 +14,14 @@ class Api::V1::SupportsController < Api::V1::ApiController
   def create
     @support = @current_user.supports.new(supports_params.merge(ticket_number: generate_ticket_number.upcase))
     if @support.save
+      @conversation = SupportConversation.create(support_id: @support.id, recipient_id: Admin.last.id, sender_id: @support.user_id)
+      @message = UserSupportMessage.create(support_conversation_id: @conversation.id, body: @support.description, sender_id: @support.user_id, image: params[:support][:image] )
       render json: {
         message: 'Support Query created',
         data: @support,
+        support_conversation: @support.support_conversation,
+        support_messages: @support.support_conversation.support_messages,
+        message_image: @message.image.attached? ? @message.image.blob.url : '',
         support_image: @support.image.attached? ? @support.image.blob.url : ''
       }, status: :ok
     else

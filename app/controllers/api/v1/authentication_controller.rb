@@ -1,6 +1,7 @@
 class Api::V1::AuthenticationController < Api::V1::ApiController
   before_action :authorize_user, except: [:sign_up, :uniq_email_and_phone, :uniq_phone_number, :login, :forgot_password, :verify_token, :reset_password, :update_social_login, :get_interests, :get_talents]
   before_action :find_user_by_email, only: [:forgot_password, :verify_token, :reset_password, :update_social_login]
+  PHONE_NUMBER_REGEX = /[!@#$%^&*(),.?":{}|<>]/
 
   def sign_up
     begin
@@ -20,42 +21,41 @@ class Api::V1::AuthenticationController < Api::V1::ApiController
   end
 
   def uniq_email_and_phone
-    @phone = User.find_by(phone_number: params[:user][:phone_number]) if params[:user][:phone_number]
-    @email = User.find_by(email: params[:user][:email]) if params[:user][:email]
-    if @phone.present? && @email.present?
-      render json: { error: 'Both email and phone number are not unique'}, status: :unprocessable_entity
-    elsif @email.present?
-      render json: {error: 'Email has already been taken' }, status: :unprocessable_entity
-    elsif @phone.present?
-      render json: { error: 'Phone number has already been taken' }, status: :unprocessable_entity
+    if params[:user][:phone_number] =~ PHONE_NUMBER_REGEX
+      render json: { error: "Please enter the valid phone number" }, status: :unprocessable_entity
     else
-      render json: { message: 'Unique email and phone number' }, status: 200
+      @phone = User.find_by(phone_number: params[:user][:phone_number]) if params[:user][:phone_number]
+      @email = User.find_by(email: params[:user][:email]) if params[:user][:email]
+      if @phone.present? && @email.present?
+        render json: { error: 'Both email and phone number are not unique'}, status: :unprocessable_entity
+      elsif @email.present?
+        render json: {error: 'Email has already been taken' }, status: :unprocessable_entity
+      elsif @phone.present?
+        render json: { error: 'Phone number has already been taken' }, status: :unprocessable_entity
+      else
+        render json: { message: 'Unique email and phone number' }, status: 200
+      end
     end
   end
 
   def uniq_phone_number
-    @phone = User.find_by(phone_number: params[:user][:phone_number]) if params[:user][:phone_number]
-    if @phone.present?
-      render json: { error: 'Phone number has already been taken' }, status: :unprocessable_entity
+    if params[:user][:phone_number] =~ PHONE_NUMBER_REGEX
+      render json: { error: "Please enter the valid phone number" }, status: :unprocessable_entity
     else
-      render json: { message: 'Unique phone number' }, status: :ok
+      @phone = User.find_by(phone_number: params[:user][:phone_number]) if params[:user][:phone_number]
+      if @phone.present?
+        render json: { error: 'Phone number has already been taken' }, status: :unprocessable_entity
+      else
+        render json: { message: 'Unique phone number' }, status: :ok
+      end
     end
   end
 
   def login
     @user = User.find_by(email: login_params[:email])
     if @user&.authenticate(login_params[:password])
-      if @user.profile_completed?
-        render json: {
-          message: 'User logged in successfully',
-          data: @user,
-          profile_image: @user.profile_image.attached? ? @user.profile_image.blob.url : '',
-          auth_token: JsonWebToken.encode(user_id: @user.id)
-        }, status: :ok
-      else
-        render json: {
-          message: 'Please complete your profile first'
-        },status: :ok
+      unless @user.profile_completed?
+        @user
       end
     else
       render json:{

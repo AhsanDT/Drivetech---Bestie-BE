@@ -68,7 +68,7 @@ class Api::V1::SupportConversationsController < Api::V1::ApiController
   end
 
   def get_messages
-    @messages = SupportMessage.where(support_conversation_id: @support_conversation.id).order(created_at: :desc)
+    @messages = SupportMessage.where(support_conversation_id: @support_conversation.id).order(created_at: :asc)
     render json: { message: 'No messages found', data: [] }, status: :ok if @messages.nil?
   end
 
