@@ -7,13 +7,14 @@ class Api::V1::ProfileController < Api::V1::ApiController
     puts social_media_links
     puts profile_params[:social_media_attributes]
     if @profile.update(profile_params.except(:social_media_attributes))
-      social_media_links.each do |single_social_media_item|
+      social_media_links&.each do |single_social_media_item|
         _social_media_plateform =  @profile.social_media.find_by(title:single_social_media_item[:title])
          _social_media_plateform.update(link:single_social_media_item[:link]) if _social_media_plateform.present?
          unless _social_media_plateform.present?
           create_social_medium_account_if_not_present(single_social_media_item[:title],single_social_media_item[:link])
          end
-      end   
+      end
+      @profile   
     else
       render json: { message: 'There are error while updating profile', error: @profile.errors.full_messages }, status: :unprocessable_entity
     end
@@ -75,10 +76,7 @@ class Api::V1::ProfileController < Api::V1::ApiController
 
   def update_social_media
     return render json: {error: "Please provide social media parameters"},status: :unprocessable_entity unless params[:social_media].present?
-    puts "<<<<<<<<<<<<<<<"
-    puts params[:social_media]
     social_media = eval(params[:social_media])
-    puts social_media
     social_media&.each do |social|
       social_medium = @current_user.social_media.find_by(title: social[:title])
       social_medium.update(link: social[:link]) if social_medium.present?
