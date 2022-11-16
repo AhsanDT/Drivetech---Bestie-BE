@@ -12,20 +12,17 @@ class StripeService
   end
 
   def self.create_package(event)
-    # case event.type
-    # when 'product.created'
-      @package = Package.create(name: event.data.object.name )
-    # when 'price.created'
-    #   @package = Package.create(price: )
-    # end
+    @package = Package.create(name: event.data.object.name, package_id: event.data.object.id)
   end
 
   def self.create_price(event)
-    
+    package = Package.find_by(package_id: event.data.object.product)
+    package.update(price: event.data.object.unit_amount, duration: event.data.object.recurring.interval)
   end
 
   def self.update_package(event)
-
+    package = Package.find_by(package_id: event.data.object.id)
+    package.update(name: event.data.object.name)
   end
 
   def delete_package

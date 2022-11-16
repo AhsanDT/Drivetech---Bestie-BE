@@ -14,7 +14,6 @@ StripeEvent.configure do |events|
       StripeService.create_price(event)
     when 'product.updated'
       StripeService.update_package(event)
-
     when 'product.deleted'
 
     end
