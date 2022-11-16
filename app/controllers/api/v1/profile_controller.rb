@@ -4,6 +4,8 @@ class Api::V1::ProfileController < Api::V1::ApiController
   def update_profile
     @profile = @current_user   
     social_media_links  = eval(profile_params[:social_media_attributes]) if profile_params[:social_media_attributes].present?
+    puts social_media_links
+    puts profile_params[:social_media_attributes]
     if @profile.update(profile_params.except(:social_media_attributes))
       social_media_links.each do |single_social_media_item|
         _social_media_plateform =  @profile.social_media.find_by(title:single_social_media_item[:title])
