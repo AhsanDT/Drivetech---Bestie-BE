@@ -2,12 +2,24 @@ class Api::V1::ProfileController < Api::V1::ApiController
   before_action :authorize_user
 
   def update_profile
-    @profile = @current_user
-    unless @profile.update(profile_params)
-      render json: {
-        message: 'There are error while updating profile',
-        error: @profile.errors.full_messages
-      }, status: :unprocessable_entity
+    @profile = @current_user   
+    social_media_links  = eval(profile_params[:social_media_attributes]) if profile_params[:social_media_attributes].present?
+    if @profile.update(profile_params.except(:social_media_attributes))
+      social_media_links.each do |single_social_media_item|
+        _social_media_plateform =  @profile.social_media.find_by(title:single_social_media_item[:title])
+         _social_media_plateform.update(link:single_social_media_item[:link]) if _social_media_plateform.present?
+         unless _social_media_plateform.present?
+          create_social_medium_account_if_not_present(single_social_media_item[:title],single_social_media_item[:link])
+         end
+      end   
+    else
+      render json: { message: 'There are error while updating profile', error: @profile.errors.full_messages }, status: :unprocessable_entity
+    end
+  end
+
+  def create_social_medium_account_if_not_present(title,link)
+    if title.present? && link.present?
+      @current_user.social_media.create(title: title,link: link)
     end
   end
 
@@ -60,16 +72,16 @@ class Api::V1::ProfileController < Api::V1::ApiController
   end
 
   def update_social_media
-    social_media = @current_user.social_media
-    if social_media.present?
-      params[:social_media].each do |social|
-        social_medium = @current_user.social_media.find_by(title: social[:title])
-        social_medium.update(link: social[:link])
+    return render json: {error: "Please provide social media parameters"},status: :unprocessable_entity unless params[:social_media].present?
+    social_media = eval(params[:social_media])
+    social_media.each do |social|
+      social_medium = @current_user.social_media.find_by(title: social[:title])
+      social_medium.update(link: social[:link]) if social_medium.present?
+      unless social_medium.present?
+        create_social_medium_account_if_not_present(social[:title],social[:link])
       end
-      @current_user.reload
-    else
-      @current_user
     end
+    @current_user
   end
 
   def update_portfolio
@@ -105,10 +117,10 @@ class Api::V1::ProfileController < Api::V1::ApiController
 
   def profile_params
     params.require(:profile).permit(:email, :password, :first_name, :last_name, :location, :city, :country, :experience, :age,
-                                    :sex, :rate, :phone_number, :pronoun, :latitude, :longitude, :profile_image,
+                                    :sex, :rate, :phone_number, :pronoun, :latitude, :longitude, :profile_image,:social_media_attributes,
                                     :id_front_image, :id_back_image, :selfie, portfolio: [], camera_detail_attributes: [ :id,
                                     :model, :camera_type, others: [] , equipment: [] ], user_interests_attributes: [:id, :interest_id],
-                                    user_talents_attributes: [:id, :talent_id], social_media_attributes: [:id, :title, :link])
+                                    user_talents_attributes: [:id, :talent_id])
   end
 
   def social_media_params
