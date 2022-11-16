@@ -11,9 +11,17 @@ class StripeService
     return card
   end
 
-  def create_package(event)
-    debugger
-    package = Package.create(name: , price: ,duration: )
+  def self.create_package(event)
+    # case event.type
+    # when 'product.created'
+      @package = Package.create(name: event.data.object.name )
+    # when 'price.created'
+    #   @package = Package.create(price: )
+    # end
+  end
+
+  def self.create_price(event)
+    
   end
 
   def self.update_package(event)

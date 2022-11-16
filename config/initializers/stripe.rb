@@ -9,8 +9,9 @@ StripeEvent.configure do |events|
   events.all do |event|
     case event.type
     when 'product.created'
-      debugger
       StripeService.create_package(event)
+    when 'price.created'
+      StripeService.create_price(event)
     when 'product.updated'
       StripeService.update_package(event)
 
