@@ -10,4 +10,17 @@ class StripeService
     card = Stripe::Customer.create_source(customer_id, {source: token})
     return card
   end
+
+  def create_package(event)
+    debugger
+    package = Package.create(name: , price: ,duration: )
+  end
+
+  def self.update_package(event)
+
+  end
+
+  def delete_package
+
+  end
 end

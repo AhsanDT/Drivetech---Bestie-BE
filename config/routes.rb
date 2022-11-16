@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  mount StripeEvent::Engine, at: '/webhooks'
   devise_for :admins,
              controllers: {
                  sessions: 'admins/sessions',
@@ -43,7 +44,6 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
-      mount StripeEvent::Engine, at: '/webhooks'
       resources :authentication, only: [] do
         collection do
           post :login

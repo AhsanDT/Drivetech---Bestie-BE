@@ -5,9 +5,21 @@ Rails.configuration.stripe = {
 
 StripeEvent.signing_secret = ENV['STRIPE_SIGNING_SECRET']
 
-StripeEvent.configure do |event|
-  event.subscribe 'product.updated' do |event|
+StripeEvent.configure do |events|
+  events.all do |event|
+    case event.type
+    when 'product.created'
+      debugger
+      StripeService.create_package(event)
+    when 'product.updated'
+      StripeService.update_package(event)
+
+    when 'product.deleted'
+
+    end
   end
+
+
   # event.subscribe 'product.deleted'
   # event.subscribe 'product.updated'
   # events.all do |event|
