@@ -75,8 +75,11 @@ class Api::V1::ProfileController < Api::V1::ApiController
 
   def update_social_media
     return render json: {error: "Please provide social media parameters"},status: :unprocessable_entity unless params[:social_media].present?
+    puts "<<<<<<<<<<<<<<<"
+    puts params[:social_media]
     social_media = eval(params[:social_media])
-    social_media.each do |social|
+    puts social_media
+    social_media&.each do |social|
       social_medium = @current_user.social_media.find_by(title: social[:title])
       social_medium.update(link: social[:link]) if social_medium.present?
       unless social_medium.present?
