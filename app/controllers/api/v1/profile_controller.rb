@@ -47,31 +47,19 @@ class Api::V1::ProfileController < Api::V1::ApiController
   end
 
   def update_user_interests
-    if @current_user.interests.present?
-      user_interest_ids = @current_user.interests.ids - params[:interest_ids].map(&:to_i)
-      user_interest_ids.each do |delete_user_interest|
-        delete_user_interest = UserInterest.find_by(interest_id: delete_user_interest)
-        delete_user_interest.destroy
-      end
+    return render json: {error: "Please provide any interest ids"},status: :unprocessable_entity unless params[:interest_ids].present?
+    @current_user.user_interests.destroy_all
+    params[:interest_ids].each do |single_id|
+      @current_user.user_interests.create(interest_id: single_id.to_i) if Interest.find_by(id: single_id).present?
     end
-    params[:interest_ids].map(&:to_i).each do |interest_id|
-      @user_interests = @current_user.user_interests.find_or_create_by(interest_id: interest_id)
-    end
-    @current_user.reload
   end
 
   def update_user_talents
-    if @current_user.talents.present?
-      user_talent_ids = @current_user.talents.ids - params[:talent_ids].map(&:to_i)
-      user_talent_ids.each do |delete_user_talent|
-        delete_user_talent = UserTalent.find_by(talent_id: delete_user_talent)
-        delete_user_talent.destroy
-      end
+    return render json: {error: "Please provide any interest ids"},status: :unprocessable_entity unless params[:talent_ids].present?
+    @current_user.user_talents.destroy_all
+    params[:talent_ids].each do |single_id|
+      @current_user.user_talents.create(talent_id: single_id.to_i) if Talent.find_by(id: single_id).present?
     end
-    params[:talent_ids].map(&:to_i).each do |talent_id|
-      @user_talents = @current_user.user_talents.find_or_create_by(talent_id: talent_id)
-    end
-    @current_user.reload
   end
 
   def update_social_media
