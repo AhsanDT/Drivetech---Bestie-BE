@@ -107,8 +107,8 @@ class Api::V1::ProfileController < Api::V1::ApiController
   private
 
   def profile_params
-    params.require(:profile).permit(:email, :password, :first_name, :last_name, :location, :city, :country, :experience, :age,
-                                    :sex, :rate, :phone_number, :pronoun, :latitude, :longitude, :profile_image,:social_media_attributes,
+    params.require(:profile).permit(:email, :password, :first_name, :last_name, :location, :city, :country, :experience, :age, :profile_completed,
+                                    :sex, :rate, :phone_number, :pronoun, :latitude, :longitude, :profile_image, :social_media_attributes,
                                     :id_front_image, :id_back_image, :selfie, portfolio: [], camera_detail_attributes: [ :id,
                                     :model, :camera_type, others: [] , equipment: [] ], user_interests_attributes: [:id, :interest_id],
                                     user_talents_attributes: [:id, :talent_id])
