@@ -14,22 +14,10 @@ StripeEvent.configure do |events|
       StripeService.create_price(event)
     when 'product.updated'
       StripeService.update_package(event)
+    when 'price.updated'
+      StripeService.update_price(event)
     when 'product.deleted'
-
+      StripeService.delete_package(event)
     end
   end
-
-
-  # event.subscribe 'product.deleted'
-  # event.subscribe 'product.updated'
-  # events.all do |event|
-  #   "product.created",
-  #   "product.deleted",
-  #   "product.updated"
-  #   # Handle all event types - logging, etc.
-  # end
-
-  # events.subscribe 'product.created', Stripe::EventHandler.new
-  # events.subscribe 'product.deleted', Stripe::EventHandler.new
-  # events.subscribe 'product.updated', Stripe::EventHandler.new
 end

@@ -25,7 +25,17 @@ class StripeService
     package.update(name: event.data.object.name)
   end
 
-  def delete_package
+  def self.update_price(event)
+    package = Package.find_by(package_id: event.data.object.product)
+    if package.present?
+      package.update(price: event.data.object.unit_amount, duration: event.data.object.recurring.interval)
+    end
+  end
 
+  def self.delete_package(event)
+    package = Package.find_by(package_id: event.data.object.id)
+    if package.present?
+      package.destroy
+    end
   end
 end
