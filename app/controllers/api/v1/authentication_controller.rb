@@ -6,6 +6,15 @@ class Api::V1::AuthenticationController < Api::V1::ApiController
   def sign_up
     begin
       @user = User.create(sign_up_params.merge(profile_completed: true, login_type: 'manual'))
+      return render json: {error: "Please provide social media parameters"},status: :unprocessable_entity unless params[:social_media].present?
+      social_media = eval(params[:social_media])
+      social_media&.each do |social|
+        social_medium = @user.social_media.find_by(title: social[:title])
+        social_medium.update(link: social[:link]) if social_medium.present?
+        unless social_medium.present?
+          create_social_medium_account_if_not_present(social[:title],social[:link])
+        end
+      end
     rescue => e
       return render json: {
         message: 'There are error while creating user',
@@ -153,6 +162,12 @@ class Api::V1::AuthenticationController < Api::V1::ApiController
   def generate_otp(user)
     otp = (SecureRandom.random_number(9e5) + 1e5).to_i
     user.update( otp: otp, otp_expiry: (Time.current + 2.minutes))
+  end
+
+  def create_social_medium_account_if_not_present(title,link)
+    if title.present? && link.present?
+      @user.social_media.create(title: title,link: link)
+    end
   end
 
 end
