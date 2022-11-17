@@ -106,6 +106,12 @@ Rails.application.routes.draw do
       post "notification_mobile_token", to: "notifications#notification_mobile_token"
 
       resources :banks
+
+      resources :subscriptions, only: [:index, :create, :destroy] do
+        collection do
+          get 'get_packages'
+        end
+      end
     end
   end
 end

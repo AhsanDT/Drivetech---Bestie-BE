@@ -17,7 +17,7 @@ class StripeService
 
   def self.create_price(event)
     package = Package.find_by(package_id: event.data.object.product)
-    package.update(price: event.data.object.unit_amount, duration: event.data.object.recurring.interval)
+    package.update(price: event.data.object.unit_amount, duration: event.data.object.recurring.interval, price_id: event.data.object.id)
   end
 
   def self.update_package(event)
@@ -47,5 +47,18 @@ class StripeService
   def self.retrive_bank(customer_id, bank_id)
     bank_account = Stripe::Customer.retrieve_source(customer_id, bank_id)
     return bank_account
+  end
+
+  def self.create_subscription(customer_id, price_id)
+    subscription = Stripe::Subscription.create(customer: customer_id, items: [{price: price_id}])
+    return subscription
+  end
+
+  def self.retrieve_subscription(subscription_id)
+    subscription = Stripe::Subscription.retrieve(subscription_id)
+  end
+
+  def self.delete_subscription(subscription_id)
+    subscription = Stripe::Subscription.cancel(subscription_id)
   end
 end
