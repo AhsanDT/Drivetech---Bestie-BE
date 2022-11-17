@@ -86,6 +86,7 @@ Rails.application.routes.draw do
       end
 
       resources :banks
+      post 'notification_mobile_token', to: 'notifications#notification_mobile_token'
     end
   end
 end
