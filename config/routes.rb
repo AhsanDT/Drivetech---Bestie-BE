@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
+  mount StripeEvent::Engine, at: '/webhooks'
   mount ActionCable.server => "/cable"
-
   devise_for :admins,
              controllers: {
                  sessions: 'admins/sessions',
