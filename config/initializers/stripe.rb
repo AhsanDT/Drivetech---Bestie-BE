@@ -3,6 +3,8 @@ Rails.configuration.stripe = {
   :publishable_key => ENV["PUBLISHABLE_KEY"]
 }
 
+Stripe.api_key = Rails.configuration.stripe[:secret_key]
+
 StripeEvent.signing_secret = ENV['STRIPE_SIGNING_SECRET']
 
 StripeEvent.configure do |events|
