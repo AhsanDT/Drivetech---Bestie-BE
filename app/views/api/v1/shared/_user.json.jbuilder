@@ -7,11 +7,6 @@ json.portfolio(user.portfolio) do |portfolio|
   json.portfolio_url portfolio.present? ? portfolio.blob.url : ''
 end
 json.camera_detail user.camera_detail
-if user.profile_type == 'bestie'
-  json.other_input_equipment user.camera_detail.others do |other|
-    json.other other
-  end
-end
 json.interest user.interests
 json.talent user.talents
 json.social_media user.social_media
