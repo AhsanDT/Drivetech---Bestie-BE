@@ -113,6 +113,18 @@ class Api::V1::AuthenticationController < Api::V1::ApiController
 
   def update_social_login
     @user.update(sign_up_params.merge(profile_completed: true))
+    if @user.profile_type == 'bestie'
+      debugger
+      return render json: {error: "Please provide social media parameters"},status: :unprocessable_entity unless params[:social_media].present?
+      social_media = eval(params[:social_media])
+      social_media&.each do |social|
+        social_medium = @user.social_media.find_by(title: social[:title])
+        social_medium.update(link: social[:link]) if social_medium.present?
+        unless social_medium.present?
+          create_social_medium_account_if_not_present(social[:title],social[:link])
+        end
+      end
+    end
     if @user.errors.any?
       render json: {
         message: 'There are error while updating user',
