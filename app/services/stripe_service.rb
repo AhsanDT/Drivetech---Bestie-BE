@@ -11,6 +11,34 @@ class StripeService
     return card
   end
 
+  def self.create_package(event)
+    @package = Package.create(name: event.data.object.name, package_id: event.data.object.id)
+  end
+
+  def self.create_price(event)
+    package = Package.find_by(package_id: event.data.object.product)
+    package.update(price: event.data.object.unit_amount, duration: event.data.object.recurring.interval)
+  end
+
+  def self.update_package(event)
+    package = Package.find_by(package_id: event.data.object.id)
+    package.update(name: event.data.object.name)
+  end
+
+  def self.update_price(event)
+    package = Package.find_by(package_id: event.data.object.product)
+    if package.present?
+      package.update(price: event.data.object.unit_amount, duration: event.data.object.recurring.interval)
+    end
+  end
+
+  def self.delete_package(event)
+    package = Package.find_by(package_id: event.data.object.id)
+    if package.present?
+      package.destroy
+    end
+  end
+
   def self.create_bank(customer_id, bank_id)
     data = Stripe::Customer.create_source(customer_id, { source: bank_id })
     return data

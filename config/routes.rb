@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  mount ActionCable.server => "/cable"
   devise_for :admins,
              controllers: {
                  sessions: 'admins/sessions',
@@ -6,6 +7,8 @@ Rails.application.routes.draw do
              }
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
   root to: "admins/dashboard#index"
+
+  mount StripeEvent::Engine, at: '/webhooks'
 
   namespace :admins do
     resources :dashboard do
@@ -76,14 +79,32 @@ Rails.application.routes.draw do
           post 'get_messages'
         end
       end
+
+      resources :conversations, only: [:index, :create, :destroy] do
+        collection do
+          post 'create_message'
+          get 'get_messages'
+          put 'change_read_status'
+          get 'get_unread_messages'
+        end
+      end
+
       resources :cards
+
       put 'update_media', to: 'media#update_media'
+
       resources :profile, only: [] do
         collection do
           put 'update_profile'
           post 'switch_user'
+          post 'update_user_interests'
+          post 'update_user_talents'
+          put 'update_social_media'
+          put 'update_portfolio'
         end
       end
+
+      post "notification_mobile_token", to: "notifications#notification_mobile_token"
 
       resources :banks
       post 'notification_mobile_token', to: 'notifications#notification_mobile_token'

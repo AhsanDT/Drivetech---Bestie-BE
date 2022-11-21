@@ -96,6 +96,8 @@ GEM
     dotenv-rails (2.8.1)
       dotenv (= 2.8.1)
       railties (>= 3.2)
+    down (5.3.1)
+      addressable (~> 2.8)
     erubi (1.11.0)
     faraday (2.5.2)
       faraday-net_http (>= 2.0, < 3.1)
@@ -247,6 +249,9 @@ GEM
       activesupport (>= 5.2)
       sprockets (>= 3.0.0)
     stripe (7.1.0)
+    stripe_event (2.6.0)
+      activesupport (>= 3.1)
+      stripe (>= 2.8, < 8)
     thor (1.2.1)
     tilt (2.0.11)
     turbolinks (5.2.1)
@@ -295,6 +300,7 @@ DEPENDENCIES
   cloudinary
   devise
   dotenv-rails
+  down (~> 5.0)
   fcm
   image_processing (~> 1.2)
   jbuilder (~> 2.7)
@@ -312,6 +318,7 @@ DEPENDENCIES
   selenium-webdriver (>= 4.0.0.rc1)
   spring
   stripe
+  stripe_event
   turbolinks (~> 5)
   tzinfo-data
   web-console (>= 4.1.0)

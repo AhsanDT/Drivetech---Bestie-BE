@@ -6,6 +6,17 @@ class Api::V1::AuthenticationController < Api::V1::ApiController
   def sign_up
     begin
       @user = User.create(sign_up_params.merge(profile_completed: true, login_type: 'manual'))
+      if params[:user][:profile_type] == 'bestie'
+        return render json: {error: "Please provide social media parameters"},status: :unprocessable_entity unless params[:social_media].present?
+        social_media = eval(params[:social_media])
+        social_media&.each do |social|
+          social_medium = @user.social_media.find_by(title: social[:title])
+          social_medium.update(link: social[:link]) if social_medium.present?
+          unless social_medium.present?
+            create_social_medium_account_if_not_present(social[:title],social[:link])
+          end
+        end
+      end
     rescue => e
       return render json: {
         message: 'There are error while creating user',
@@ -54,10 +65,8 @@ class Api::V1::AuthenticationController < Api::V1::ApiController
   def login
     @user = User.find_by(email: login_params[:email])
     if @user&.authenticate(login_params[:password])
-      if !@user.profile_completed?
-        render json: {
-          message: 'Please complete your profile first'
-        },status: :ok
+      unless @user.profile_completed?
+        @user
       end
     else
       render json:{
@@ -104,6 +113,17 @@ class Api::V1::AuthenticationController < Api::V1::ApiController
 
   def update_social_login
     @user.update(sign_up_params.merge(profile_completed: true))
+    if @user.profile_type == 'bestie'
+      return render json: {error: "Please provide social media parameters"},status: :unprocessable_entity unless params[:social_media].present?
+      social_media = eval(params[:social_media])
+      social_media&.each do |social|
+        social_medium = @user.social_media.find_by(title: social[:title])
+        social_medium.update(link: social[:link]) if social_medium.present?
+        unless social_medium.present?
+          create_social_medium_account_if_not_present(social[:title],social[:link])
+        end
+      end
+    end
     if @user.errors.any?
       render json: {
         message: 'There are error while updating user',
@@ -155,6 +175,12 @@ class Api::V1::AuthenticationController < Api::V1::ApiController
   def generate_otp(user)
     otp = (SecureRandom.random_number(9e5) + 1e5).to_i
     user.update( otp: otp, otp_expiry: (Time.current + 2.minutes))
+  end
+
+  def create_social_medium_account_if_not_present(title,link)
+    if title.present? && link.present?
+      @user.social_media.create(title: title,link: link)
+    end
   end
 
 end
