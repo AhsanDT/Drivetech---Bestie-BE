@@ -32,6 +32,7 @@ class User < ApplicationRecord
   has_many :conversations, dependent: :destroy, foreign_key: :recipient_id
   has_many :messages
   has_many :banks, dependent: :destroy
+  has_many :subscriptions, dependent: :destroy
 
   accepts_nested_attributes_for :camera_detail, allow_destroy: true, :reject_if => :which_profile_type
   accepts_nested_attributes_for :user_interests, allow_destroy: true

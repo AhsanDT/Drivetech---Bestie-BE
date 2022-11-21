@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_11_16_131733) do
+ActiveRecord::Schema.define(version: 2022_11_17_071621) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -169,6 +169,7 @@ ActiveRecord::Schema.define(version: 2022_11_16_131733) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "package_id"
+    t.string "price_id"
   end
 
   create_table "pages", force: :cascade do |t|
@@ -186,6 +187,16 @@ ActiveRecord::Schema.define(version: 2022_11_16_131733) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["user_id"], name: "index_social_media_on_user_id"
+  end
+
+  create_table "subscriptions", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "package_id"
+    t.string "subscription_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["package_id"], name: "index_subscriptions_on_package_id"
+    t.index ["user_id"], name: "index_subscriptions_on_user_id"
   end
 
   create_table "support_conversations", force: :cascade do |t|
@@ -275,6 +286,8 @@ ActiveRecord::Schema.define(version: 2022_11_16_131733) do
   add_foreign_key "mobile_devices", "users"
   add_foreign_key "notifications", "users"
   add_foreign_key "social_media", "users"
+  add_foreign_key "subscriptions", "packages"
+  add_foreign_key "subscriptions", "users"
   add_foreign_key "support_conversations", "supports"
   add_foreign_key "support_messages", "support_conversations"
   add_foreign_key "supports", "users"
