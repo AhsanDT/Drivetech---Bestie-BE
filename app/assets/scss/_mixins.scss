@@ -74,11 +74,11 @@ $cross_circle: url('data:image/svg+xml;utf8,<svg version="1.1" xmlns="http://www
 	}
 }
 
-@include font-face("Inter", "../fonts/Inter-Light", woff2, "woff", 300);
-@include font-face("Inter", "../fonts/Inter-Regular", woff2, "woff", 400);
-@include font-face("Inter", "../fonts/Inter-Medium", woff2, "woff", 500);
-@include font-face("Inter", "../fonts/Inter-SemiBold", woff2, "woff", 600);
-@include font-face("Inter", "../fonts/Inter-Bold", woff2, "woff", 700);
+@include font-face("Inter", "/assets/Inter-Light", woff2, "woff", 300);
+@include font-face("Inter", "/assets/Inter-Regular", woff2, "woff", 400);
+@include font-face("Inter", "/assets/Inter-Medium", woff2, "woff", 500);
+@include font-face("Inter", "/assets/Inter-SemiBold", woff2, "woff", 600);
+@include font-face("Inter", "/assets/Inter-Bold", woff2, "woff", 700);
 
 @mixin flex($align: null, $justify: null, $flow: null, $direction: null) {
 	display: -webkit-box;
