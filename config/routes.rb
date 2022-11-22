@@ -113,6 +113,14 @@ Rails.application.routes.draw do
           get 'get_packages'
         end
       end
+
+      resources :schedules, ony: [:create] do
+        collection do
+          get "besties_availablity"
+        end
+      end
+
+      resources :posts
     end
   end
 end

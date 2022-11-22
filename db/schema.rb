@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_11_17_071621) do
+ActiveRecord::Schema.define(version: 2022_11_22_150007) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -180,6 +180,30 @@ ActiveRecord::Schema.define(version: 2022_11_17_071621) do
     t.index ["permalink"], name: "index_pages_on_permalink"
   end
 
+  create_table "posts", force: :cascade do |t|
+    t.string "title"
+    t.time "date", default: [], array: true
+    t.float "rate"
+    t.string "location"
+    t.text "camera_type", default: [], array: true
+    t.text "description"
+    t.bigint "user_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_posts_on_user_id"
+  end
+
+  create_table "schedules", force: :cascade do |t|
+    t.text "month", default: [], array: true
+    t.text "day", default: [], array: true
+    t.time "start_time"
+    t.time "end_time"
+    t.bigint "user_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_schedules_on_user_id"
+  end
+
   create_table "social_media", force: :cascade do |t|
     t.string "title"
     t.string "link"
@@ -285,6 +309,8 @@ ActiveRecord::Schema.define(version: 2022_11_17_071621) do
   add_foreign_key "messages", "users"
   add_foreign_key "mobile_devices", "users"
   add_foreign_key "notifications", "users"
+  add_foreign_key "posts", "users"
+  add_foreign_key "schedules", "users"
   add_foreign_key "social_media", "users"
   add_foreign_key "subscriptions", "packages"
   add_foreign_key "subscriptions", "users"
