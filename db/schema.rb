@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_11_22_150007) do
+ActiveRecord::Schema.define(version: 2022_11_23_064327) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -133,6 +133,16 @@ ActiveRecord::Schema.define(version: 2022_11_22_150007) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "job_posts", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "post_id"
+    t.string "type"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["post_id"], name: "index_job_posts_on_post_id"
+    t.index ["user_id"], name: "index_job_posts_on_user_id"
+  end
+
   create_table "messages", force: :cascade do |t|
     t.text "body"
     t.bigint "user_id"
@@ -182,7 +192,8 @@ ActiveRecord::Schema.define(version: 2022_11_22_150007) do
 
   create_table "posts", force: :cascade do |t|
     t.string "title"
-    t.time "date", default: [], array: true
+    t.time "start_time", default: [], array: true
+    t.time "end_time", default: [], array: true
     t.float "rate"
     t.string "location"
     t.text "camera_type", default: [], array: true
@@ -305,6 +316,8 @@ ActiveRecord::Schema.define(version: 2022_11_22_150007) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "camera_details", "users"
   add_foreign_key "cards", "users"
+  add_foreign_key "job_posts", "posts"
+  add_foreign_key "job_posts", "users"
   add_foreign_key "messages", "conversations"
   add_foreign_key "messages", "users"
   add_foreign_key "mobile_devices", "users"

@@ -1,0 +1,3 @@
+class SavedJobPost < JobPost
+
+end

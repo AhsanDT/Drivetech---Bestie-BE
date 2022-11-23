@@ -121,6 +121,8 @@ Rails.application.routes.draw do
       end
 
       resources :posts
+      resources :applied_job_posts
+      resources :saved_job_posts
     end
   end
 end
