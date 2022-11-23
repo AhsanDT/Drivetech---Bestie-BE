@@ -113,6 +113,15 @@ Rails.application.routes.draw do
           get 'get_packages'
         end
       end
+
+      resources :user_profile, only: [] do
+        collection do
+          get 'get_profile'
+          get 'get_profile_image'
+          get 'get_camera_detail'
+          get 'get_portfolio'
+        end
+      end
     end
   end
 end
