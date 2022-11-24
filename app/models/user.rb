@@ -2,8 +2,13 @@ class User < ApplicationRecord
   require 'csv'
   has_secure_password
   include PgSearch::Model
-     pg_search_scope :custom_search,
+    pg_search_scope :custom_search,
                   against: [:first_name, :last_name, :email, :phone_number]
+
+    acts_as_mappable :default_formula => :sphere,
+                    :distance_field_name => :distance,
+                    :lat_column_name => :latitude,
+                    :lng_column_name => :longitude
   validates :email, uniqueness: true, on: :create
   validates :phone_number, uniqueness: true, on: :create, if: :phone_number?
   validates :password_digest, presence: true
