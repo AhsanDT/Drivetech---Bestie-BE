@@ -123,6 +123,15 @@ Rails.application.routes.draw do
         end
       end
 
+      resources :user_profile, only: [] do
+        collection do
+          get 'get_profile'
+          get 'get_profile_image'
+          get 'get_camera_detail'
+          get 'get_portfolio'
+        end
+      end
+      
       resources :schedules, ony: [:create] do
         collection do
           get "besties_availablity"

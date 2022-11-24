@@ -1,0 +1,1 @@
+json.camera_detail @current_user.camera_detail

@@ -1,0 +1,1 @@
+json.profile_image @current_user.profile_image.attached? ? @current_user.profile_image.blob.url : ''
