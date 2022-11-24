@@ -108,6 +108,15 @@ Rails.application.routes.draw do
 
       resources :banks
 
+      post 'notification_mobile_token', to: 'notifications#notification_mobile_token'
+      
+      resources :users, only: [] do
+        collection do
+          get 'suggested_besties'
+          get 'besties_near_you'
+        end
+      end
+      
       resources :subscriptions, only: [:index, :create, :destroy] do
         collection do
           get 'get_packages'
@@ -122,6 +131,16 @@ Rails.application.routes.draw do
           get 'get_portfolio'
         end
       end
+      
+      resources :schedules, ony: [:create] do
+        collection do
+          get "besties_availablity"
+        end
+      end
+
+      resources :posts
+      resources :applied_job_posts
+      resources :saved_job_posts
     end
   end
 end

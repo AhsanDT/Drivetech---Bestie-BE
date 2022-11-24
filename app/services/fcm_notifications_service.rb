@@ -5,7 +5,7 @@ class FcmNotificationsService
     options = { priority: 'high',
                 # data: { message: message, icon: image },
                 notification: {
-                  title: notification.subject,
+                  subject: notification.subject,
                   body: notification.body,
                 }
               }

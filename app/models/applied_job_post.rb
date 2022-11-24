@@ -1,0 +1,3 @@
+class AppliedJobPost < JobPost
+  
+end

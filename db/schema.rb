@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_11_17_071621) do
+ActiveRecord::Schema.define(version: 2022_11_23_064327) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -133,6 +133,16 @@ ActiveRecord::Schema.define(version: 2022_11_17_071621) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "job_posts", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "post_id"
+    t.string "type"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["post_id"], name: "index_job_posts_on_post_id"
+    t.index ["user_id"], name: "index_job_posts_on_user_id"
+  end
+
   create_table "messages", force: :cascade do |t|
     t.text "body"
     t.bigint "user_id"
@@ -178,6 +188,31 @@ ActiveRecord::Schema.define(version: 2022_11_17_071621) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["permalink"], name: "index_pages_on_permalink"
+  end
+
+  create_table "posts", force: :cascade do |t|
+    t.string "title"
+    t.time "start_time", default: [], array: true
+    t.time "end_time", default: [], array: true
+    t.float "rate"
+    t.string "location"
+    t.text "camera_type", default: [], array: true
+    t.text "description"
+    t.bigint "user_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_posts_on_user_id"
+  end
+
+  create_table "schedules", force: :cascade do |t|
+    t.text "month", default: [], array: true
+    t.text "day", default: [], array: true
+    t.time "start_time"
+    t.time "end_time"
+    t.bigint "user_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_schedules_on_user_id"
   end
 
   create_table "social_media", force: :cascade do |t|
@@ -281,10 +316,14 @@ ActiveRecord::Schema.define(version: 2022_11_17_071621) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "camera_details", "users"
   add_foreign_key "cards", "users"
+  add_foreign_key "job_posts", "posts"
+  add_foreign_key "job_posts", "users"
   add_foreign_key "messages", "conversations"
   add_foreign_key "messages", "users"
   add_foreign_key "mobile_devices", "users"
   add_foreign_key "notifications", "users"
+  add_foreign_key "posts", "users"
+  add_foreign_key "schedules", "users"
   add_foreign_key "social_media", "users"
   add_foreign_key "subscriptions", "packages"
   add_foreign_key "subscriptions", "users"
