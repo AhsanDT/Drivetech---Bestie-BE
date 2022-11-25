@@ -132,7 +132,7 @@ Rails.application.routes.draw do
         end
       end
       
-      resources :schedules, ony: [:create] do
+      resources :schedules, only: [:create] do
         collection do
           get "besties_availablity"
         end
@@ -141,6 +141,11 @@ Rails.application.routes.draw do
       resources :posts
       resources :applied_job_posts
       resources :saved_job_posts
+      resources :block_users, only: [:create, :index, :destroy] do
+        collection do
+          post 'report'
+        end
+      end
     end
   end
 end
