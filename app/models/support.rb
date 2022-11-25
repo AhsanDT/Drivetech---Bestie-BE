@@ -1,7 +1,7 @@
 class Support < ApplicationRecord
   has_one_attached :image
   belongs_to :user
-  has_one :support_conversation
+  has_one :support_conversation, dependent: :destroy
 
   enum status: {
     pending: 0,
