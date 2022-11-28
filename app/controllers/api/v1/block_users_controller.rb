@@ -12,10 +12,10 @@ class Api::V1::BlockUsersController < Api::V1::ApiController
         @conversation.update(is_blocked: true)
         render json: { message: "User has been blocked", data: @block_user }
       else
-        render json: {message: "This conversation is not present"}
+        render json: { message: "User and conversation has been blocked" }
       end
     else
-      render json: { message: "This user does not exist"}
+      render json: { message: "This user does not exist" }
     end
   end
 
