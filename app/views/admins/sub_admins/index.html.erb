@@ -41,12 +41,12 @@
           </div>
           Add
         </button>
-        <a class="filter" href="/admins/sub_admins/export_to_csv">
+        <%= link_to export_to_csv_admins_sub_admins_path, class: "filter", method: :get do %>
           <div class="img_blk">
             <img src="/assets/download.svg" alt="">   
           </div>
           Download CSV
-        </a>
+        <%end%>
       </ul>
     </div>
   </div>

@@ -6,7 +6,10 @@ class Admin < ApplicationRecord
          :recoverable, :rememberable, :validatable
   include PgSearch::Model
      pg_search_scope :custom_search,
-                  against: [:first_name, :last_name, :email, :phone_number, :username]
+                  against: [:first_name, :last_name, :email, :phone_number, :username],
+                  :using => {
+                    :tsearch => {:prefix => true}
+                  }
 
   has_many :support_conversations, dependent: :destroy,foreign_key: :recipient_id
   has_many :admin_support_messages, dependent: :destroy,foreign_key: :sender_id
