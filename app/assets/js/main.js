@@ -113,9 +113,15 @@ $(document).on('turbolinks:load', function() {
 		}
 	});
 
+	$(document).ready(function(){
+		document.querySelector(".previous_page").innerHTML = "Previous"
+		document.querySelector(".next_page").innerHTML = "Next"
+	})
+
 	/*
 	|----------------------------------------------------------------------
 	|       OTHER JAVASCRIPT
 	|----------------------------------------------------------------------
 	*/
 });
+

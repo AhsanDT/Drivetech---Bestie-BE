@@ -27,7 +27,7 @@ class Admins::RegistrationsController < Devise::RegistrationsController
       clean_up_passwords resource
       set_minimum_password_length
       flash[:alert] = @admin.errors.full_messages.to_sentence
-      redirect_to new_admin_registration_path  and return
+      redirect_to admins_sub_admins_path  and return
     end
   end
 end
