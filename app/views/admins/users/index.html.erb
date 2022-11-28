@@ -79,13 +79,13 @@
           <% end %>
         </tbody>
       </table>
+    </div>
        <%if @end_users.present? %>
         <div class="digg_pagination mt-5">
           <p class="me-auto"><%= page_entries_info @end_users %></p>
           <%= will_paginate @end_users %>
         </div>
       <%end%>
-    </div>
   </div>
 
 <!-- pagination_section -->

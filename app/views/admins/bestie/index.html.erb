@@ -76,13 +76,13 @@
             <% end %>
           </tbody>
       </table>
+    </div>
       <%if @besties.present? %>
         <div class="digg_pagination mt-5">
           <p class="me-auto"><%= page_entries_info @besties %></p>
           <%= will_paginate @besties %>
         </div>
       <%end%>
-    </div>
   </div>
 </div>
 </section>

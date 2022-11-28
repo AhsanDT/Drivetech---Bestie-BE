@@ -118,13 +118,13 @@
           <% end %>
         </tbody>
       </table>
+    </div>
       <%if @sub_admins.present? %>
         <div class="digg_pagination mt-5">
           <p class="me-auto"><%= page_entries_info @sub_admins %></p>
           <%= will_paginate @sub_admins %>
         </div>
       <%end%>
-    </div>
   </div>
 
 </div>

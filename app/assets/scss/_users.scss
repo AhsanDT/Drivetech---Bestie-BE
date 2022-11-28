@@ -76,6 +76,9 @@
 					+ input {
 						padding-left: 5rem;
 						background: #F1F3F6;
+						&::placeholder{
+							color: #09110E;
+						}
 					}
 				}
 			}

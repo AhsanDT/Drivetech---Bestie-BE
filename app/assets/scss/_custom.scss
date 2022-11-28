@@ -19,12 +19,27 @@
 }
 
 
-#table_sub_admin .table__blk{
-  overflow-x: unset;
+#table_sub_admin .table__blk::-webkit-scrollbar {
+    display: none;
 }
 
+#table-besty .table__blk::-webkit-scrollbar {
+  display: none;
+}
+
+#table_users .table__blk::-webkit-scrollbar {
+  display: none;
+}
 #content{
   min-height: 65rem;
+}
+
+#logon .log_blk .form_wrapper form .input{
+  &:-webkit-autofill,
+  &:-webkit-autofill:hover, 
+  &:-webkit-autofill:focus{
+    -webkit-text-fill-color: #EFEFEF;
+}
 }
 
 #table_sub_admin .table__blk table tbody tr .interest .danger {
