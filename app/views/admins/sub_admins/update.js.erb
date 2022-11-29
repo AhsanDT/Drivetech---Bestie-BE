@@ -1,0 +1,12 @@
+let params_id = <%= params[:id]%>
+<% if @admin.status == "active" %>
+  $("#customdropdownmeanofactiveorinactive_"+params_id).empty();
+  $("#customdropdownmeanofactiveorinactive_"+params_id).append('<li id="inactive_li_<%= @admin.id %>">'+
+                      "<%= link_to 'In Active', admins_sub_admin_path(id: @admin.id), method: :put, remote: true, class: 'site_btn sm'%>"+
+                      "</li>");
+<%else%>
+  $("#customdropdownmeanofactiveorinactive_"+params_id).empty();
+   $("#customdropdownmeanofactiveorinactive_"+params_id).append('<li id="active_li_<%=@admin.id %>">'+
+                        "<%= link_to 'Active', admins_sub_admin_path(id: @admin.id), method: :put, remote: true, class: 'site_btn sm'%>"+
+                     '</li>');
+<%end%>

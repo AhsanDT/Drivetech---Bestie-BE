@@ -1,5 +1,4 @@
 $(document).on('turbolinks:load', function() {
-	$('.save_popup').hide();
 	/*_____ Toggle _____*/
 	$(document).on("click", ".toggle", function () {
 		$(".toggle").toggleClass("active");
@@ -118,17 +117,6 @@ $(document).on('turbolinks:load', function() {
 		document.querySelector(".previous_page").innerHTML = "Previous"
 		document.querySelector(".next_page").innerHTML = "Next"
 	})
-
-	$('.data-attribute').on('click', function(){
-		var attribute_id  = $(this).attr("data-id")
-			$('.update_status').on('click', function(){
-				$.ajax({
-					url: `/admins/sub_admins/${attribute_id}`,
-					type: 'put',
-				})
-			})
-	});
-
 
 	/*
 	|----------------------------------------------------------------------

@@ -76,23 +76,47 @@
               <td><%= sub_admin&.location %></td>
               <td class="interest">
                 <% if sub_admin.status == 'active' %>
-                  <span><%= sub_admin&.status&.humanize %></span>
+                  <span id="custom_status_<%=sub_admin.id %>"><%= sub_admin&.status&.humanize %></span>
                 <% else %>
-                  <span class="danger"><%= sub_admin&.status&.humanize %></span>
+                  <span class="danger" id="custom_status_<%=sub_admin.id %>"><%= sub_admin&.status&.humanize %></span>
                 <% end %>
-                <div class="dropdown">
-                  <button class="btn dropdown-toggle data-attribute data-attribute"  type="button" id="dropdownMenuButton1" data-id='<%=sub_admin.id%>' data-bs-toggle="dropdown" aria-expanded="false">
+                <div class="dropdown" >
+                  <button class="btn dropdown-toggle data-attribute"  type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                     <img src="/assets/dot-icon.svg" alt="">
                   </button>
-                  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                  <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1" id="customdropdownmeanofactiveorinactive_<%=sub_admin.id %>">
                     <% if sub_admin.status == 'active' %>
-                      <li><button class="dropdown-item pop_btn" data-popup="change_status">In Active</button></li>
+                     <li id="inactive_li_<%=sub_admin.id %>">
+                      <%= link_to 'In Active', admins_sub_admin_path(id: sub_admin.id), method: :put, remote: true, class: 'site_btn sm custom_status_dropdown',id: sub_admin.id%>
+                     </li>
                     <% else %>
-                      <li><button class="dropdown-item pop_btn" data-popup="change_status">Active</button></li>
+                     <li id="active_li_<%=sub_admin.id %>">
+                        <%= link_to 'Active', admins_sub_admin_path(id: sub_admin.id), method: :put, remote: true, class: 'site_btn sm custom_status_dropdown',id: sub_admin.id%>
+                     </li>
                     <% end %>
                   </ul>
                 </div>
                 <!-- Change status for sub admin   -->
+                <div class="popup save_popup" data-popup="change_status" style= "display: none">
+                  <div class="table_dv overlay">
+                    <div class="table_cell">
+                      <div class="contain-fluid">
+                        <div class="row justify-content-center">
+                          <div class="col-3">
+                            <div class="_inner">
+                              <button type="button" class="x_btn"></button>
+                              <h4 class="text-center">Are you sure?</h4>
+                              <div class="btn_blk justify-content-center mt-5 update_status">
+                                <%= link_to 'Save', ' ',  class: 'site_btn sm'%>
+                                <!-- <button type="button" class="site_btn sm">Save</button> -->
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </td>
             </tr>
           <% end %>
@@ -111,27 +135,23 @@
 </div>
 </section>
 
-<div class="popup save_popup" data-popup="change_status">
-  <div class="table_dv overlay">
-    <div class="table_cell">
-      <div class="contain-fluid">
-        <div class="row justify-content-center">
-          <div class="col-3">
-            <div class="_inner">
-              <button type="button" class="x_btn"></button>
-              <h4 class="text-center">Are you sure?</h4>
-              <div class="btn_blk justify-content-center update_status mt-5">
-                <%= link_to 'Save', ' ',  class: 'site_btn sm'%>
-                <!-- <button type="button" class="site_btn sm">Save</button> -->
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  </div>
-
 
 <!-- Main Js -->
 <script src="/assets/main.js"></script>
+<script>
+  $(".custom_status_dropdown").click(function(){
+    let id = $(this).attr("id");
+    let text_status = $("#custom_status_"+id).text();
+    if (text_status == "Inactive")
+     {
+        $("#custom_status_"+id).removeClass("danger");
+        $("#custom_status_"+id).text("Active");
+     }
+    else
+    {
+         $("#custom_status_"+id).text("Inactive");
+         $("#custom_status_"+id).addClass("danger");
+    }
+    end
+  });
+</script>

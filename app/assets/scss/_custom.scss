@@ -48,6 +48,38 @@
 }
 
 
+#table_sub_admin{
+  .table__blk{
+    table{
+      tbody{
+        tr{
+          &:last-child{
+            td{
+              padding-bottom: 6rem;
+            }
+          }
+          td{
+            .dropdown{
+              .btn.dropdown-toggle{
+                margin-right: 1rem;
+              }
+              .dropdown-menu{
+                li{
+                  a{
+                    background-color: #fff;
+                    color: #212529;
+                    font-size: 1.4rem;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
 #support{
   .img_url {
     background: #fcad90;
