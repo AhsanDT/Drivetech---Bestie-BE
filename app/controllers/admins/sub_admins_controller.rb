@@ -18,6 +18,8 @@ class Admins::SubAdminsController < ApplicationController
     else
        @admin.update(status: 'active')
     end
+    puts @admin.status
+    @admin.status
   end
 
   def export_to_csv
