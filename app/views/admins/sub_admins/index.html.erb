@@ -81,7 +81,7 @@
                   <span class="danger"><%= sub_admin&.status&.humanize %></span>
                 <% end %>
                 <div class="dropdown">
-                  <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                  <button class="btn dropdown-toggle data-attribute data-attribute"  type="button" id="dropdownMenuButton1" data-id='<%=sub_admin.id%>' data-bs-toggle="dropdown" aria-expanded="false">
                     <img src="/assets/dot-icon.svg" alt="">
                   </button>
                   <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
@@ -93,26 +93,6 @@
                   </ul>
                 </div>
                 <!-- Change status for sub admin   -->
-                <div class="popup" data-popup="change_status">
-                  <div class="table_dv overlay">
-                    <div class="table_cell">
-                      <div class="contain-fluid">
-                        <div class="row justify-content-center">
-                          <div class="col-3">
-                            <div class="_inner">
-                              <button type="button" class="x_btn"></button>
-                              <h4 class="text-center">Are you sure?</h4>
-                              <div class="btn_blk justify-content-center">
-                                <%= link_to 'Save', admins_sub_admin_path(id: sub_admin.id), method: :put, class: 'site_btn sm'%>
-                                <!-- <button type="button" class="site_btn sm">Save</button> -->
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
               </td>
             </tr>
           <% end %>
@@ -130,6 +110,27 @@
 </div>
 </div>
 </section>
+
+<div class="popup save_popup" data-popup="change_status">
+  <div class="table_dv overlay">
+    <div class="table_cell">
+      <div class="contain-fluid">
+        <div class="row justify-content-center">
+          <div class="col-3">
+            <div class="_inner">
+              <button type="button" class="x_btn"></button>
+              <h4 class="text-center">Are you sure?</h4>
+              <div class="btn_blk justify-content-center update_status mt-5">
+                <%= link_to 'Save', ' ',  class: 'site_btn sm'%>
+                <!-- <button type="button" class="site_btn sm">Save</button> -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
 
 
 <!-- Main Js -->
