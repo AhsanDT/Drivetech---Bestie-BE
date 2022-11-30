@@ -141,9 +141,18 @@ Rails.application.routes.draw do
       resources :posts
       resources :applied_job_posts
       resources :saved_job_posts
+      
       resources :block_users, only: [:create, :index, :destroy] do
         collection do
           post 'report'
+        end
+      end
+
+      resources :stripe_connect, only: [] do
+        collection do
+          post 'connect'
+          get 'get_connect_account'
+          get 'create_login_link'
         end
       end
     end

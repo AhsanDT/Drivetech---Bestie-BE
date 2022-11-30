@@ -1,0 +1,15 @@
+<% if @admin.status == "active" %>
+  $("#customdropdownmeanofactiveorinactive_"+<%= params[:id]%>).empty();
+  $("#custom_status_"+<%= params[:id]%>).text("In active");
+  $("#custom_status_"+<%= params[:id]%>).addClass("danger");
+  $("#customdropdownmeanofactiveorinactive_"+<%= params[:id]%>).append('<li id="inactive_li_<%= @admin.id %>">'+
+                      '<%= link_to 'Active', admins_sub_admin_path(id: @admin.id), method: :put, remote: true, class: 'site_btn sm custom_status_dropdown',id: params[:id]%>'+
+                      "</li>");
+<%else%>
+   $("#customdropdownmeanofactiveorinactive_"+<%= params[:id]%>).empty();
+   $("#custom_status_"+<%= params[:id]%>).removeClass("danger");
+   $("#custom_status_"+<%= params[:id]%>).text("Active");
+   $("#customdropdownmeanofactiveorinactive_"+<%= params[:id]%>).append('<li id="active_li_<%=@admin.id %>">'+
+                        '<%= link_to 'In Active', admins_sub_admin_path(id: @admin.id), method: :put, remote: true, class: 'site_btn sm custom_status_dropdown' ,id: params[:id]%>'+
+                     '</li>');
+<%end%>

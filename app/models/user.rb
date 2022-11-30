@@ -3,7 +3,10 @@ class User < ApplicationRecord
   has_secure_password
   include PgSearch::Model
     pg_search_scope :custom_search,
-                  against: [:first_name, :last_name, :email, :phone_number]
+                  against: [:first_name, :last_name, :email, :phone_number],
+                  :using => {
+                    :tsearch => {:prefix => true}
+                  }
 
     acts_as_mappable :default_formula => :sphere,
                     :distance_field_name => :distance,

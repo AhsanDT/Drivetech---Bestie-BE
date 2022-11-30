@@ -44,7 +44,7 @@
     .digg_pagination a:hover, .digg_pagination a:focus {
       background-color: #FF6933;
       cursor: pointer;
-      color: #fff;
+      color: #000;
       border-color: #000033;
 
     }
@@ -69,4 +69,22 @@
     height: 1%; }
   *:first-child + html .digg_pagination {
     overflow: hidden;
+}
+
+
+.pagination .previous_page{
+  padding-left: 2.5rem;
+  background-image: url("/assets/left_arrow.svg");
+  background-size: 0.7rem;
+  background-repeat: no-repeat;
+  background-position: center left 1rem;
+  line-height: 2.4rem;
+}
+
+.pagination .next_page{
+  padding-right: 2.5rem;
+  background-image: url("/assets/right arrow.svg");
+  background-size: 0.7rem;
+  background-repeat: no-repeat;
+  background-position: center right 1rem;;
 }
