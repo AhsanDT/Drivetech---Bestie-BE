@@ -22,24 +22,24 @@ Rails.application.routes.draw do
     end
     resources :users, only: [:index, :show] do
       collection do
-        get 'export_to_csv', defaults: { format: :csv }
+        get :export_to_csv, defaults: { format: :csv }
       end
     end
     resources :bestie, only: [:index, :show] do
       collection do
-        get 'export_to_csv', defaults: { format: :csv }
+        get :export_to_csv, defaults: { format: :csv }
       end
     end
     resources :sub_admins, only: [:index, :update] do
       collection do
-        get 'export_to_csv', defaults: { format: :csv }
+        get :export_to_csv, defaults: { format: :csv }
       end
     end
     resources :supports, only: [:index, :new, :create] do
       collection do
-        get 'user_chat'
-        get 'download'
-        get 'update_ticket_status'
+        get :user_chat
+        get :download
+        get :update_ticket_status
       end
     end
   end
@@ -66,75 +66,75 @@ Rails.application.routes.draw do
           post :social_login
         end
       end
-      get 'static_page', to: 'static_page#static_page'
+      get :static_page, to: 'static_page#static_page'
 
       resources :supports, only: [:index, :create] do
-        post 'create_message'
-        get 'get_messages'
+        post :create_message
+        get :get_messages
       end
 
       resources :support_conversations, only: [:index, :create, :destroy] do
         collection do
-          post 'create_message'
-          post 'get_messages'
+          post :create_message
+          post :get_messages
         end
       end
 
       resources :conversations, only: [:index, :create, :destroy] do
         collection do
-          post 'create_message'
-          get 'get_messages'
-          put 'change_read_status'
-          get 'get_unread_messages'
+          post :create_message
+          get :get_messages
+          put :change_read_status
+          get :get_unread_messages
         end
       end
 
       resources :cards
 
-      put 'update_media', to: 'media#update_media'
+      put :update_media, to: 'media#update_media'
 
       resources :profile, only: [] do
         collection do
-          put 'update_profile'
-          post 'switch_user'
-          post 'update_user_interests'
-          post 'update_user_talents'
-          put 'update_social_media'
-          put 'update_portfolio'
+          put :update_profile
+          post :switch_user
+          post :update_user_interests
+          post :update_user_talents
+          put :update_social_media
+          put :update_portfolio
         end
       end
 
-      post "notification_mobile_token", to: "notifications#notification_mobile_token"
+      post :notification_mobile_token, to: "notifications#notification_mobile_token"
 
       resources :banks
 
-      post 'notification_mobile_token', to: 'notifications#notification_mobile_token'
+      post :notification_mobile_token, to: 'notifications#notification_mobile_token'
       
       resources :users, only: [] do
         collection do
-          get 'suggested_besties'
-          get 'besties_near_you'
+          get :suggested_besties
+          get :besties_near_yous
         end
       end
       
       resources :subscriptions, only: [:index, :create, :destroy] do
         collection do
-          get 'get_packages'
+          get :get_packages
         end
       end
 
       resources :user_profile, only: [] do
         collection do
-          get 'get_profile'
-          get 'get_profile_image'
-          get 'get_camera_detail'
-          get 'get_portfolio'
+          get :get_profile
+          get :get_profile_image
+          get :get_camera_detail
+          get :get_portfolio
         end
       end
       
       resources :schedules, only: [:create] do
         collection do
-          get "besties_availablity"
+          get :besties_availablity
         end
       end
 
@@ -144,15 +144,15 @@ Rails.application.routes.draw do
       
       resources :block_users, only: [:create, :index, :destroy] do
         collection do
-          post 'report'
+          post :report
         end
       end
 
       resources :stripe_connect, only: [] do
         collection do
-          post 'connect'
-          get 'get_connect_account'
-          get 'create_login_link'
+          post :connect
+          get :get_connect_account
+          get :create_login_link
         end
       end
     end
