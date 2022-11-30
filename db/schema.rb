@@ -10,7 +10,8 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_11_24_112603) do
+
+ActiveRecord::Schema.define(version: 2022_11_25_071850) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -86,6 +87,15 @@ ActiveRecord::Schema.define(version: 2022_11_24_112603) do
     t.string "bank_name"
     t.boolean "default", default: false
     t.index ["user_id"], name: "index_banks_on_user_id"
+  end
+
+  create_table "block_users", force: :cascade do |t|
+    t.bigint "blocked_user_id"
+    t.bigint "blocked_by_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["blocked_by_id"], name: "index_block_users_on_blocked_by_id"
+    t.index ["blocked_user_id"], name: "index_block_users_on_blocked_user_id"
   end
 
   create_table "camera_details", force: :cascade do |t|
