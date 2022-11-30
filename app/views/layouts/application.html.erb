@@ -15,8 +15,8 @@
     <link rel="stylesheet" href="/assets/app.min.css">
 
     <!-- JS Files -->
-    <script src="/assets/jquery.min.js"></script>
-    <script src="/assets/bootstrap.bundle.min.js"></script>
+    <%# <script src="/assets/jquery.min.js"></script>
+    <script src="/assets/bootstrap.bundle.min.js"></script> %>
 
     <!-- Favicon -->
     <link type="image/png" rel="icon" href="/assets/favicon.png">
@@ -67,23 +67,5 @@
         transition: 0.3s;
       }
     </style>
-    <script>
-      var close = document.getElementsByClassName("closebtn");
-      var i;
-
-      for (i = 0; i < close.length; i++) {
-        close[i].onclick = function(){
-          var div = this.parentElement;
-          div.style.opacity = "0";
-          setTimeout(function(){ div.style.display = "none"; }, 600);
-        }
-      }
-
-      setTimeout(() => {
-      var box = document.getElementsByClassName("alert-primary")[0];
-      box.classList.add('none');
-      }, 4000);
-
-    </script>
   </body>
 </html>
