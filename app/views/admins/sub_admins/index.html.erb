@@ -78,7 +78,7 @@
                 <% if sub_admin.status == 'active' %>
                   <span id="custom_status_<%=sub_admin.id %>">Active</span>
                 <% else %>
-                  <span class="danger" id="custom_status_<%=sub_admin.id %>">In active</span>
+                  <span class="danger" id="custom_status_<%=sub_admin.id %>">In Active</span>
                 <% end %>
                 <div class="dropdown" >
                   <button class="btn dropdown-toggle data-attribute"  type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
@@ -134,7 +134,20 @@
 </div>
 </div>
 </section>
+<script>
+  // $(document).ready(function(){
+  //    $(".custom_status_dropdown").click(function(){
+  //      let id = $(this).attr("id");
+  //      let text = $("#custom_status_"+id).text();
+  //      if(text == "Active")
+  //      {
+  //       $("#custom_status_"+id).text("In Active");
+  //      }
+  //      else
+  //      {
+  //       $("#custom_status_"+id).text("Active");
+  //      }
 
-
-<!-- Main Js -->
-<script src="/assets/main.js"></script>
+  //    });
+  // });
+</script>
