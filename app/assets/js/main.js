@@ -118,6 +118,11 @@ $(document).on('turbolinks:load', function() {
 		document.querySelector(".next_page").innerHTML = "Next"
 	})
 
+	$("#csearchbtn").keyup(function (){
+		var word = $(this).val();
+		$("#searchformc").trigger('click');
+	});
+
 	/*
 	|----------------------------------------------------------------------
 	|       OTHER JAVASCRIPT
