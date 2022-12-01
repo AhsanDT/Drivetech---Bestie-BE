@@ -15,7 +15,7 @@ class MessageBroadcastJob < ApplicationJob
       message_image: message.image.attached? ? message.image.url : "",
       sender_image: message.conversation.sender.profile_image.attached? ? message.conversation.sender.profile_image.url : "",
       recepient_image: message.conversation.recepient.profile_image.attached? ? message.conversation.recepient.profile_image.url : "",
-      unread_messages: message.conversation.messages.where(is_read: false).count
+      unread_messages: message.conversation.messages.where(is_read: false).count,
       is_blocked: message.conversation.is_blocked
     }
     ActionCable.server.broadcast(build_conversation_id(message.conversation_id), payload)
