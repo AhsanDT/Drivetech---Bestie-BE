@@ -1,0 +1,13 @@
+.trix-button-group {
+  margin-bottom: 1rem !important;
+  border: transparent !important;
+  border-top-color: transparent !important;
+  border-bottom-color: transparent !important;
+  border-radius: 0.6rem !important;
+  background-color: transparent !important;
+}
+.trix-button-group .trix-button.trix-button--icon{
+  width: 5rem;
+  height: 4rem;
+  border-bottom: transparent;
+}

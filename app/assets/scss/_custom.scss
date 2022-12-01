@@ -32,6 +32,9 @@
 }
 #content{
   min-height: 65rem;
+  margin: 2rem;
+    border-radius: 0.7rem;
+    padding: 2rem;
 }
 
 #logon .log_blk .form_wrapper form .input{
@@ -188,6 +191,17 @@
     .hr{
       background: #EFEFEF;
       opacity: 1;
+    }
+  }
+  .cancel.x_btn{
+    position: static;
+    font-weight: 400;
+    min-width: unset;
+    width: unset;
+    height: unset;
+    font-size: 1.4rem;
+    &::before{
+      content: none;
     }
   }
 }
