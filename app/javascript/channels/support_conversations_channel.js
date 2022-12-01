@@ -17,16 +17,50 @@ consumer.subscriptions.create({channel: "SupportConversationsChannel", id: "supp
     if(data.body.support_conversation_id == chat_id)
     {
       data = data.body;
-    if (data.recipient_id == data.user_id) {
-
-      $(".msg_contain").append('<div class="msg">'+
-          '<p class="msg">' + data.body + '</p>'+
-          '<div class="img_url">'+
-            (data.image !== null ? "<img src="+data.image+">" : '')+
+      debugger
+      if (data.recipient_id == data.user_id) {
+        $(".msg_contain").append(
+          '<div class="msg">'+
+          '<div class="detail">'+
+            '<div class="img">'+
+            "<img src='/assets/icon-chat.svg'>"+
+            '</div>'+
+            '<div class="txt">'+
+              '<h6 class="mb-0">Bestie Support</h6>'+
+              '<p class="">'+data.created_at_date+' '+'|'+' '+ data.created_at_time +'</p>'+
+            '</div>'+
           '</div>'+
-        '</div>'
-        );
-    }}
-   }
+          '<p class="msg_body">'+ data.body +'</p>'+
+            '<div class="img_url">'+
+              '<div class="atchmt_img">'+
+                (data.image !== null ? "<img src="+data.image+">" : '')+
+              '</div>'+
+            '</div>'
+            );
+      }
+      else
+      {
+        $(".msg_contain").append(
+          '<div class="msg">'+
+            '<div class="detail">'+
+              '<div class="img">'+
+                (data.image !== null ? "<img src="+data.image+">" : '<img src="/assets/dummy.png">')+
+              '</div>'+
+              '<div class="txt">'+
+                '<h6 class="mb-0">'+data.ticket_number+'</h6>'+
+                '<p class="">'+data.created_at_date+' '+'|'+' '+ data.created_at_time +'</p>'+
+              '</div>'+
+            '</div>'+
+            '<p class="msg_body">'+data.body+'</p>'+
+            '<div class="img_url">'+
+              '<div class="atchmt_img">'+
+                (data.image !== null ? "<img src="+data.image+">" : '')+
+              '</div>'+
+            '</div>'+
+          '</div>'
+            );
+      }
+    }
+  }
   });
 });

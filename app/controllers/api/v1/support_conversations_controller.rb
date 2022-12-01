@@ -57,11 +57,13 @@ class Api::V1::SupportConversationsController < Api::V1::ApiController
         data["body"] = @message.body
         data["sender_id"] = @message.support_conversation.sender.id
         data["recipient_id"] = @message.support_conversation.recipient_id
-        data["created_at"] = @message.created_at
+        data["created_at_date"] = @message.created_at&.strftime('%b %d, %Y') 
+        data["created_at_time"] = @message&.created_at&.strftime('%H:%M%p')
         data["updated_at"] = @message.updated_at
         data["image"] = @message&.image&.url
         data["user_id"] = @message.sender_id
         data["user_profile"] = @message&.user&.profile_image&.url
+        data["ticket_number"] = @message.support_conversation.support.ticket_number
         ActionCable.server.broadcast "support_conversations_#{@message.support_conversation_id}", { title: 'Support Message', body: data.as_json }
     end
     render json: { message: @message}
