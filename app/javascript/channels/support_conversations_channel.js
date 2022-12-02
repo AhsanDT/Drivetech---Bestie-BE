@@ -15,6 +15,8 @@ consumer.subscriptions.create({channel: "SupportConversationsChannel", id: "supp
   received(data) {
     console.log(data.body);
     $('.send_message').val('');
+    $(".msg_contain").animate({
+      scrollTop: $('.msg_contain').get(0).scrollHeight}, 1000);
     if(data.body.support_conversation_id == chat_id)
     {
       data = data.body;
