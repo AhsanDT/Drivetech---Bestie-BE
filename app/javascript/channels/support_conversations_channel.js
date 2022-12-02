@@ -17,7 +17,6 @@ consumer.subscriptions.create({channel: "SupportConversationsChannel", id: "supp
     if(data.body.support_conversation_id == chat_id)
     {
       data = data.body;
-      debugger
       if (data.recipient_id == data.user_id) {
         $(".msg_contain").append(
           '<div class="msg">'+
