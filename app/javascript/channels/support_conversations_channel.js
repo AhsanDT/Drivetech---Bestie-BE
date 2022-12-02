@@ -18,24 +18,22 @@ consumer.subscriptions.create({channel: "SupportConversationsChannel", id: "supp
     {
       data = data.body;
       if (data.recipient_id == data.user_id) {
+        var message ='<div class="img">'+"<img src='/assets/icon-chat.svg'>"+'</div>'+
+        '<div class="txt">'+
+          '<h6 class="mb-0">Bestie Support</h6>'+
+          '<p class="">'+data.created_at_date+' '+'|'+' '+ data.created_at_time +'</p>'+
+        '</div>';
         $(".msg_contain").append(
           '<div class="msg">'+
-          '<div class="detail">'+
-            '<div class="img">'+
-            "<img src='/assets/icon-chat.svg'>"+
-            '</div>'+
-            '<div class="txt">'+
-              '<h6 class="mb-0">Bestie Support</h6>'+
-              '<p class="">'+data.created_at_date+' '+'|'+' '+ data.created_at_time +'</p>'+
-            '</div>'+
+          '<div class="detail">'+message+
           '</div>'+
-          '<p class="msg_body">'+ data.body +'</p>'+
-            '<div class="img_url">'+
+          '<p class="msg_body">'+ data.body +'</p>'+(data.image !== null ? '<div class="img_url">'+
               '<div class="atchmt_img">'+
-                (data.image !== null ? "<img src="+data.image+">" : '')+
+                "<img src="+data.image+">"+
               '</div>'+
-            '</div>'
-            );
+            '</div>' : '')+
+          '</div>'
+        );
       }
       else
       {
@@ -43,21 +41,20 @@ consumer.subscriptions.create({channel: "SupportConversationsChannel", id: "supp
           '<div class="msg">'+
             '<div class="detail">'+
               '<div class="img">'+
-                (data.image !== null ? "<img src="+data.image+">" : '<img src="/assets/dummy.png">')+
+                (data.user_profile !== null ? "<img src="+data.user_profile+">" : '<img src="/assets/dummy.png">')+
               '</div>'+
               '<div class="txt">'+
                 '<h6 class="mb-0">'+data.ticket_number+'</h6>'+
                 '<p class="">'+data.created_at_date+' '+'|'+' '+ data.created_at_time +'</p>'+
               '</div>'+
             '</div>'+
-            '<p class="msg_body">'+data.body+'</p>'+
-            '<div class="img_url">'+
+            '<p class="msg_body">'+ data.body +'</p>'+(data.image !== null ? '<div class="img_url">'+
               '<div class="atchmt_img">'+
-                (data.image !== null ? "<img src="+data.image+">" : '')+
+                "<img src="+data.image+">"+
               '</div>'+
-            '</div>'+
+            '</div>' : '')+
           '</div>'
-            );
+        );
       }
     }
   }
