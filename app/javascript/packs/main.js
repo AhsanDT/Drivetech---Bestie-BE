@@ -1,7 +1,4 @@
 $(document).on('turbolinks:load', function() {
-	$(".msg_contain").animate({
-		scrollTop: $('.msg_contain').get(0).scrollHeight
-	}, 1000);
 	/*_____ Toggle _____*/
 	$(document).on("click", ".toggle", function () {
 		$(".toggle").toggleClass("active");

@@ -153,4 +153,12 @@
 
 
 <!-- Main Js -->
-<script src="/assets/main.js"></script>
+<%# <script src="/assets/main.js"></script> %>
+
+<script>
+  $(document).on('turbolinks:load', function() {
+    $(".msg_contain").animate({
+        scrollTop: $('.msg_contain').get(0).scrollHeight
+      }, 1000);
+  });
+</script>
