@@ -132,11 +132,11 @@
                 </button> -->
                 <label class="btn att-btn">
                   <%= image_tag "/assets/icon-attach.svg", alt: "attachImage"%>
-                  <%= f.file_field :file,accept: 'image/png,image/gif,image/jpeg', style: "opacity:0" %>
+                  <%= f.file_field :file,accept: 'image/png,image/gif,image/jpeg', style: "opacity:0", class: "send_message" %>
                 </label>
 
-                <input type="text" name="body" class="input" placeholder="Type your message here">
-                <button type="submit" class="btn send_btn">
+                <input type="text" name="body" class="input send_message" placeholder="Type your message here">
+                <button type="submit" class="btn send_btn send_message">
                   <%= image_tag "/assets/icon-send.svg", alt:"" %>
                 </button>
               </div>

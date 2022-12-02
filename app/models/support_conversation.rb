@@ -11,5 +11,12 @@ class SupportConversation < ApplicationRecord
                   associated_against: {
                     support: [:ticket_number],
                     sender: [:email]
+                  },
+                  using: {
+                    trigram: {
+                      threshold: 0.01,
+                      word_similarity: true
+                    }
                   }
+
 end

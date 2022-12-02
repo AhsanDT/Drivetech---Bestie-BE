@@ -24,6 +24,8 @@ class Admins::SupportsController < ApplicationController
           data["user_id"] = @message.sender_id
           data["sender_id"] = @message.support_conversation.sender.id
           data["recipient_id"] =  @message.support_conversation.recipient.id
+          data["created_at_date"] = @message.created_at&.strftime('%b %d, %Y') 
+          data["created_at_time"] = @message&.created_at&.strftime('%H:%M%p')
           data["created_at"] = @message.created_at
           data["updated_at"] = @message.updated_at
           data["image"] = @message&.image&.url
