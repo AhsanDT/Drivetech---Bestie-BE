@@ -119,15 +119,11 @@
 }*/
 
 
-#support .chat_blk .selected_chat .img img{
+#support .chat_blk .selected_chat .img img,#support .chat_blk .msg_contain .msg .detail .img img,#support .users_blk .users_list li .user .img img{
   height: 100%;
   object-fit: cover;
 }
 
-#support .users_blk .users_list li .user .img img{
-  height: 100%;
-  object-fit: cover;
-}
 .table__blk {
   table {
     tbody tr {
