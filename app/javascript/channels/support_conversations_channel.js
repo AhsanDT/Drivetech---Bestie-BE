@@ -14,6 +14,7 @@ consumer.subscriptions.create({channel: "SupportConversationsChannel", id: "supp
 
   received(data) {
     console.log(data.body);
+    $('.send_message').val('');
     if(data.body.support_conversation_id == chat_id)
     {
       data = data.body;
