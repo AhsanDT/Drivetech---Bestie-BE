@@ -154,7 +154,7 @@ class Api::V1::AuthenticationController < Api::V1::ApiController
 
   private
   def sign_up_params
-    params.require(:user).permit(:email, :password, :first_name, :last_name, :location, :city, :country, :experience, :age,
+    params.require(:user).permit(:email, :password, :first_name, :last_name, :location, :city, :country, :experience, :age, :country_code,
                                  :sex, :rate, :phone_number, :pronoun, :latitude, :longitude, :profile_type, :profile_image,
                                  :id_front_image, :id_back_image, :selfie, portfolio: [], camera_detail_attributes: [ :id,
                                  :model, :camera_type, others: [] , equipment: [] ], user_interests_attributes: [:id, :interest_id],

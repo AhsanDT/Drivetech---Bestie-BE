@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_11_30_083909) do
+ActiveRecord::Schema.define(version: 2022_12_05_071822) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
@@ -321,6 +321,7 @@ ActiveRecord::Schema.define(version: 2022_11_30_083909) do
     t.boolean "profile_completed", default: false
     t.string "stripe_customer_id"
     t.string "stripe_connect_id"
+    t.string "country_code"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
