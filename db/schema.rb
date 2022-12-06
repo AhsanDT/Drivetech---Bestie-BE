@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_11_30_083909) do
+ActiveRecord::Schema.define(version: 2022_12_06_080641) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
@@ -214,6 +214,15 @@ ActiveRecord::Schema.define(version: 2022_11_30_083909) do
     t.index ["user_id"], name: "index_posts_on_user_id"
   end
 
+  create_table "recent_users", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "recent_user_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["recent_user_id"], name: "index_recent_users_on_recent_user_id"
+    t.index ["user_id"], name: "index_recent_users_on_user_id"
+  end
+
   create_table "schedules", force: :cascade do |t|
     t.text "month", default: [], array: true
     t.text "day", default: [], array: true
@@ -321,6 +330,7 @@ ActiveRecord::Schema.define(version: 2022_11_30_083909) do
     t.boolean "profile_completed", default: false
     t.string "stripe_customer_id"
     t.string "stripe_connect_id"
+    t.string "country_code"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"

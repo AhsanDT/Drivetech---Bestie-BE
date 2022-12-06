@@ -46,6 +46,8 @@ class User < ApplicationRecord
   has_many :job_posts, dependent: :destroy
   has_many :block_users, dependent: :destroy
   has_many :blocked_users, :foreign_key => "blocked_by_id", :class_name => "BlockUser"
+  has_many :recent_users, dependent: :destroy
+  has_many :recent_users, :foreign_key => "user_id", :class_name => "RecentUser"
 
   accepts_nested_attributes_for :camera_detail, allow_destroy: true, :reject_if => :which_profile_type
   accepts_nested_attributes_for :user_interests, allow_destroy: true

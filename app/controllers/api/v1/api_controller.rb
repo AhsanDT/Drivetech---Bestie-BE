@@ -15,4 +15,13 @@ class Api::V1::ApiController < ActionController::API
       render json: { errors: e.message }, status: :unauthorized
     end
   end
+
+  def param_clean(_params)
+    _params.delete_if do |k, v|
+      if v.instance_of?(ActionController::Parameters)
+        param_clean(v)
+      end
+      v.empty?
+    end
+  end
 end

@@ -113,7 +113,11 @@ Rails.application.routes.draw do
       resources :users, only: [] do
         collection do
           get :suggested_besties
-          get :besties_near_yous
+          get :besties_near_you
+          get :home
+          get :search
+          get :recent_besties
+          get :filter
         end
       end
       
@@ -138,7 +142,12 @@ Rails.application.routes.draw do
         end
       end
 
-      resources :posts
+      resources :posts, only: [:create, :update, :index, :destroy, :show] do
+        collection do
+          get :all_posts
+        end
+      end
+
       resources :applied_job_posts
       resources :saved_job_posts
       
