@@ -4,21 +4,25 @@ class Api::V1::UsersController < Api::V1::ApiController
 
   def home
     @suggested_besties = User.where.not(id: @current_user.id).joins(:subscriptions).uniq
-    @suggested_besties = (@suggested_besties & @nearby_users)
+    @suggested_besties = (@suggested_besties & @nearby_users).first(3)
 
     @besties_near_you = User.where.missing(:subscriptions)
-    @besties_near_you = (@besties_near_you & @nearby_users)
+    @besties_near_you = (@besties_near_you & @nearby_users).first(3)
   end
 
   def suggested_besties
-    @besties = User.where.not(id: @current_user.id).joins(:subscriptions).uniq
+    if params[:type] == "suggested_besties"
+      @besties = User.where.not(id: @current_user.id).joins(:subscriptions).uniq
+    elsif params[:type] == "besties_near_you"
+      @besties = User.where.missing(:subscriptions)
+    end
     @besties = (@besties & @nearby_users)
   end
 
-  def besties_near_you
-    @besties = User.where.missing(:subscriptions)
-    @besties = (@besties & @nearby_users)
-  end
+  # def besties_near_you
+  #   @besties = User.where.missing(:subscriptions)
+  #   @besties = (@besties & @nearby_users)
+  # end
 
   def search
     @besties = besties.custom_search(params[:search])

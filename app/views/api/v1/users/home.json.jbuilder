@@ -3,7 +3,7 @@ if @suggested_besties.present? || @besties_near_you.present?
     json.partial! "api/v1/shared/user", user: bestie
   end
 
-  json.suggested_users @suggested_besties do |bestie|
+  json.suggested_besties @suggested_besties do |bestie|
     json.partial! "api/v1/shared/user", user: bestie
   end
 else

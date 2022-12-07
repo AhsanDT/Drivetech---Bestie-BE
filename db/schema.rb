@@ -10,8 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-
-ActiveRecord::Schema.define(version: 2022_12_06_080641) do
+ActiveRecord::Schema.define(version: 2022_12_07_083419) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
@@ -97,6 +96,19 @@ ActiveRecord::Schema.define(version: 2022_12_06_080641) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["blocked_by_id"], name: "index_block_users_on_blocked_by_id"
     t.index ["blocked_user_id"], name: "index_block_users_on_blocked_user_id"
+  end
+
+  create_table "bookings", force: :cascade do |t|
+    t.string "date"
+    t.time "time", default: [], array: true
+    t.float "rate"
+    t.bigint "send_to_id"
+    t.bigint "send_by_id"
+    t.integer "status"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["send_by_id"], name: "index_bookings_on_send_by_id"
+    t.index ["send_to_id"], name: "index_bookings_on_send_to_id"
   end
 
   create_table "camera_details", force: :cascade do |t|

@@ -112,7 +112,7 @@ Rails.application.routes.draw do
       
       resources :users, only: [] do
         collection do
-          get :suggested_besties
+          post :suggested_besties
           get :besties_near_you
           get :home
           get :search
@@ -138,7 +138,7 @@ Rails.application.routes.draw do
       
       resources :schedules, only: [:create] do
         collection do
-          get :besties_availablity
+          post :besties_availablity
         end
       end
 
@@ -164,6 +164,8 @@ Rails.application.routes.draw do
           get :create_login_link
         end
       end
+
+      resources :bookings
     end
   end
 end
