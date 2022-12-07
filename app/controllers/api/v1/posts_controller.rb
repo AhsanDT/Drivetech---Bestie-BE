@@ -29,6 +29,10 @@ class Api::V1::PostsController < Api::V1::ApiController
 
   def show; end
 
+  def all_posts
+    @posts = Post.all
+  end
+
   private
 
   def post_params
