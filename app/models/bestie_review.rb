@@ -1,0 +1,3 @@
+class BestieReview < Review
+  
+end

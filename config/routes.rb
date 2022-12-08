@@ -167,6 +167,7 @@ Rails.application.routes.draw do
       end
 
       resources :bookings
+      resources :reviews
     end
   end
 end

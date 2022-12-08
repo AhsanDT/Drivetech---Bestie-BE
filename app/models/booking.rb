@@ -1,6 +1,7 @@
 class Booking < ApplicationRecord
   belongs_to :send_by, :class_name=>'User'
   belongs_to :send_to, :class_name=>'User'
+  has_one :review
 
   enum status: {
     "Accepted": 0,
@@ -8,4 +9,5 @@ class Booking < ApplicationRecord
   }
 
   after_create_commit { BookingBroadcastJob.perform_later(self) }
+  after_update { BookingBroadcastJob.perform_later(self) }
 end

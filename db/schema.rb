@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_12_07_083419) do
+ActiveRecord::Schema.define(version: 2022_12_08_075135) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
@@ -234,6 +234,20 @@ ActiveRecord::Schema.define(version: 2022_12_07_083419) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["recent_user_id"], name: "index_recent_users_on_recent_user_id"
     t.index ["user_id"], name: "index_recent_users_on_user_id"
+  end
+
+  create_table "reviews", force: :cascade do |t|
+    t.integer "rating"
+    t.text "description"
+    t.bigint "review_by_id"
+    t.bigint "review_to_id"
+    t.bigint "booking_id"
+    t.string "type"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["booking_id"], name: "index_reviews_on_booking_id"
+    t.index ["review_by_id"], name: "index_reviews_on_review_by_id"
+    t.index ["review_to_id"], name: "index_reviews_on_review_to_id"
   end
 
   create_table "schedules", force: :cascade do |t|
