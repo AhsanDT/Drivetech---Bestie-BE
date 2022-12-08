@@ -45,6 +45,7 @@ gem "down", "~> 5.0"
 gem 'stripe_event'
 gem 'geokit-rails'
 gem 'pg_trgm', '~> 0.0.1'
+gem 'sidekiq'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

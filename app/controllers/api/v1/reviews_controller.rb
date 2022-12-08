@@ -4,14 +4,24 @@ class Api::V1::ReviewsController < Api::V1::ApiController
   before_action :find_bookings, only: [:index]
 
   def create
-    if @current_user.profile_type == "bestie" || "Bestie"
-      @review = BestieReview.create(review_params.merge(review_to_id: @booking.send_to_id, review_by_id: @current_user.id))
+    if @booking.present?
+      if @current_user.profile_type == "bestie" || "Bestie"
+        @review = BestieReview.create(review_params.merge(review_to_id: @booking.send_to_id, review_by_id: @current_user.id))
+      else
+        @review = UserReview.create(review_params.merge(review_to_id: @booking.send_to_id, review_by_id: @current_user.id))
+      end
     else
-      @review = UserReview.create(review_params.merge(review_to_id: @booking.send_to_id, review_by_id: @current_user.id))
-    end 
+      render json: {message: "This booking is not present"}
+    end
   end
 
-  def index; end
+  def index
+    @review_rating = 0
+    @reviews.each do |review|
+      @review_rating  += review.rating
+    end
+    @review_average_rating = @review_rating / @current_user.reviews.count
+  end
 
   private
 

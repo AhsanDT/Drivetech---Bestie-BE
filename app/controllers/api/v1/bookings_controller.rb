@@ -9,7 +9,7 @@ class Api::V1::BookingsController < Api::V1::ApiController
   end
 
   def update
-    @booking.update(status: params[:status])
+    @booking.update(booking_params)
     Notification.create(subject: "Booking #{params[:status]}", body: "Booking has been #{params[:status]}", user_id: @current_user.id)
     render json: {message: "Booking has been #{params[:status]}", data: @booking}
   end
