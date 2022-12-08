@@ -23,11 +23,6 @@ class Api::V1::SubscriptionsController < Api::V1::ApiController
     end
   end
 
-  def index
-    @subscriptions = @current_user.subscriptions
-    render json: { message: "All subscriptions", data: @subscriptions }
-  end
-
   def destroy
     stripe_subscription = StripeService.retrieve_subscription(@subscription.subscription_id)
     if @subscription.present?
@@ -41,6 +36,22 @@ class Api::V1::SubscriptionsController < Api::V1::ApiController
     else
       render json: { message: "Subscription is not present" }
     end
+  end
+
+  def current_user_subscription
+    @subscription = @current_user.subscriptions.first
+    if @subscription.present?
+      if @subscription.package.name == "Gold Package"
+        @remaining_time = (@subscription.created_at + 7.day - Time.now) / 60
+      elsif @subscription.package.name == "Silver Package"
+        @remaining_time = (@subscription.created_at + 3.day - Time.now) / 60
+      elsif @subscription.package.name == "Bronze Package"
+        @remaining_time = (@subscription.created_at + 1.day - Time.now) / 60
+      end
+    else
+      render json: {message: "No subscription found"}
+    end
+    @remaining_time
   end
 
   private

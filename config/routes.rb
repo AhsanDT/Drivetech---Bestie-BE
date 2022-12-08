@@ -121,9 +121,10 @@ Rails.application.routes.draw do
         end
       end
       
-      resources :subscriptions, only: [:index, :create, :destroy] do
+      resources :subscriptions, only: [:create, :destroy] do
         collection do
           get :get_packages
+          get :current_user_subscription
         end
       end
 
