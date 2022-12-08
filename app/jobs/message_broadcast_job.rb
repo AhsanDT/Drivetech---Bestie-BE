@@ -3,6 +3,7 @@ class MessageBroadcastJob < ApplicationJob
 
   def perform(message)
     payload = {
+      type: "chat",
       id: message.id,
       body: message.body,
       conversation_id: message.conversation_id,
