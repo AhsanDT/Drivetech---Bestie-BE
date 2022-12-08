@@ -4,7 +4,7 @@ class Api::V1::BookingsController < Api::V1::ApiController
 
   def create
     @booking = @current_user.bookings.create(booking_params)
-    Notification.create(subject: "Booking", body: "Booking has been created", user_id: @current_user.id)
+    Notification.create(subject: "Booking", body: "You have a new booking", user_id: @current_user.id)
     render json: { data: @booking }
   end
 
