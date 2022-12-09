@@ -43,10 +43,13 @@ class Api::V1::SubscriptionsController < Api::V1::ApiController
     if @subscription.present?
       if @subscription.package.name == "Gold Package"
         @remaining_time = (@subscription.created_at + 7.day - Time.now) / 60
+        check_positive(@remaining_time)
       elsif @subscription.package.name == "Silver Package"
         @remaining_time = (@subscription.created_at + 3.day - Time.now) / 60
+        check_positive(@remaining_time)
       elsif @subscription.package.name == "Bronze Package"
         @remaining_time = (@subscription.created_at + 1.day - Time.now) / 60
+        check_positive(@remaining_time)
       end
     else
       render json: {message: "No subscription found"}
@@ -80,5 +83,13 @@ class Api::V1::SubscriptionsController < Api::V1::ApiController
 
   def find_subscription
     @subscription = Subscription.find_by(id: params[:id])
+  end
+
+  def check_positive(remaining_time)
+    if @remaining_time >= 1
+      return @remaining_time
+    else
+      render json: {message: "No subscription found"}
+    end
   end
 end
