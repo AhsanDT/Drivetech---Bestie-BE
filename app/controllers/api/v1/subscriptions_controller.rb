@@ -39,7 +39,7 @@ class Api::V1::SubscriptionsController < Api::V1::ApiController
   end
 
   def current_user_subscription
-    @subscription = @current_user.subscriptions.first
+    @subscription = @current_user.subscriptions.last
     if @subscription.present?
       if @subscription.package.name == "Gold Package"
         @remaining_time = (@subscription.created_at + 7.day - Time.now) / 60
