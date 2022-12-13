@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  require 'sidekiq/web'
+  mount Sidekiq::Web => '/sidekiq'
   mount ActionCable.server => "/cable"
   devise_for :admins,
              controllers: {
@@ -134,6 +136,7 @@ Rails.application.routes.draw do
           get :get_profile_image
           get :get_camera_detail
           get :get_portfolio
+          post :get_user_profile
         end
       end
       
