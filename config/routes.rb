@@ -149,6 +149,7 @@ Rails.application.routes.draw do
       resources :posts, only: [:create, :update, :index, :destroy, :show] do
         collection do
           get :all_posts
+          post :time_slots
         end
       end
 
