@@ -1,0 +1,3 @@
+class UserReview < Review
+  
+end
