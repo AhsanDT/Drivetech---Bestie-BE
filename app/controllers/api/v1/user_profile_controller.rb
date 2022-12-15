@@ -8,4 +8,8 @@ class Api::V1::UserProfileController < Api::V1::ApiController
   def get_camera_detail; end
 
   def get_portfolio; end
+
+  def get_user_profile
+    @user = User.find_by(id: params[:user_id])
+  end
 end

@@ -16,11 +16,15 @@ class Api::V1::ReviewsController < Api::V1::ApiController
   end
 
   def index
-    @review_rating = 0
-    @reviews.each do |review|
-      @review_rating  += review.rating
+    if @reviews.present?
+      @review_rating = 0
+      @reviews.each do |review|
+        @review_rating  += review.rating
+      end
+      @review_average_rating = @review_rating / @current_user.reviews.count
+    else
+      render json: {message: "No reviews found"}
     end
-    @review_average_rating = @review_rating / @current_user.reviews.count
   end
 
   private
