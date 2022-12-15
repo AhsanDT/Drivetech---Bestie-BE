@@ -35,17 +35,18 @@ class Api::V1::PostsController < Api::V1::ApiController
   end
 
   def time_slots
-    array = Post.select {|p| p.start_time.include? params[:date_time]}.pluck(:start_time).flatten.compact
+    array = @current_user.posts.where("(?) = Any(CAST(start_time as Date[]))",[params[:date_time].to_datetime.strftime("%a,%d %b %Y")]).pluck(:start_time).flatten.compact
     array =  array.reject(&:blank?).map{ |item| item.to_datetime.strftime("%H")+":00 "+item.to_datetime.strftime("%p") }
     _format_slot = []
     temp = { start_time: "", end_time: "", already_booked: false}
     hour_step = (1.to_f/24)
-    date_time = DateTime.new(2015,4,1,00,00)
-    date_time_limit = DateTime.new(2015,4,1,24,00)
+    date_time = params["date_time"].to_datetime
+    date_time_limit = params["date_time"].to_datetime + 24.hours
+    last_selected  = ''
     date_time.step(date_time_limit,hour_step).each_with_index do |interval,index|
       if index == 1
         temp[:end_time] = Time.at(interval).strftime("%I:%M %p")
-        temp[:already_booked] = interval.strftime("%I:%M %p").in?(array) ? true : false
+        temp[:already_booked] = temp[:start_time].in?(array) ? true : false
         _format_slot << temp
         temp = { start_time: "", end_time: "", already_booked: false}
       elsif index == 0
@@ -53,7 +54,8 @@ class Api::V1::PostsController < Api::V1::ApiController
       else
         temp_start_time = _format_slot[index-2][:end_time]
         temp_end_time =  (Time.at(temp_start_time.to_time)+1.hour).strftime("%I:%M %p")
-        temp[:already_booked] = interval.strftime("%I:%M %p").in?(array) ? true : false
+        temp[:already_booked] = true if  temp[:start_time].in?(array) == true
+        last_selected = temp_end_time if temp[:already_booked] == true
         temp = { start_time: temp_start_time, end_time: temp_end_time, already_booked: false}
         _format_slot << temp
       end
