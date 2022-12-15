@@ -39,6 +39,7 @@ class Api::V1::UsersController < Api::V1::ApiController
     @besties = besties.where(param_clean(filter_params))
     @besties = @besties.includes(:user_interests).where(user_interests: {interest_id: params[:interest_id]})  if params[:interest_id].present?
     @besties = @besties.includes(:camera_detail).where(camera_detail: {camera_type: params[:camera_type]}) if params[:camera_type].present?
+    @besties = @besties.in_range(eval(params[:distance_range]), units: :miles, origin: [@current_user.latitude, @current_user.longitude]) if params[:distance_range].present?
   end
 
   private

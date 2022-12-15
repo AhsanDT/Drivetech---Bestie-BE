@@ -38,7 +38,7 @@ class Api::V1::PostsController < Api::V1::ApiController
     array = @current_user.posts.where("(?) = Any(CAST(start_time as Date[]))",[params[:date_time].to_datetime.strftime("%a,%d %b %Y")]).pluck(:start_time).flatten.compact
     array =  array.reject(&:blank?).map{ |item| item.to_datetime.strftime("%H")+":00 "+item.to_datetime.strftime("%p") }
     _format_slot = []
-    temp = { start_time: "", end_time: "", already_booked: false}
+    temp = { start_time: "", end_time: "", already_booked: false, date: params[:date_time]}
     hour_step = (1.to_f/24)
     date_time = params["date_time"].to_datetime
     date_time_limit = params["date_time"].to_datetime + 24.hours
@@ -48,7 +48,7 @@ class Api::V1::PostsController < Api::V1::ApiController
         temp[:end_time] = Time.at(interval).strftime("%I:%M %p")
         temp[:already_booked] = temp[:start_time].in?(array) ? true : false
         _format_slot << temp
-        temp = { start_time: "", end_time: "", already_booked: false}
+        temp = { start_time: "", end_time: "", already_booked: false, date: params[:date_time]}
       elsif index == 0
         temp[:start_time] = Time.at(interval).strftime("%I:%M %p") 
       else
@@ -56,7 +56,7 @@ class Api::V1::PostsController < Api::V1::ApiController
         temp_end_time =  (Time.at(temp_start_time.to_time)+1.hour).strftime("%I:%M %p")
         temp[:already_booked] = true if  temp[:start_time].in?(array) == true
         last_selected = temp_end_time if temp[:already_booked] == true
-        temp = { start_time: temp_start_time, end_time: temp_end_time, already_booked: false}
+        temp = { start_time: temp_start_time, end_time: temp_end_time, already_booked: false, date: params[:date_time]}
         _format_slot << temp
       end
     end
