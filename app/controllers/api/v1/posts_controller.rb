@@ -31,7 +31,7 @@ class Api::V1::PostsController < Api::V1::ApiController
   def show; end
 
   def all_posts
-    @posts = Post.all
+    @posts = Post.all.order('created_at desc')
   end
 
   def time_slots
@@ -75,6 +75,6 @@ class Api::V1::PostsController < Api::V1::ApiController
   end
 
   def find_posts
-    @posts = @current_user.posts
+    @posts = @current_user.posts.order('created_at desc')
   end
 end
