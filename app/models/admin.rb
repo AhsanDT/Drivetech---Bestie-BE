@@ -27,7 +27,7 @@ class Admin < ApplicationRecord
   self.per_page = 10
 
   def full_name
-    first_name + ' ' + last_name
+    first_name + ' ' + last_name rescue nil
   end
 
   def self.to_csv
