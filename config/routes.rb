@@ -111,6 +111,7 @@ Rails.application.routes.draw do
       resources :banks
 
       post :notification_mobile_token, to: 'notifications#notification_mobile_token'
+      get :get_notifications, to: 'notifications#get_notifications'
       
       resources :users, only: [] do
         collection do

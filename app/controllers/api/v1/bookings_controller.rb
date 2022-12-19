@@ -12,8 +12,8 @@ class Api::V1::BookingsController < Api::V1::ApiController
   def update
     @booking.update(booking_params)
     if params[:status] == "Accepted"
-      current_user_notification = Notification.create(subject: "You #{params[:status]} The Booking", body: "This is added to your calendar you have an upcoming appointment #{@booking.start_time}", user_id: @current_user.id)
-      other_user_notification = Notification.create(subject: "Booking Has Been Set!", body: "This is added to your calendar you have an upcoming appointment #{@booking.start_time}", user_id: @booking.send_to_id)
+      current_user_notification = Notification.create(subject: "You #{params[:status]} The Booking", body: "This is added to your calendar you have an upcoming appointment today", user_id: @current_user.id)
+      other_user_notification = Notification.create(subject: "Booking Has Been Set!", body: "This is added to your calendar you have an upcoming appointment today", user_id: @booking.send_to_id)
     elsif params[:status] == "Rejected"
       current_user_notification = Notification.create(subject: "You Denied The Booking", body: "You denied the booking, you can never return this back", user_id: @current_user.id)
       other_user_notification = Notification.create(subject: "Booking Has Been Denied!", body: "Your booking has been denied by bestie, you can try and book again.", user_id: @booking.send_to_id)
