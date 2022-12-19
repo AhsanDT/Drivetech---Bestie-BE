@@ -170,7 +170,12 @@ Rails.application.routes.draw do
         end
       end
 
-      resources :bookings
+      resources :bookings, only: [:create, :update] do
+        collection do
+          post :send_reschedule
+          post :reschedule
+        end
+      end
       resources :reviews
     end
   end
