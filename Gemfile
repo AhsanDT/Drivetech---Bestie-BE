@@ -22,6 +22,7 @@ gem 'jbuilder', '~> 2.7'
 # gem 'redis', '~> 4.0'
 # Use Active Model has_secure_password
 gem 'bcrypt', '~> 3.1.7'
+gem 'dotenv-rails'
 
 # Use Active Storage variant
 gem 'image_processing', '~> 1.2'
@@ -31,7 +32,6 @@ gem 'rexml'
 gem 'bootsnap', '>= 1.4.4', require: false
 gem 'jwt'
 gem 'cloudinary'
-gem 'dotenv-rails', groups: [:development, :test]
 gem 'securerandom'
 gem "letter_opener", group: :development
 gem 'devise'

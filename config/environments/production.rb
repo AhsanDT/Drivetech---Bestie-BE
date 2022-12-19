@@ -120,18 +120,18 @@ Rails.application.configure do
   # config.active_record.database_selector = { delay: 2.seconds }
   # config.active_record.database_resolver = ActiveRecord::Middleware::DatabaseSelector::Resolver
   # config.active_record.database_resolver_context = ActiveRecord::Middleware::DatabaseSelector::Resolver::Session
-  config.action_cable.url = 'wss://bestie-staging.herokuapp.com/cable'
+  config.action_cable.url = ENV['ACTION_CABLE_URL']
   config.action_cable.allowed_request_origins = [/http:\/\/*/, /https:\/\/*/]
   config.action_mailer.perform_deliveries = true
   config.action_mailer.raise_delivery_errors = true
 
-  config.action_mailer.default_url_options = {  host: 'https://bestie-staging.herokuapp.com/' }
+  config.action_mailer.default_url_options = {  host: ENV['ACTION_MAILER_DEFAULT_URL'] }
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
     :address              => "smtp.gmail.com",
     :port                 =>  587,
-    :user_name            => 'sbestie18@gmail.com',
-    :password             => 'mixswvsgqhjpynvb',
+    :user_name            => ENV['SMTP_EMAIL'],
+    :password             => ENV['SMTP_PASSWORD'],
     :authentication       => "plain",
     :enable_starttls_auto => true
   }
