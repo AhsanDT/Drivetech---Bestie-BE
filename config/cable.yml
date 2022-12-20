@@ -7,4 +7,4 @@ test:
 production:
   adapter: redis
   channel_prefix: bestie_production
-  url: ENV['REDIS_ACTION_CABLE']
+  url:  <%= ENV['REDIS_ACTION_CABLE'] %>
