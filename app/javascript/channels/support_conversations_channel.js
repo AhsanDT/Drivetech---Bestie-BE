@@ -1,5 +1,5 @@
 import consumer from "./consumer"
-$(document).on('turbolinks:load', function(){
+$(document).ready(function(){
 const chat_id = $("#chatmessagebox").attr('data-id');
 console.log(chat_id);
 consumer.subscriptions.create({channel: "SupportConversationsChannel", id: "support_conversations_" + chat_id},  {
