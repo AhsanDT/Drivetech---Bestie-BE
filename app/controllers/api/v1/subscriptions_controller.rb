@@ -16,7 +16,7 @@ class Api::V1::SubscriptionsController < Api::V1::ApiController
         @subscription = create_customer_subscription(@stripe_subscription)
         render json: {message: "Successfull subscription", data: @subscription}
       rescue => e
-        return render json: e.message
+        return render json: { error: e.message }, status: :unprocessable_entity
       end
     else
       render json: { message: "This package is not present" }
