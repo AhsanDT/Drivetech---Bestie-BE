@@ -1,7 +1,12 @@
 import consumer from "./consumer"
+let chat_id = ''
+$(document).on('turbolinks:load', function(){
+  chat_id = $("#chatmessagebox").attr('data-id');
+  console.log(chat_id);
+});
+
 $(document).ready(function(){
-const chat_id = $("#chatmessagebox").attr('data-id');
-console.log(chat_id);
+chat_id = $("#chatmessagebox").attr('data-id');
 consumer.subscriptions.create({channel: "SupportConversationsChannel", id: "support_conversations_" + chat_id},  {
   connected() {
     console.log("Channel Connected!!! To SupportConversationsChannel");
