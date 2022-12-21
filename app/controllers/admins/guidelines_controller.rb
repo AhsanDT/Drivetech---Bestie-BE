@@ -9,7 +9,7 @@ class Admins::GuidelinesController < ApplicationController
 
   def update
     if @page.update(content: params[:content])
-      render 'index'
+      redirect_to admins_guidelines_path+ "?permalink=#{@page.permalink}"
     end
   end
 
@@ -20,6 +20,6 @@ class Admins::GuidelinesController < ApplicationController
   end
 
   def get_page
-    @page = Page.find_by(permalink: params[:permalink].blank? ? "terms&condition" : params[:permalink])
+    @page = Page.find_by(permalink: params[:permalink].blank? || params[:permalink] == "terms" ? "terms&condition" : params[:permalink])
   end
 end
