@@ -47,5 +47,5 @@ class Admin < ApplicationRecord
     end
   end
 
-  scope :admin, -> {Admin.where(admin_type: "super_admin")}
+  scope :admin, -> {Admin.find_by(admin_type: "super_admin")}
 end
