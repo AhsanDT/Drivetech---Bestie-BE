@@ -37,7 +37,6 @@
                         <h6 class="mb-0"><%= user&.support&.ticket_number %></h6>
                         <p class="status"><%= user&.support&.status&.humanize %></p>
                       </div>
-                      <p class="mb-0"><%= user&.support&.user&.email %></p>
                       <p class="msg"><%= user&.support_messages&.last&.body %></p>
                     </div>
                   </div>
@@ -60,19 +59,11 @@
               </div>
               <div class="txt" <%= @user&.id %> data-id="<%= @user&.id %>" id="chatmessagebox">
                 <h5 class="mb-0"><%= @user&.support&.ticket_number %></h5>
-                <p class="mb-0"><%= @user&.support&.user&.email %></p>
-                <p class="status"><%= @user&.support&.status&.humanize %></p>
+                <p class="status"><img src="/assets/status-dot.svg" alt=""><%= @user&.support&.status&.humanize %></p>
               </div>
               <div class="form_blk">
-                <div class="dropdown">
-                  <button class="site_btn blank dropdown-toggle chevron" data-bs-toggle="dropdown">
-                      Mark as
-                  </button>
-                  <ul class="dropdown-menu" >
-                    <li><a class="dropdown-item" href="<%= update_ticket_status_admins_supports_path(support_id: @user&.support&.id, status: 'in_progress', id: @user&.id) %>">In Progress</a></li>
-                    <li><a class="dropdown-item" href="<%= update_ticket_status_admins_supports_path(support_id: @user&.support&.id, status: 'completed', id: @user&.id) %>">Completed</a></li>
-                  </ul>
-                </div>
+                <a style="color: black" href="<%= update_ticket_status_admins_supports_path(support_id: @user&.support&.id, status: 'pending', id: @user&.id) %>"><input type="checkbox" name="" id="complete" <%= @user&.support&.status == "completed" ? "checked" : ""%>/></a>
+                <label for="complete"><a style="color: black">Mark as Complete<a></label>
               </div>
             </div>
             <div class="msg_contain">

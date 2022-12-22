@@ -36,7 +36,11 @@ class Admins::SupportsController < ApplicationController
   end
 
   def update_ticket_status
-    @support.update(status: params[:status])
+    if @support.status == "pending"
+      @support.update(status: "completed")
+    else
+      @support.update(status: "pending")
+    end
     redirect_to user_chat_admins_supports_path(id: params[:id])
   end
 
