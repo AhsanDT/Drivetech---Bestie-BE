@@ -131,8 +131,9 @@
     </div>
   </div>
 </section>
-  <!-- account_section -->
-
-
-  <!-- Main Js -->
 <script src="/assets/main.js"></script>
+<script>
+$(".pagination a").click(function(){
+  $("html, body").animate({ scrollTop: $(document).height() }, 1000);
+});
+</script>

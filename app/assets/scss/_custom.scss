@@ -209,3 +209,20 @@
     }
   }
 }
+
+
+#Besties .personal_details table .pad_left{
+  width: 8rem;
+  padding-left: 0;
+}
+
+#support .status{
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  >img{
+    width: 1rem;
+    min-width: 1rem;
+    height: 1rem;
+  }
+}

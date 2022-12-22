@@ -101,14 +101,14 @@
                 <td class="pad_left">Talents</td>
               </tr>
               <tr>
-                <% @bestie&.talents.each do |talent| %>
-                  <td class="btn_blk pad_left">
-                  <div class=" site_btn blk_bg">
-                    <%= talent&.title %>
-                  </div>
+                <td class="btn_blk pad_left">
+                  <% @bestie&.talents.each do |talent| %>
+                    <div class=" site_btn blk_bg">
+                      <%= talent&.title %>
+                    </div>
+                  <% end %>
                 </td>
-              <% end %>
-            </tr>
+              </tr>
           </tbody>
         </table>
       </div>

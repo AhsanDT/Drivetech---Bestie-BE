@@ -7,7 +7,7 @@
           <h1>Guidelines</h1>
           <ul>
             <li>
-              <a href="<%= admins_guidelines_path(permalink: 'terms&condition') %>" class="site_btn trans <%=params[:permalink] == 'terms&condition' ?  'active' : '' %>">Terms & Conditions</a>
+              <a href="<%= admins_guidelines_path(permalink: 'terms&condition') %>" class="site_btn trans <%=params[:permalink] == 'terms&condition'|| params[:permalink] == "terms" || (params[:action] == "index" && !params[:permalink].present?)  ?  'active' : '' %>">Terms & Conditions</a>
             </li>
             <li>
               <a href="<%= admins_guidelines_path(permalink: 'privacy_policy') %>" class="site_btn trans <%=params[:permalink] == 'privacy_policy' ?  'active' : '' %>">Privacy Policy</a>
@@ -21,7 +21,7 @@
       <div class="col-md-9">
         <div class="guid_top">
           <div class="btn_blk">
-            <button type="button" class="site_btn top_btn trans">Cancel</button>
+            <button type="button" class="site_btn top_btn trans" id="cancel_button">Cancel</button>
             <button type="button" class="site_btn top_btn blue" id="customsubmitbutton">Save</button>
           </div>
         </div>
@@ -45,6 +45,10 @@
   $(document).ready(function(){
     $("#customsubmitbutton").click(function(){
        $("#customfaqsubmitbtns").trigger('click');
+    })
+
+    $('#cancel_button').on('click', function(){
+      location.reload();
     })
   })
 </script>

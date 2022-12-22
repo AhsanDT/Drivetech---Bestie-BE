@@ -113,6 +113,27 @@ $(document).on('turbolinks:load', function() {
 		}
 	});
 
+	$(document).ready(function() {
+    new_arr = []
+    arr = $('.me-auto')[0].innerHTML.split("</b>")
+    if(arr.length > 2)
+    {
+      first_part =  arr[0].split("<b>");
+      new_arr.push("Showing ");
+      temp_middle_part =  first_part[1].split("-");
+      middle_part = temp_middle_part[0] + "to" + temp_middle_part[1];
+      temp_third_part =  arr[1].split("<b>");
+      third_part = temp_third_part[0] + temp_third_part[1]
+      new_arr.push(middle_part);
+      new_arr.push(third_part);
+      new_arr.push(" entries");
+      $('.me-auto')[0].innerHTML = new_arr.join(" ");
+    }
+		else {
+			$('.me-auto').hide();
+		}
+	})
+
 	$(document).ready(function(){
 		document.querySelector(".previous_page").innerHTML = "Previous"
 		document.querySelector(".next_page").innerHTML = "Next"
