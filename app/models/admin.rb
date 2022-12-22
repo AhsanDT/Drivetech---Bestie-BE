@@ -17,6 +17,11 @@ class Admin < ApplicationRecord
   has_many :support_conversations, dependent: :destroy,foreign_key: :recipient_id
   has_many :admin_support_messages, dependent: :destroy,foreign_key: :sender_id
 
+  enum admin_type: {
+    super_admin: 0,
+    sub_admin: 1
+  }
+
   enum status: {
     active: 0,
     inactive: 1
@@ -41,4 +46,6 @@ class Admin < ApplicationRecord
       end
     end
   end
+
+  scope :admin, -> {Admin.where(admin_type: "super_admin")}
 end
