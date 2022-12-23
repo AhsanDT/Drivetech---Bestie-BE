@@ -1,15 +1,15 @@
 class User < ApplicationRecord
   require 'csv'
   has_secure_password
-  include PgSearch::Model
-      pg_search_scope :custom_search,
-                  against: [:email, :first_name, :last_name],
-                  using: {
-                    trigram: {
-                      threshold: 0.01,
-                      word_similarity: true
-                    }
-                  }
+  # include PgSearch::Model
+  #     pg_search_scope :custom_search,
+  #                 against: [:email, :first_name, :last_name],
+  #                 using: {
+  #                   trigram: {
+  #                     threshold: 0.01,
+  #                     word_similarity: true
+  #                   }
+  #                 }
 
     acts_as_mappable :default_formula => :sphere,
                     :distance_field_name => :distance,

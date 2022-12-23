@@ -3,7 +3,7 @@ class Admins::SubAdminsController < ApplicationController
 
   def index
     if params[:search].present?
-      @sub_admins = Admin.custom_search(params[:search]).paginate(page: params[:page])
+      @sub_admins = Admin.where('email LIKE :search OR first_name LIKE :search OR last_name LIKE :search OR phone_number LIKE :search OR location LIKE :search OR username LIKE :search', search: "%#{params[:search]}%").paginate(page: params[:page])
     elsif params[:key] == "location"
       @sub_admins = Admin.ordered_by_country.paginate(page: params[:page])
     else
