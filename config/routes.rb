@@ -112,6 +112,7 @@ Rails.application.routes.draw do
       resources :banks
 
       post :notification_mobile_token, to: 'notifications#notification_mobile_token'
+      get :get_notifications, to: 'notifications#get_notifications'
       
       resources :users, only: [] do
         collection do
@@ -171,7 +172,12 @@ Rails.application.routes.draw do
         end
       end
 
-      resources :bookings
+      resources :bookings, only: [:create, :update] do
+        collection do
+          post :send_reschedule
+          post :reschedule
+        end
+      end
       resources :reviews
     end
   end
