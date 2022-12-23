@@ -6,6 +6,7 @@ class MessageBroadcastJob < ApplicationJob
       type: "chat",
       id: message.id,
       body: message.body,
+      user_id: message.user_id,
       conversation_id: message.conversation_id,
       read_status: message.is_read,
       sender_id: message.conversation.sender.id,
