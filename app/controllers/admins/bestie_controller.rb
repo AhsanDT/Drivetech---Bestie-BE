@@ -3,7 +3,7 @@ class Admins::BestieController < ApplicationController
 
   def index
     if params[:search].present?
-      @besties = besties.where('email LIKE :search OR cast(age as text) LIKE :search OR first_name LIKE :search OR last_name LIKE :search OR phone_number LIKE :search OR country LIKE :search OR sex LIKE :search', search: "%#{params[:search]}%")
+      @besties = besties.where('email ILIKE :search OR cast(age as text) ILIKE :search OR first_name ILIKE :search OR last_name ILIKE :search OR phone_number ILIKE :search OR country ILIKE :search OR sex ILIKE :search', search: "%#{params[:search]}%")
     elsif params[:key] == "sex"
       @besties = besties.ordered_by_sex
     elsif params[:key] == "age"
