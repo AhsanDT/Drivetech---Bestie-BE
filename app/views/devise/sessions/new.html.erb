@@ -10,7 +10,7 @@
         <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
           <%= render "devise/shared/error_messages", resource: resource %>
           <h6>Email Address</h6>
-          <div class="form_blk">
+          <div class="form_blk <%= resource.errors.any? ? 'error': ''%>">
             <input type="email" name="admin[email]" class="input" placeholder="Type here">
           </div>
           <p class="error_text">Invalid email address</p>

@@ -1,13 +1,13 @@
 class Admin < ApplicationRecord
   include PgSearch::Model
-  pg_search_scope :custom_search,
-      against: :email,
-      using: {
-        trigram: {
-          threshold: 0.01,
-          word_similarity: true
-        }
-      }
+  # pg_search_scope :custom_search,
+  #     against: :email,
+  #     using: {
+  #       trigram: {
+  #         threshold: 0.01,
+  #         word_similarity: true
+  #       }
+  #     }
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   require 'csv'
