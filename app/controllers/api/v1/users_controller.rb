@@ -17,6 +17,12 @@ class Api::V1::UsersController < Api::V1::ApiController
       @besties = User.where.missing(:subscriptions)
     end
     @besties = (@besties & @nearby_users)
+    @besties = User.where(id: @besties.map(&:id))
+    if @current_user.profile_type == 'bestie'
+      @besties = @besties.where(profile_type: 'user')
+    else
+      @besties = @besties.where(profile_type: 'bestie')
+    end
   end
 
   # def besties_near_you

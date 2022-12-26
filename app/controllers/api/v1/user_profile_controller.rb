@@ -14,7 +14,11 @@ class Api::V1::UserProfileController < Api::V1::ApiController
   end
 
   def search_by_name
-    @users = User.where(full_name: params[:name])
+    if @current_user.profile_type == "bestie"
+      @users = User.where(full_name: params[:name], profile_type: "user")
+    else
+      @users = User.where(full_name: params[:name], profile_type: "bestie")
+    end
     render json: {data: @users}
   end
 end

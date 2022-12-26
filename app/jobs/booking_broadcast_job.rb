@@ -18,7 +18,8 @@ class BookingBroadcastJob < ApplicationJob
         booking_id: booking.id,
         booking_date: booking.date,
         booking_time: booking.time,
-        booking_rate: booking.rate
+        booking_rate: booking.rate,
+        booking_status: booking.status
       }
       ActionCable.server.broadcast(build_conversation_id(@conversation.id), payload)
     end
