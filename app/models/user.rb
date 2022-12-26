@@ -61,6 +61,8 @@ class User < ApplicationRecord
   accepts_nested_attributes_for :user_talents, allow_destroy: true, :reject_if => :which_profile_type
   accepts_nested_attributes_for :social_media, allow_destroy: true, :reject_if => :which_profile_type
 
+  after_create :create_full_name
+
 
   enum profile_type: {
     user: 0,
@@ -103,4 +105,7 @@ class User < ApplicationRecord
     end
   end
 
+  def create_full_name
+    self.update(full_name: self.first_name + ' ' + self.last_name)
+  end
 end

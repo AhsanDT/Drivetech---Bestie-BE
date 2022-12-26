@@ -12,4 +12,9 @@ class Api::V1::UserProfileController < Api::V1::ApiController
   def get_user_profile
     @user = User.find_by(id: params[:user_id])
   end
+
+  def search_by_name
+    @users = User.where(full_name: params[:name])
+    render json: {data: @users}
+  end
 end

@@ -139,6 +139,7 @@ Rails.application.routes.draw do
           get :get_camera_detail
           get :get_portfolio
           post :get_user_profile
+          post :search_by_name
         end
       end
       
