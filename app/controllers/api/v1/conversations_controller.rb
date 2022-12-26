@@ -3,7 +3,7 @@ class Api::V1::ConversationsController < Api::V1::ApiController
   before_action :find_conversation, only: [:change_read_status, :get_unread_messages]
 
   def create
-    if Conversation.find_by(sender_id: @current_user.id ,recipient_id: params[:recipient_id]).present?
+    if Conversation.find_by(sender_id: @current_user.id ,recipient_id: params[:recipient_id]).present? || Conversation.find_by(sender_id: params[:recipient_id] ,recipient_id: @current_user.id).present?
       render json: { message: "Conversation has already been created!" }, status: :unprocessable_entity
     else
       @conversation = Conversation.create!(sender_id: @current_user.id, recipient_id: params[:recipient_id])
