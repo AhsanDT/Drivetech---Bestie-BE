@@ -6,7 +6,7 @@ class Api::V1::ConversationsController < Api::V1::ApiController
     if params[:recipient_id].present?
       @conversation = Conversation.find_by(sender_id: @current_user.id ,recipient_id: params[:recipient_id]) || Conversation.find_by(sender_id: params[:recipient_id] ,recipient_id: @current_user.id)
       if @conversation.present?
-        render json: { message: "Conversation has already been created!", data: @conversation }, status: :unprocessable_entity
+        render json: { message: "Conversation has already been created!", data: @conversation }
       else
         @conversation = Conversation.create!(sender_id: @current_user.id, recipient_id: params[:recipient_id])
         render json: {

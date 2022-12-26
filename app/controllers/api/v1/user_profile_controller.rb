@@ -14,10 +14,18 @@ class Api::V1::UserProfileController < Api::V1::ApiController
   end
 
   def search_by_name
-    if @current_user.profile_type == "bestie"
-      @users = User.where(full_name: params[:name], profile_type: "user")
+    if params[:name].present?
+      if @current_user.profile_type == "bestie"
+        @users = User.where(full_name: params[:name], profile_type: "user")
+      else
+        @users = User.where(full_name: params[:name], profile_type: "bestie")
+      end
     else
-      @users = User.where(full_name: params[:name], profile_type: "bestie")
+      if @current_user.profile_type == 'user'
+        @users = User.bestie_users.first(10)
+      else
+        @users = User.end_users.first(10)
+      end
     end
     render json: {data: @users}
   end
