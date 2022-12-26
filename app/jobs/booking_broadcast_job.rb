@@ -17,7 +17,8 @@ class BookingBroadcastJob < ApplicationJob
         is_blocked: @conversation.is_blocked,
         booking_id: booking.id,
         booking_date: booking.date,
-        booking_time: booking.time,
+        booking_start_time: booking.start_time,
+        booking_end_time: booking.end_time,
         booking_rate: booking.rate,
         booking_status: booking.status
       }
