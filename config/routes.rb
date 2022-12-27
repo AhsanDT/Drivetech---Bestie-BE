@@ -146,6 +146,7 @@ Rails.application.routes.draw do
       resources :schedules, only: [:create] do
         collection do
           post :besties_availablity
+          post :bestie_schedule
         end
       end
 
@@ -177,6 +178,7 @@ Rails.application.routes.draw do
         collection do
           post :send_reschedule
           post :reschedule
+          post :pingpong
         end
       end
       resources :reviews
