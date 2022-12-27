@@ -100,16 +100,14 @@ ActiveRecord::Schema.define(version: 2022_12_26_072839) do
   end
 
   create_table "bookings", force: :cascade do |t|
-    t.string "date"
-    t.time "time", default: [], array: true
     t.float "rate"
     t.bigint "send_to_id"
     t.bigint "send_by_id"
     t.integer "status"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.datetime "start_time"
-    t.datetime "end_time"
+    t.datetime "start_time", default: [], array: true
+    t.datetime "end_time", default: [], array: true
     t.index ["send_by_id"], name: "index_bookings_on_send_by_id"
     t.index ["send_to_id"], name: "index_bookings_on_send_to_id"
   end
@@ -256,8 +254,8 @@ ActiveRecord::Schema.define(version: 2022_12_26_072839) do
   create_table "schedules", force: :cascade do |t|
     t.text "month", default: [], array: true
     t.text "day", default: [], array: true
-    t.time "start_time"
-    t.time "end_time"
+    t.datetime "start_time"
+    t.datetime "end_time"
     t.bigint "user_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false

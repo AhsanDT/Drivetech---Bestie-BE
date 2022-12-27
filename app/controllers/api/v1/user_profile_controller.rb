@@ -1,5 +1,7 @@
 class Api::V1::UserProfileController < Api::V1::ApiController
   before_action :authorize_user
+  before_action :besties, only: [:search_by_name]
+  before_action :end_users, only: [:search_by_name]
 
   def get_profile; end
 
@@ -16,17 +18,27 @@ class Api::V1::UserProfileController < Api::V1::ApiController
   def search_by_name
     if params[:name].present?
       if @current_user.profile_type == "bestie"
-        @users = User.where(full_name: params[:name], profile_type: "user")
+        @users = end_users.where('full_name ILIKE ?',  "%#{params[:name]}%")
       else
-        @users = User.where(full_name: params[:name], profile_type: "bestie")
+        @users = besties.where('full_name ILIKE ?',  "%#{params[:name]}%")
       end
     else
       if @current_user.profile_type == 'user'
-        @users = User.bestie_users.first(10)
+        @users = besties.first(10)
       else
-        @users = User.end_users.first(10)
+        @users = end_users.first(10)
       end
     end
-    render json: {data: @users}
+    @users
+  end
+
+  private
+
+  def besties
+    User.bestie_users
+  end
+
+  def end_users
+    User.end_users
   end
 end

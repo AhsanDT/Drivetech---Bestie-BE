@@ -3,8 +3,8 @@ class CreateSchedules < ActiveRecord::Migration[6.1]
     create_table :schedules do |t|
       t.text :month, default: [], array: true
       t.text :day, default: [], array: true
-      t.time :start_time
-      t.time :end_time
+      t.datetime :start_time
+      t.datetime :end_time
       t.references :user, foreign_key: true
       
       t.timestamps
