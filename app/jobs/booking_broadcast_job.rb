@@ -17,10 +17,10 @@ class BookingBroadcastJob < ApplicationJob
         is_blocked: @conversation.is_blocked,
         user_id: booking.send_by_id,
         booking_id: booking.id,
-        booking_start_time: booking.start_time,
-        booking_end_time: booking.end_time,
-        booking_rate: booking.rate,
-        booking_status: booking.status
+        start_time: booking.start_time,
+        end_time: booking.end_time,
+        rate: booking.rate,
+        status: booking.status
       }
       ActionCable.server.broadcast(build_conversation_id(@conversation.id), payload)
     end
