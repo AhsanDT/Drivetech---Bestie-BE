@@ -1,7 +1,7 @@
 class Api::V1::BookingsController < Api::V1::ApiController
   before_action :authorize_user
   before_action :find_booking, only: [:update, :send_reschedule, :reschedule]
-  # after_action :notification_worker, only: [:create]
+  after_action :notification_worker, only: [:create]
 
   def create
     @booking = []
@@ -71,13 +71,15 @@ class Api::V1::BookingsController < Api::V1::ApiController
     @booking = Booking.find_by(id: params[:id])
   end
 
-  # def notification_worker
-  #   one_hour_worker = NotificationWorker.perform_in((@booking.start_time[1] - 1.hours), @booking.send_to_id, "1 Hour Before Your Appointment with #{@booking.send_to.full_name}")
-  #   half_hour_worker = NotificationWorker.perform_in((@booking.start_time[1] - 0.5.hours), @booking.send_to_id, "30 Minutes Before Your Appointment with #{@booking.send_to.full_name}")
-  #   twenty_minute_worker = NotificationWorker.perform_in((@booking.start_time[1] - 20.minutes), @booking.send_to_id, "20 Minutes Before Your Appointment with #{@booking.send_to.full_name}")
-  #   ten_minutes_worker = NotificationWorker.perform_in((@booking.start_time[1] - 10.minutes), @booking.send_to_id, "10 Minutes Before Your Appointment with #{@booking.send_to.full_name}")
-  #   two_hour_worker = NotificationWorker.perform_in((@booking.end_time[1] - 2.hours), @booking.send_to_id, "Appointment has started #{((@booking.end_time[1] - @booking.start_time[1]) / 60).to_i} min remaining")
-  #   twenty_minutes_worker = NotificationWorker.perform_in((@booking.end_time[1] - 20.minutes), @booking.send_to_id, "Appointment almost done 20 min remaining")
-  #   zero_minutes_worker = NotificationWorker.perform_in((@booking.end_time[1] - 20.minutes), @booking.send_to_id, "Appointment done 0 min")
-  # end
+  def notification_worker
+    if @booking.present?
+      one_hour_worker = NotificationWorker.perform_in((@booking.start_time.first - 1.hours), @booking.send_to_id, "1 Hour Before Your Appointment with #{@booking.send_to.full_name}")
+      half_hour_worker = NotificationWorker.perform_in((@booking.start_time.first - 0.5.hours), @booking.send_to_id, "30 Minutes Before Your Appointment with #{@booking.send_to.full_name}")
+      twenty_minute_worker = NotificationWorker.perform_in((@booking.start_time.first - 20.minutes), @booking.send_to_id, "20 Minutes Before Your Appointment with #{@booking.send_to.full_name}")
+      ten_minutes_worker = NotificationWorker.perform_in((@booking.start_time.first - 10.minutes), @booking.send_to_id, "10 Minutes Before Your Appointment with #{@booking.send_to.full_name}")
+      two_hour_worker = NotificationWorker.perform_in((@booking.end_time.last - 2.hours), @booking.send_to_id, "Appointment has started #{((@booking.end_time.last - @booking.start_time.first) / 60).to_i} min remaining")
+      twenty_minutes_worker = NotificationWorker.perform_in((@booking.end_time.last - 20.minutes), @booking.send_to_id, "Appointment almost done 20 min remaining")
+      zero_minutes_worker = NotificationWorker.perform_in((@booking.end_time.last - 20.minutes), @booking.send_to_id, "Appointment done 0 min")
+    end
+  end
 end
