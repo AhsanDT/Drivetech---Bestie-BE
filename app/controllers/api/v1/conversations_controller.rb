@@ -49,8 +49,7 @@ class Api::V1::ConversationsController < Api::V1::ApiController
       @messages = Message.where(conversation_id: @conversation.id).order(created_at: :desc)
       @combine_booking << @messages
       @combine_booking << @current_user.bookings
-      @combine_booking = @combine_booking.flatten.sort_by(&:created_at)
-      render json: { message: @combine_booking},status: :ok
+      @combine_booking = @combine_booking.flatten.sort { |x,y| y.created_at <=> x.created_at }
       render json: { message: 'No messages found', data: [] }, status: :ok if @messages.nil?
     else
       render json: { message: "This conversation is not present" }, status: :not_found

@@ -4,24 +4,27 @@ class Api::V1::BookingsController < Api::V1::ApiController
   # after_action :notification_worker, only: [:create]
 
   def create
+    @booking = []
+    @bestie_booking_timing = []
     params[:start_time].each do |start_time|
-      @bestie_booking = User.find_by(id: params[:send_to_id]).bookings.where("(?) = Any(start_time)", start_time)
+      @bestie_booking_timing  << User.find_by(id: params[:send_to_id]).bookings.where("(?) = Any(start_time)", start_time)
     end
-    @bestie_booking.each do |booking|
-      @time_array = []
-      @time_array = @time_array + booking.start_time
-      params[:start_time].each do |start_time|
-        @check = @time_array.include?(start_time)
+    custom_start_time_params = []
+    custom_end_time_params = []
+    time_array = @bestie_booking_timing.flatten.pluck(:start_time).flatten
+      params[:start_time].each_with_index do |start_time,index|
+        @check = time_array.include?(start_time)
+        if @check == false
+          custom_start_time_params << start_time
+          custom_end_time_params << params[:end_time][index]
+        end
+      end 
+      params[:start_time] = custom_start_time_params
+      params[:end_time] = custom_end_time_params
+      if params[:start_time].present?
+        @booking  = @current_user.bookings.create(booking_params)
       end
-      @check
-    end
-    if @check == true
-      render json: { message: "Already booked" }
-    else
-      @booking = @current_user.bookings.create(booking_params)
-      Notification.create(subject: "Booking", body: "You have a new booking", user_id: @booking.send_to_id)
-      render json: { data: @booking }
-    end
+    render json: { data: @booking }
   end
 
   def update

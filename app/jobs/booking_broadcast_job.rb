@@ -15,6 +15,7 @@ class BookingBroadcastJob < ApplicationJob
         recepient_image: @conversation.recepient.profile_image.attached? ? @conversation.recepient.profile_image.url : "",
         unread_messages: @conversation.messages.where(is_read: false).count,
         is_blocked: @conversation.is_blocked,
+        user_id: booking.send_by_id,
         booking_id: booking.id,
         booking_start_time: booking.start_time,
         booking_end_time: booking.end_time,

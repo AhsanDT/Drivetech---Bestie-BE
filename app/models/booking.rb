@@ -10,4 +10,10 @@ class Booking < ApplicationRecord
 
   after_create_commit { BookingBroadcastJob.perform_later(self) }
   after_update { BookingBroadcastJob.perform_later(self) }
+  after_create :create_notification
+
+
+  def create_notification
+    Notification.create(subject: "Booking", body: "You have a new booking", user_id: self.send_to_id)
+  end
 end
