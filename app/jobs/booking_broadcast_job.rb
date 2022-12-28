@@ -22,7 +22,14 @@ class BookingBroadcastJob < ApplicationJob
         rate: booking.rate,
         status: booking.status
       }
+      puts '--------------------------------------'
+      puts payload
+      puts '--------------------------------------'
+
       ActionCable.server.broadcast(build_conversation_id(@conversation.id), payload)
+      puts '++++++++++++++++++++++++++++++++++++++'
+      puts payload
+      puts '++++++++++++++++++++++++++++++++++++++'
     end
   end
 
