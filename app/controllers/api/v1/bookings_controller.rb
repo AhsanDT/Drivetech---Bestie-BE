@@ -12,18 +12,18 @@ class Api::V1::BookingsController < Api::V1::ApiController
     custom_start_time_params = []
     custom_end_time_params = []
     time_array = @bestie_booking_timing.flatten.pluck(:start_time).flatten
-      params[:start_time].each_with_index do |start_time,index|
-        @check = time_array.include?(start_time)
-        if @check == false
-          custom_start_time_params << start_time
-          custom_end_time_params << params[:end_time][index]
-        end
-      end 
-      params[:start_time] = custom_start_time_params
-      params[:end_time] = custom_end_time_params
-      if params[:start_time].present?
-        @booking  = @current_user.bookings.create(booking_params)
+    params[:start_time].each_with_index do |start_time,index|
+      @check = time_array.include?(start_time)
+      if @check == false
+        custom_start_time_params << start_time
+        custom_end_time_params << params[:end_time][index]
       end
+    end
+    params[:start_time] = custom_start_time_params
+    params[:end_time] = custom_end_time_params
+    if params[:start_time].present?
+      @booking  = @current_user.bookings.create(booking_params)
+    end
     render json: { data: @booking }
   end
 
