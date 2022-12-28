@@ -35,10 +35,14 @@ class Api::V1::SchedulesController < Api::V1::ApiController
   end
 
   def bestie_schedule
-    schedule_start_time = @bestie.schedule.start_time
-    schedule_end_time = @bestie.schedule.end_time
-    _format_slot = split_time(schedule_start_time,schedule_end_time)
-    render json: {data: _format_slot}
+    if @bestie.schedule.present?
+      schedule_start_time = @bestie.schedule.start_time
+      schedule_end_time = @bestie.schedule.end_time
+      _format_slot = split_time(schedule_start_time,schedule_end_time)
+      render json: {data: _format_slot}
+    else
+      render json: { message: "This bestie has no schedule" }, status: :unprocessable_entity
+    end
   end
 
   private

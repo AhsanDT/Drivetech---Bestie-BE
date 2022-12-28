@@ -254,8 +254,8 @@ ActiveRecord::Schema.define(version: 2022_12_26_072839) do
   create_table "schedules", force: :cascade do |t|
     t.text "month", default: [], array: true
     t.text "day", default: [], array: true
-    t.datetime "start_time"
-    t.datetime "end_time"
+    t.string "start_time"
+    t.string "end_time"
     t.bigint "user_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
