@@ -16,7 +16,7 @@ class BookingBroadcastJob < ApplicationJob
         unread_messages: @conversation.messages.where(is_read: false).count,
         is_blocked: @conversation.is_blocked,
         user_id: booking.send_by_id,
-        booking_id: booking.id,
+        id: booking.id,
         start_time: booking.start_time,
         end_time: booking.end_time,
         rate: booking.rate,
