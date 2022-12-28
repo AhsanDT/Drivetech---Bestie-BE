@@ -41,7 +41,7 @@ class Api::V1::SchedulesController < Api::V1::ApiController
       _format_slot = split_time(schedule_start_time,schedule_end_time)
       render json: {data: _format_slot}
     else
-      render json: { message: "This bestie has no schedule" }, status: :unprocessable_entity
+      render json: { message: "This bestie has no schedule" }
     end
   end
 
