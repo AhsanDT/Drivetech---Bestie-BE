@@ -2,12 +2,16 @@ Rails.application.routes.draw do
   require 'sidekiq/web'
   mount Sidekiq::Web => '/sidekiq'
   mount ActionCable.server => "/cable"
+
   devise_for :admins,
              controllers: {
                  sessions: 'admins/sessions',
-                 registrations: 'admins/registrations',
                  passwords: 'admins/passwords'
              }
+  devise_scope :admin do
+    get 'reset_password_instruction', to: 'admins/passwords#custom_reset_password_action'
+  end
+
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
   root to: "admins/dashboard#index"
 
