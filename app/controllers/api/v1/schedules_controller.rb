@@ -38,8 +38,20 @@ class Api::V1::SchedulesController < Api::V1::ApiController
     if @bestie.schedule.present?
       schedule_start_time = @bestie.schedule.start_time
       schedule_end_time = @bestie.schedule.end_time
+      bestie_months = @bestie.schedule.month
+      bestie_days = @bestie.schedule.day
       _format_slot = split_time(schedule_start_time,schedule_end_time)
-      render json: {data: _format_slot}
+      months = []
+      days = []
+      bestie_months.each do |month|
+        months << month
+      end
+
+      bestie_days.each do |day|
+        days << day
+      end
+
+      render json: { months: months, days: days, slots: _format_slot}
     else
       render json: { message: "This bestie has no schedule" }
     end
