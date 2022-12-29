@@ -180,6 +180,11 @@ Rails.application.routes.draw do
         end
       end
       resources :reviews
+      resources :payments, only: [:create] do
+        collection do
+          post :transfer
+        end
+      end
     end
   end
 end
