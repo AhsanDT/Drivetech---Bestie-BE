@@ -1,9 +1,14 @@
 class Api::V1::SchedulesController < Api::V1::ApiController
   before_action :authorize_user
   before_action :find_bestie, only: [:bestie_schedule]
+  before_action :find_schedule, only: [:create]
 
   def create
-    @schedule = Schedule.create(month: params[:month], start_time: params[:start_time], end_time: params[:end_time], day: params[:day], user_id: @current_user.id)
+    if @schedule.present?
+      @schedule.update(month: params[:month], start_time: params[:start_time], end_time: params[:end_time], day: params[:day])
+    else
+      @schedule = Schedule.create(month: params[:month], start_time: params[:start_time], end_time: params[:end_time], day: params[:day], user_id: @current_user.id)
+    end
     render json: { data: @schedule }
   end
 
@@ -61,5 +66,9 @@ class Api::V1::SchedulesController < Api::V1::ApiController
 
   def find_bestie
     @bestie = User.find_by(id: params[:bestie_id])
+  end
+
+  def find_schedule
+    @schedule = User.find_by(id: @current_user.id).schedule
   end
 end
