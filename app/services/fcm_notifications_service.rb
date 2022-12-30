@@ -7,6 +7,10 @@ class FcmNotificationsService
                 notification: {
                   subject: notification.subject,
                   body: notification.body,
+                  type: notification.notification_type,
+                  name: notification.send_by_name,
+                  send_by_id: notification.send_by_id,
+                  send_to_id: notification.user_id
                 }
               }
     registration_ids = User.find_by(id: notification.user_id).mobile_devices.pluck(:mobile_token)

@@ -195,6 +195,7 @@ ActiveRecord::Schema.define(version: 2022_12_30_101707) do
     t.datetime "updated_at", precision: 6, null: false
     t.string "notification_type"
     t.bigint "send_by_id"
+    t.string "send_by_name"
     t.index ["send_by_id"], name: "index_notifications_on_send_by_id"
     t.index ["user_id"], name: "index_notifications_on_user_id"
   end
