@@ -9,7 +9,7 @@
         <h5>Enter your details below</h5>
         <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
           <h6>Email Address</h6>
-          <div class="form_blk <%= resource.errors.any? ? "error" : "" %>" id="email_div">
+          <div class="form_blk <%= params[:error].present? ? "error" : "" %>" id="email_div">
             <input type="text" name="admin[email]" id="customemailfield" class="input" placeholder="Type here">
           </div>
           <p class="error_text">Invalid email address</p>

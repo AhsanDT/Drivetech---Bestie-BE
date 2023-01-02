@@ -3,12 +3,16 @@ class Admins::PasswordsController < Devise::PasswordsController
   def custom_reset_password_action
   end
 
+  def new
+    super
+  end
+
   def create
     @admin = Admin.find_by(email: params[:admin][:email])
     if @admin.present?
       super
     else
-      redirect_to new_admin_password_path
+      redirect_to (new_admin_password_path+"?error=No admin against this email")
     end
   end
 
