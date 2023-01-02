@@ -42,7 +42,7 @@ class Api::V1::BookingsController < Api::V1::ApiController
 
   def send_reschedule
     if @booking.present?
-      @notification = Notification.create(subject: "Reschedule Booking", body: "#{@booking.send_by.full_name} requests to re-schedule your booking", user_id: @booking.send_to_id, send_by_id: @current_user.id ,notification_type: "Reschedule")
+      @notification = Notification.create(subject: "Reschedule Booking", body: "#{@booking.send_by.full_name} requests to re-schedule your booking", user_id: @booking.send_to_id, send_by_id: @current_user.id , notification_type: "Reschedule Request")
       render json: { data: @notification }
     else
       render json: { message: "Booking not found"}
@@ -52,9 +52,9 @@ class Api::V1::BookingsController < Api::V1::ApiController
   def reschedule
     if @booking.present?
       if params[:status] == "Accepted"
-        @notification = Notification.create(subject: "Accepted Reschedule", body: "Your request to re-schedule your booking has been approved by #{@booking.send_by.full_name}. Wait until your client chooses new date and time.", user_id: @booking.send_to_id, send_by_id: @current_user.id, send_by_name: @booking.send_by.full_name)
+        @notification = Notification.create(subject: "Accepted Reschedule", body: "Your request to re-schedule your booking has been approved by #{@booking.send_by.full_name}. Wait until your client chooses new date and time.", user_id: @booking.send_to_id, send_by_id: @current_user.id, send_by_name: @booking.send_by.full_name, notification_type: "Reschedule Accept")
       elsif params[:status] == "Rejected"
-        @notification = Notification.create(subject: "Rejected Reschedule", body: "Your request to re-schedule your booking has been denied by #{@booking.send_by.full_name}.", user_id: @booking.send_to_id, send_by_id: @current_user.id, send_by_name: @booking.send_by.full_name)
+        @notification = Notification.create(subject: "Rejected Reschedule", body: "Your request to re-schedule your booking has been denied by #{@booking.send_by.full_name}.", user_id: @booking.send_to_id, send_by_id: @current_user.id, send_by_name: @booking.send_by.full_name, notification_type: "Reschedule Deny")
       end
       render json: { data: @notification }
     else
@@ -74,13 +74,13 @@ class Api::V1::BookingsController < Api::V1::ApiController
 
   def notification_worker
     if @booking.present?
-      one_hour_worker = NotificationWorker.perform_in((@booking.start_time.first - 1.hours), @booking.send_to_id, "1 Hour Before Your Appointment with #{@booking.send_to.full_name}")
-      half_hour_worker = NotificationWorker.perform_in((@booking.start_time.first - 0.5.hours), @booking.send_to_id, "30 Minutes Before Your Appointment with #{@booking.send_to.full_name}")
-      twenty_minute_worker = NotificationWorker.perform_in((@booking.start_time.first - 20.minutes), @booking.send_to_id, "20 Minutes Before Your Appointment with #{@booking.send_to.full_name}")
-      ten_minutes_worker = NotificationWorker.perform_in((@booking.start_time.first - 10.minutes), @booking.send_to_id, "10 Minutes Before Your Appointment with #{@booking.send_to.full_name}")
-      two_hour_worker = NotificationWorker.perform_in((@booking.end_time.last - 2.hours), @booking.send_to_id, "Appointment has started #{((@booking.end_time.last - @booking.start_time.first) / 60).to_i} min remaining")
-      twenty_minutes_worker = NotificationWorker.perform_in((@booking.end_time.last - 20.minutes), @booking.send_to_id, "Appointment almost done 20 min remaining")
-      zero_minutes_worker = NotificationWorker.perform_in((@booking.end_time.last - 20.minutes), @booking.send_to_id, "Appointment done 0 min")
+      one_hour_worker = NotificationWorker.perform_in((@booking.start_time.first - 1.hours), @booking.send_to_id, "1 Hour Before Your Appointment with #{@booking.send_to.full_name}", @booking.send_by.id, @booking.send_by.full_name, "Pre Reminder" )
+      half_hour_worker = NotificationWorker.perform_in((@booking.start_time.first - 0.5.hours), @booking.send_to_id, "30 Minutes Before Your Appointment with #{@booking.send_to.full_name}", @booking.send_by.id, @booking.send_by.full_name, "Pre Reminder")
+      twenty_minute_worker = NotificationWorker.perform_in((@booking.start_time.first - 20.minutes), @booking.send_to_id, "20 Minutes Before Your Appointment with #{@booking.send_to.full_name}", @booking.send_by.id, @booking.send_by.full_name, "Pre Reminder")
+      ten_minutes_worker = NotificationWorker.perform_in((@booking.start_time.first - 10.minutes), @booking.send_to_id, "10 Minutes Before Your Appointment with #{@booking.send_to.full_name}", @booking.send_by.id, @booking.send_by.full_name, "Pre Reminder")
+      two_hour_worker = NotificationWorker.perform_in((@booking.end_time.last - 2.hours), @booking.send_to_id, "Appointment has started #{((@booking.end_time.last - @booking.start_time.first) / 60).to_i} min remaining", @booking.send_by.id, @booking.send_by.full_name, "Post Reminder")
+      twenty_minutes_worker = NotificationWorker.perform_in((@booking.end_time.last - 20.minutes), @booking.send_to_id, "Appointment almost done 20 min remaining", @booking.send_by.id, @booking.send_by.full_name, "Post Reminder")
+      zero_minutes_worker = NotificationWorker.perform_in((@booking.end_time.last - 20.minutes), @booking.send_to_id, "Appointment done 0 min", @booking.send_by.id, @booking.send_by.full_name, "Post Reminder")
     end
   end
 end
