@@ -1,7 +1,6 @@
 class FcmNotificationsService
   require 'fcm'
   def self.push_notification(notification)
-    debugger
     data = {
       subject: notification.subject,
       body: notification.body,
