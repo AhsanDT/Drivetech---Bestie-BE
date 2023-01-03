@@ -1,13 +1,15 @@
 class FcmNotificationsService
   require 'fcm'
   def self.push_notification(notification)
+    debugger
     data = {
       subject: notification.subject,
       body: notification.body,
       type: notification.notification_type,
       name: notification.send_by_name,
       send_by_id: notification.send_by_id,
-      send_to_id: notification.user_id
+      send_to_id: notification.user_id,
+      sender_profile_image: notification.send_by.profile_image.attached? ? notification.send_by.profile_image.blob.url : ''
     }
     fcm_client = FCM.new(ENV['FIREBASE_SECRET_KEY']) # set your FCM_SERVER_KEY
     options = { priority: 'high',
