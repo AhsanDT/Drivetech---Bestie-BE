@@ -8,6 +8,7 @@ class FcmNotificationsService
       name: notification.send_by_name,
       send_by_id: notification.send_by_id,
       send_to_id: notification.user_id,
+      booking_sender_id: notification.booking_sender_id,
       sender_profile_image: notification.send_by.profile_image.attached? ? notification.send_by.profile_image.blob.url : ''
     }
     fcm_client = FCM.new(ENV['FIREBASE_SECRET_KEY']) # set your FCM_SERVER_KEY

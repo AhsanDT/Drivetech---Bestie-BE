@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_12_30_101707) do
+ActiveRecord::Schema.define(version: 2023_01_03_142152) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
@@ -196,6 +196,7 @@ ActiveRecord::Schema.define(version: 2022_12_30_101707) do
     t.string "notification_type"
     t.bigint "send_by_id"
     t.string "send_by_name"
+    t.string "booking_sender_id"
     t.index ["send_by_id"], name: "index_notifications_on_send_by_id"
     t.index ["user_id"], name: "index_notifications_on_user_id"
   end
