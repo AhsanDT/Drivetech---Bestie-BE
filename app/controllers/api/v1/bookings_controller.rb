@@ -78,9 +78,9 @@ class Api::V1::BookingsController < Api::V1::ApiController
       half_hour_worker = NotificationWorker.perform_in((@booking.start_time.first - 0.5.hours), @booking.send_to_id, "30 Minutes Before Your Appointment with #{@booking.send_to.full_name}", @booking.send_by.id, @booking.send_by.full_name, "Pre Reminder")
       twenty_minute_worker = NotificationWorker.perform_in((@booking.start_time.first - 20.minutes), @booking.send_to_id, "20 Minutes Before Your Appointment with #{@booking.send_to.full_name}", @booking.send_by.id, @booking.send_by.full_name, "Pre Reminder")
       ten_minutes_worker = NotificationWorker.perform_in((@booking.start_time.first - 10.minutes), @booking.send_to_id, "10 Minutes Before Your Appointment with #{@booking.send_to.full_name}", @booking.send_by.id, @booking.send_by.full_name, "Pre Reminder")
-      two_hour_worker = NotificationWorker.perform_in((@booking.end_time.last - 2.hours), @booking.send_to_id, "Appointment has started #{((@booking.end_time.last - @booking.start_time.first) / 60).to_i} min remaining", @booking.send_by.id, @booking.send_by.full_name, "Post Reminder")
-      twenty_minutes_worker = NotificationWorker.perform_in((@booking.end_time.last - 20.minutes), @booking.send_to_id, "Appointment almost done 20 min remaining", @booking.send_by.id, @booking.send_by.full_name, "Post Reminder")
-      zero_minutes_worker = NotificationWorker.perform_in((@booking.end_time.last - 20.minutes), @booking.send_to_id, "Appointment done 0 min", @booking.send_by.id, @booking.send_by.full_name, "Post Reminder")
+      two_hour_worker = NotificationWorker.perform_in((@booking.end_time.last - 2.hours), @booking.send_to_id, "#{((@booking.end_time.last - @booking.start_time.first) / 60).to_i}", @booking.send_by.id, @booking.send_by.full_name, "Post Reminder")
+      twenty_minutes_worker = NotificationWorker.perform_in((@booking.end_time.last - 20.minutes), @booking.send_to_id, "20", @booking.send_by.id, @booking.send_by.full_name, "Post Reminder")
+      zero_minutes_worker = NotificationWorker.perform_in((@booking.end_time.last - 20.minutes), @booking.send_to_id, "0", @booking.send_by.id, @booking.send_by.full_name, "Post Reminder")
     end
   end
 end
