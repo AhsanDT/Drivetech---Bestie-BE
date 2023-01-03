@@ -48,6 +48,10 @@ class Api::V1::UsersController < Api::V1::ApiController
     end
   end
 
+  def map_users
+    @users = User.within(5, :origin => @current_user)
+  end
+
   private
 
   def find_nearby_users

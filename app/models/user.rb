@@ -14,6 +14,7 @@ class User < ApplicationRecord
     acts_as_mappable :default_formula => :sphere,
                     :distance_field_name => :distance,
                     :lat_column_name => :latitude,
+                    :default_units => :kms,
                     :lng_column_name => :longitude
   validates :email, uniqueness: true, on: :create
   validates :phone_number, uniqueness: true, on: :create, if: :phone_number?

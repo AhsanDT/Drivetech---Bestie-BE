@@ -127,6 +127,7 @@ Rails.application.routes.draw do
           get :search
           get :recent_besties
           post :filter
+          get :map_users
         end
       end
       
