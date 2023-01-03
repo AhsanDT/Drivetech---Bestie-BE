@@ -38,7 +38,7 @@ class Api::V1::ConversationsController < Api::V1::ApiController
     @message.user_id = @current_user.id
     @conversation = Conversation.find_by(id: params[:message][:conversation_id])
     @count = @conversation.messages.where(is_read: false).count
-    Notification.create(subject: "Message", body: "You have a new message", user_id: @conversation.recipient_id, notification_type: "Chat")
+    Notification.create(subject: "Message", body: "You have a new message", user_id: @conversation.recipient_id, notification_type: "Chat", send_by_id: @message.user_id)
   end
 
   def get_messages

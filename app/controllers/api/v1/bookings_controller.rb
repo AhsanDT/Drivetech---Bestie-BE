@@ -23,7 +23,7 @@ class Api::V1::BookingsController < Api::V1::ApiController
     params[:end_time] = custom_end_time_params
     if params[:start_time].present?
       @booking  = @current_user.bookings.create(booking_params)
-      Notification.create(subject: "Booking", body: "You have a new booking", notification_type: "Booking", user_id: @booking.send_to_id, send_by_id: @booking.send_by_id, send_by_name: @booking.send_by.full_name)
+      Notification.create(subject: "Booking_#{@booking.id}", body: "You have a new booking", notification_type: "Booking", user_id: @booking.send_to_id, send_by_id: @booking.send_by_id, send_by_name: @booking.send_by.full_name)
     end
     render json: { data: @booking }
   end
@@ -42,7 +42,7 @@ class Api::V1::BookingsController < Api::V1::ApiController
 
   def send_reschedule
     if @booking.present?
-      @notification = Notification.create(subject: "Reschedule Booking", body: "#{@booking.send_by.full_name} requests to re-schedule your booking", user_id: @booking.send_to_id, send_by_id: @current_user.id , notification_type: "Reschedule Request")
+      @notification = Notification.create(subject: "Reschedule Booking_#{@booking.id}", body: "#{@booking.send_by.full_name} requests to re-schedule your booking", user_id: @booking.send_to_id, send_by_id: @current_user.id, send_by_name: @booking.send_by.full_name, notification_type: "Reschedule Request")
       render json: { data: @notification }
     else
       render json: { message: "Booking not found"}
@@ -52,9 +52,9 @@ class Api::V1::BookingsController < Api::V1::ApiController
   def reschedule
     if @booking.present?
       if params[:status] == "Accepted"
-        @notification = Notification.create(subject: "Accepted Reschedule", body: "Your request to re-schedule your booking has been approved by #{@booking.send_by.full_name}. Wait until your client chooses new date and time.", user_id: @booking.send_to_id, send_by_id: @current_user.id, send_by_name: @booking.send_by.full_name, notification_type: "Reschedule Accept")
+        @notification = Notification.create(subject: "Accepted Reschedule_#{@booking.id}", body: "Your request to re-schedule your booking has been approved by #{@booking.send_by.full_name}. Wait until your client chooses new date and time.", user_id: @booking.send_to_id, send_by_id: @current_user.id, send_by_name: @booking.send_by.full_name, notification_type: "Reschedule Accept")
       elsif params[:status] == "Rejected"
-        @notification = Notification.create(subject: "Rejected Reschedule", body: "Your request to re-schedule your booking has been denied by #{@booking.send_by.full_name}.", user_id: @booking.send_to_id, send_by_id: @current_user.id, send_by_name: @booking.send_by.full_name, notification_type: "Reschedule Deny")
+        @notification = Notification.create(subject: "Rejected Reschedule_#{@booking.id}", body: "Your request to re-schedule your booking has been denied by #{@booking.send_by.full_name}.", user_id: @booking.send_to_id, send_by_id: @current_user.id, send_by_name: @booking.send_by.full_name, notification_type: "Reschedule Deny")
       end
       render json: { data: @notification }
     else
