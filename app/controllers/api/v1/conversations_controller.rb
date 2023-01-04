@@ -72,17 +72,9 @@ class Api::V1::ConversationsController < Api::V1::ApiController
     return render json: { error: "User Current Status is missing in params." }, status: :unprocessable_entity unless params[:current_status].present?
     if params[:current_status] == "online"
       @current_user.update(is_online: true)
-      ActionCable.server.broadcast("user_appearance_status", {
-        title: 'Online Status',
-        body: {online: true, user_id: @current_user.id}
-      })
       return render json: { message: "User Current Status is set to Online." }, status: :ok
     elsif params[:current_status] == "offline"
       @current_user.update(is_online: false)
-      ActionCable.server.broadcast("user_appearance_status", {
-        title: 'Online Status',
-        body: {online: false, user_id: @current_user.id}
-      })
       return render json: { message: "User Current Status is set to Offline." }, status: :ok
     else
       return render json: { error: "Value of User Current Status is incorrect in params." }, status: :unprocessable_entity
