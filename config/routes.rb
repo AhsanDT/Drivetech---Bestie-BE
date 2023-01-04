@@ -185,7 +185,7 @@ Rails.application.routes.draw do
         collection do
           post :send_reschedule
           post :reschedule
-          post :pingpong
+          get :current_user_bookings
         end
       end
       resources :reviews
