@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_12_26_072839) do
+ActiveRecord::Schema.define(version: 2023_01_04_074258) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
@@ -100,16 +100,14 @@ ActiveRecord::Schema.define(version: 2022_12_26_072839) do
   end
 
   create_table "bookings", force: :cascade do |t|
-    t.string "date"
-    t.time "time", default: [], array: true
     t.float "rate"
     t.bigint "send_to_id"
     t.bigint "send_by_id"
     t.integer "status"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.datetime "start_time"
-    t.datetime "end_time"
+    t.datetime "start_time", default: [], array: true
+    t.datetime "end_time", default: [], array: true
     t.index ["send_by_id"], name: "index_bookings_on_send_by_id"
     t.index ["send_to_id"], name: "index_bookings_on_send_to_id"
   end
@@ -151,6 +149,14 @@ ActiveRecord::Schema.define(version: 2022_12_26_072839) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["recipient_id"], name: "index_conversations_on_recipient_id"
     t.index ["sender_id"], name: "index_conversations_on_sender_id"
+  end
+
+  create_table "default_payments", force: :cascade do |t|
+    t.integer "payment_type"
+    t.bigint "user_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_default_payments_on_user_id"
   end
 
   create_table "interests", force: :cascade do |t|
@@ -195,6 +201,11 @@ ActiveRecord::Schema.define(version: 2022_12_26_072839) do
     t.bigint "user_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "notification_type"
+    t.bigint "send_by_id"
+    t.string "send_by_name"
+    t.string "booking_sender_id"
+    t.index ["send_by_id"], name: "index_notifications_on_send_by_id"
     t.index ["user_id"], name: "index_notifications_on_user_id"
   end
 
@@ -256,8 +267,8 @@ ActiveRecord::Schema.define(version: 2022_12_26_072839) do
   create_table "schedules", force: :cascade do |t|
     t.text "month", default: [], array: true
     t.text "day", default: [], array: true
-    t.time "start_time"
-    t.time "end_time"
+    t.string "start_time"
+    t.string "end_time"
     t.bigint "user_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false

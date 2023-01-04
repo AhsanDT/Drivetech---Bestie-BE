@@ -93,6 +93,6 @@ class Api::V1::CardsController < Api::V1::ApiController
   end
 
   def card_params
-    params.require(:card).permit(:card_holder_name, :token, :country)
+    params.require(:card).permit(:card_holder_name, :token, :country, :default)
   end
 end

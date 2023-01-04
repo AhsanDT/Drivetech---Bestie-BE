@@ -183,6 +183,8 @@ Rails.application.routes.draw do
       resources :payments, only: [:create] do
         collection do
           post :transfer
+          post :make_default_payment
+          post :create_payment
         end
       end
     end
