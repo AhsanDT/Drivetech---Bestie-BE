@@ -13,6 +13,15 @@ class Api::V1::UserProfileController < Api::V1::ApiController
 
   def get_user_profile
     @user = User.find_by(id: params[:user_id])
+    if @user.reviews.present?
+      @review_rating = 0
+      @user.reviews.each do |review|
+        @review_rating  += review.rating
+      end
+      @review_average_rating = @review_rating / @user.reviews.count
+    else
+      @review_average_rating = ''
+    end
   end
 
   def search_by_name
