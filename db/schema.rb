@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_01_03_142152) do
+ActiveRecord::Schema.define(version: 2023_01_04_113808) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
@@ -149,6 +149,14 @@ ActiveRecord::Schema.define(version: 2023_01_03_142152) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["recipient_id"], name: "index_conversations_on_recipient_id"
     t.index ["sender_id"], name: "index_conversations_on_sender_id"
+  end
+
+  create_table "default_payments", force: :cascade do |t|
+    t.integer "payment_type"
+    t.bigint "user_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_default_payments_on_user_id"
   end
 
   create_table "interests", force: :cascade do |t|
@@ -365,6 +373,7 @@ ActiveRecord::Schema.define(version: 2023_01_03_142152) do
     t.string "stripe_connect_id"
     t.string "country_code"
     t.string "full_name"
+    t.boolean "is_online"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"

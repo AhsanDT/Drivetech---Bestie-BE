@@ -94,6 +94,7 @@ Rails.application.routes.draw do
           post :get_messages
           put :change_read_status
           get :get_unread_messages
+          post :update_user_status
         end
       end
 
