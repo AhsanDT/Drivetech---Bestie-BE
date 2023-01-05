@@ -29,7 +29,6 @@ class Api::V1::ReviewsController < Api::V1::ApiController
 
   def pending_reviews
     @bookings = Booking.where(send_by_id: @current_user.id).where.missing(:review)
-    render json: { message: "Bookings with pending reviews", data: @bookings}
   end
 
   private
