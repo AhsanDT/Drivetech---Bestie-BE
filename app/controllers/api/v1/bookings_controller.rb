@@ -75,7 +75,7 @@ class Api::V1::BookingsController < Api::V1::ApiController
   end
 
   def current_user_bookings
-    @bookings = Booking.where(send_by_id: @current_user.id) || Booking.where(send_to_id: @current_user.id)
+    @bookings = Booking.where(send_by_id: @current_user.id).or(Booking.where(send_to_id: @current_user.id))
   end
 
   private
