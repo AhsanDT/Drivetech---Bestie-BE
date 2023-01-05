@@ -188,7 +188,11 @@ Rails.application.routes.draw do
           get :current_user_bookings
         end
       end
-      resources :reviews
+      resources :reviews, only: [:create, :index] do
+        collection do
+          get :pending_reviews
+        end
+      end
     end
   end
 end
