@@ -13,6 +13,7 @@ class Api::V1::UserProfileController < Api::V1::ApiController
 
   def get_user_profile
     @user = User.find_by(id: params[:user_id])
+    @conversation = Conversation.where(sender_id: @current_user.id, recipient_id: @user.id).or(Conversation.where(sender_id: @user.id, recipient_id: @current_user.id))
     if @user.reviews.present?
       @review_rating = 0
       @user.reviews.each do |review|
