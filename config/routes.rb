@@ -193,6 +193,14 @@ Rails.application.routes.draw do
           get :pending_reviews
         end
       end
+      resources :reviews
+      resources :payments, only: [:create] do
+        collection do
+          post :transfer
+          post :make_default_payment
+          post :create_payment
+        end
+      end
     end
   end
 end
