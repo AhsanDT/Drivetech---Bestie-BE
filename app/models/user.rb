@@ -14,6 +14,7 @@ class User < ApplicationRecord
     acts_as_mappable :default_formula => :sphere,
                     :distance_field_name => :distance,
                     :lat_column_name => :latitude,
+                    :default_units => :kms,
                     :lng_column_name => :longitude
   validates :email, uniqueness: true, on: :create
   validates :phone_number, uniqueness: true, on: :create, if: :phone_number?
@@ -63,6 +64,7 @@ class User < ApplicationRecord
   accepts_nested_attributes_for :social_media, allow_destroy: true, :reject_if => :which_profile_type
 
   after_create :create_full_name
+  after_save :check_is_online_update
 
 
   enum profile_type: {
@@ -108,5 +110,11 @@ class User < ApplicationRecord
 
   def create_full_name
     self.update(full_name: self.first_name + ' ' + self.last_name)
+  end
+
+  def check_is_online_update
+    if self.saved_change_to_is_online?
+      StatusBroadcastJob.perform_now(self)
+    end
   end
 end

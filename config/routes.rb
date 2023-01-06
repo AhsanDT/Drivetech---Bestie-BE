@@ -2,12 +2,17 @@ Rails.application.routes.draw do
   require 'sidekiq/web'
   mount Sidekiq::Web => '/sidekiq'
   mount ActionCable.server => "/cable"
+
   devise_for :admins,
              controllers: {
                  sessions: 'admins/sessions',
                  registrations: 'admins/registrations',
                  passwords: 'admins/passwords'
              }
+  devise_scope :admin do
+    get 'reset_password_instruction', to: 'admins/passwords#custom_reset_password_action'
+  end
+
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
   root to: "admins/dashboard#index"
 
@@ -89,6 +94,7 @@ Rails.application.routes.draw do
           post :get_messages
           put :change_read_status
           get :get_unread_messages
+          post :update_user_status
         end
       end
 
@@ -122,6 +128,7 @@ Rails.application.routes.draw do
           get :search
           get :recent_besties
           post :filter
+          get :map_users
         end
       end
       
@@ -146,6 +153,7 @@ Rails.application.routes.draw do
       resources :schedules, only: [:create] do
         collection do
           post :besties_availablity
+          post :bestie_schedule
         end
       end
 
@@ -177,6 +185,12 @@ Rails.application.routes.draw do
         collection do
           post :send_reschedule
           post :reschedule
+          get :current_user_bookings
+        end
+      end
+      resources :reviews, only: [:create, :index] do
+        collection do
+          get :pending_reviews
         end
       end
       resources :reviews

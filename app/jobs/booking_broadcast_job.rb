@@ -15,10 +15,12 @@ class BookingBroadcastJob < ApplicationJob
         recepient_image: @conversation.recepient.profile_image.attached? ? @conversation.recepient.profile_image.url : "",
         unread_messages: @conversation.messages.where(is_read: false).count,
         is_blocked: @conversation.is_blocked,
-        booking_id: booking.id,
-        booking_date: booking.date,
-        booking_time: booking.time,
-        booking_rate: booking.rate
+        user_id: booking.send_by_id,
+        id: booking.id,
+        start_time: booking.start_time,
+        end_time: booking.end_time,
+        rate: booking.rate,
+        status: booking.status
       }
       ActionCable.server.broadcast(build_conversation_id(@conversation.id), payload)
     end

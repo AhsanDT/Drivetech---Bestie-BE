@@ -9,5 +9,5 @@ class Booking < ApplicationRecord
   }
 
   after_create_commit { BookingBroadcastJob.perform_later(self) }
-  after_update { BookingBroadcastJob.perform_later(self) }
+  after_update_commit { BookingBroadcastJob.perform_later(self) }
 end

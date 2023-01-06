@@ -13,6 +13,5 @@ class Api::V1::NotificationsController < Api::V1::ApiController
 
   def get_notifications
     @notifications = @current_user.notifications
-    render json: { data: @notifications }
   end
 end

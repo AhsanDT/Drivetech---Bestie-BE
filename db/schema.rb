@@ -373,6 +373,7 @@ ActiveRecord::Schema.define(version: 2023_01_04_074258) do
     t.string "stripe_connect_id"
     t.string "country_code"
     t.string "full_name"
+    t.boolean "is_online"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"

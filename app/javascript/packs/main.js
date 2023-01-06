@@ -134,6 +134,31 @@ $(document).on('turbolinks:load', function() {
 		}
 	})
 
+	$(document).on("keyup keypress", function(e){
+		if ($('#message_validation').val() == '' && $('#image_validation').val() == ''){
+			var keyCode = e.keyCode || e.which;
+			if (keyCode === 13) {
+				e.preventDefault();
+				return false;
+			}
+    }
+	})
+
+	$("#send_button").on("click", function(e){
+		if ($('#message_validation').val() == '' && $('#image_validation').val() == ''){
+				e.preventDefault();
+				return false;
+			}
+	})
+
+	$(document).ready(function(){
+		var uri = window.location.toString();
+		if (uri.indexOf("?error") > 0) {
+				var clean_uri = uri.substring(0, uri.indexOf("?"));
+				window.history.replaceState({}, document.title, clean_uri);
+		}
+	});
+
 	$(document).ready(function(){
 		document.querySelector(".previous_page").innerHTML = "Previous"
 		document.querySelector(".next_page").innerHTML = "Next"

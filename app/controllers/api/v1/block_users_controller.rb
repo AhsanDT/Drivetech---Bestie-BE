@@ -4,18 +4,30 @@ class Api::V1::BlockUsersController < Api::V1::ApiController
   before_action :find_blocked_user, only: [:create]
 
   def create
-    if @user.present?
-      return render json: { message: "User is already blocked"} unless !@blocked_user.present?
-      @block_user = BlockUser.create(blocked_user_id: params[:block_user_id], blocked_by_id: @current_user.id)
-      @conversation = Conversation.where(sender_id: params[:block_user_id], recipient_id: @current_user.id).or(Conversation.where(sender_id: @current_user.id, recipient_id: params[:block_user_id]))
-      if @conversation.present?
-        @conversation.update(is_blocked: true)
-        render json: { message: "User has been blocked", data: @block_user }
+    if params[:type] == "block"
+      if @user.present?
+        return render json: { message: "User is already blocked"} unless !@blocked_user.present?
+        @block_user = BlockUser.create(blocked_user_id: params[:block_user_id], blocked_by_id: @current_user.id)
+        @conversation = Conversation.where(sender_id: params[:block_user_id], recipient_id: @current_user.id).or(Conversation.where(sender_id: @current_user.id, recipient_id: params[:block_user_id]))
+        if @conversation.present?
+          @conversation.update(is_blocked: true)
+        else
+          render json: { message: "User and conversation has been blocked" }
+        end
       else
-        render json: { message: "User and conversation has been blocked" }
+        render json: { message: "This user does not exist" }
       end
-    else
-      render json: { message: "This user does not exist" }
+    elsif params[:type] == "report"
+      @support = @current_user.supports.new(supports_params.merge(ticket_number: generate_ticket_number.upcase, description: "Report"))
+      if @support.save
+        @conversation = SupportConversation.create(support_id: @support.id, recipient_id: Admin.admin.id, sender_id: @support.user_id)
+        @message = UserSupportMessage.create(support_conversation_id: @conversation.id, body: "#{params[:user_name]} has been reported by #{@current_user.first_name + ' ' + @current_user.last_name}", sender_id: @support.user_id )
+      else
+        render json: {
+          message: 'There are errors while creating support query',
+          error: @support.errors.full_messages
+        }, status: :unprocessable_entity
+      end
     end
   end
 
@@ -39,18 +51,18 @@ class Api::V1::BlockUsersController < Api::V1::ApiController
     render json: { message: "Current user blocked users", data: @blocked_users }
   end
 
-  def report
-    @support = @current_user.supports.new(supports_params.merge(ticket_number: generate_ticket_number.upcase, description: "Report"))
-    if @support.save
-      @conversation = SupportConversation.create(support_id: @support.id, recipient_id: Admin.last.id, sender_id: @support.user_id)
-      @message = UserSupportMessage.create(support_conversation_id: @conversation.id, body: "#{params[:user_name]} has been reported by #{@current_user.first_name + ' ' + @current_user.last_name}", sender_id: @support.user_id )
-    else
-      render json: {
-        message: 'There are errors while creating support query',
-        error: @support.errors.full_messages
-      }, status: :unprocessable_entity
-    end
-  end
+  # def report
+  #   @support = @current_user.supports.new(supports_params.merge(ticket_number: generate_ticket_number.upcase, description: "Report"))
+  #   if @support.save
+  #     @conversation = SupportConversation.create(support_id: @support.id, recipient_id: Admin.admin.id, sender_id: @support.user_id)
+  #     @message = UserSupportMessage.create(support_conversation_id: @conversation.id, body: "#{params[:user_name]} has been reported by #{@current_user.first_name + ' ' + @current_user.last_name}", sender_id: @support.user_id )
+  #   else
+  #     render json: {
+  #       message: 'There are errors while creating support query',
+  #       error: @support.errors.full_messages
+  #     }, status: :unprocessable_entity
+  #   end
+  # end
 
   private
 

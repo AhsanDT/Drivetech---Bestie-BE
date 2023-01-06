@@ -3,14 +3,19 @@ class Api::V1::ConversationsController < Api::V1::ApiController
   before_action :find_conversation, only: [:change_read_status, :get_unread_messages]
 
   def create
-    if Conversation.find_by(sender_id: @current_user.id ,recipient_id: params[:recipient_id]).present? || Conversation.find_by(sender_id: params[:recipient_id] ,recipient_id: @current_user.id).present?
-      render json: { message: "Conversation has already been created!" }, status: :unprocessable_entity
+    if params[:recipient_id].present?
+      @conversation = Conversation.find_by(sender_id: @current_user.id ,recipient_id: params[:recipient_id]) || Conversation.find_by(sender_id: params[:recipient_id] ,recipient_id: @current_user.id)
+      if @conversation.present?
+        render json: { message: "Conversation has already been created!", data: @conversation }
+      else
+        @conversation = Conversation.create!(sender_id: @current_user.id, recipient_id: params[:recipient_id])
+        render json: {
+          message: "Conversation has been created",
+          data: @conversation
+        }, status: :ok
+      end
     else
-      @conversation = Conversation.create!(sender_id: @current_user.id, recipient_id: params[:recipient_id])
-      render json: {
-        message: "Conversation has been created",
-        data: @conversation
-      }, status: :ok
+      render json: {message: "Please provide the recipient ID"}
     end
   end
 
@@ -33,14 +38,18 @@ class Api::V1::ConversationsController < Api::V1::ApiController
     @message.user_id = @current_user.id
     @conversation = Conversation.find_by(id: params[:message][:conversation_id])
     @count = @conversation.messages.where(is_read: false).count
-    Notification.create(subject: "Message", body: "You have a new message", user_id: @conversation.recipient_id)
+    Notification.create(subject: "Message", body: "You have a new message", user_id: @conversation.recipient_id, notification_type: "Chat", send_by_id: @message.user_id)
   end
 
   def get_messages
+    @combine_booking = []
     @conversation = Conversation.find_by(id: params[:conversation_id])
     @count = @conversation.messages.where(is_read: false).count
     if @conversation.present?
       @messages = Message.where(conversation_id: @conversation.id).order(created_at: :desc)
+      @combine_booking << @messages
+      @combine_booking << Booking.where(send_by_id: @conversation.recipient_id, send_to_id: @conversation.sender_id).or(Booking.where(send_by_id: @conversation.sender_id, send_to_id: @conversation.recipient_id))
+      @combine_booking = @combine_booking.flatten.sort { |x,y| y.created_at <=> x.created_at }
       render json: { message: 'No messages found', data: [] }, status: :ok if @messages.nil?
     else
       render json: { message: "This conversation is not present" }, status: :not_found
@@ -57,6 +66,19 @@ class Api::V1::ConversationsController < Api::V1::ApiController
 
   def get_unread_messages
     @count = @conversation.messages.where(is_read: false).count
+  end
+
+  def update_user_status
+    return render json: { error: "User Current Status is missing in params." }, status: :unprocessable_entity unless params[:current_status].present?
+    if params[:current_status] == "online"
+      @current_user.update(is_online: true)
+      return render json: { message: "User Current Status is set to Online." }, status: :ok
+    elsif params[:current_status] == "offline"
+      @current_user.update(is_online: false)
+      return render json: { message: "User Current Status is set to Offline." }, status: :ok
+    else
+      return render json: { error: "Value of User Current Status is incorrect in params." }, status: :unprocessable_entity
+    end
   end
 
   private

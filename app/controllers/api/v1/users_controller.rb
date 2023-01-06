@@ -1,3 +1,4 @@
+
 class Api::V1::UsersController < Api::V1::ApiController
   before_action :authorize_user
   before_action :find_nearby_users, only: [:suggested_besties, :besties_near_you, :home]
@@ -36,10 +37,19 @@ class Api::V1::UsersController < Api::V1::ApiController
   end
 
   def filter
-    @besties = besties.where(param_clean(filter_params))
-    @besties = @besties.includes(:user_interests).where(user_interests: {interest_id: params[:interest_id]})  if params[:interest_id].present?
-    @besties = @besties.includes(:camera_detail).where(camera_detail: {camera_type: params[:camera_type]}) if params[:camera_type].present?
-    @besties = @besties.in_range(eval(params[:distance_range]), units: :miles, origin: [@current_user.latitude, @current_user.longitude]) if params[:distance_range].present?
+    if !params[:location].present? && !params[:age].present? && !params[:sex].present? && !params[:camera_type].present? && !params[:interest_id].present? && !params[:distance_range].present?
+      @besties = besties
+      @besties.where('age <= ?', 50)
+    else
+      @besties = besties.where(param_clean(filter_params))
+      @besties = @besties.includes(:user_interests).where(user_interests: {interest_id: params[:interest_id]})  if params[:interest_id].present?
+      @besties = @besties.includes(:camera_detail).where(camera_detail: {camera_type: params[:camera_type]}) if params[:camera_type].present?
+      @besties = @besties.in_range(eval(params[:distance_range]), units: :miles, origin: [@current_user.latitude, @current_user.longitude]) if params[:distance_range].present?
+    end
+  end
+
+  def map_users
+    @users = User.within(5, :origin => @current_user)
   end
 
   private
