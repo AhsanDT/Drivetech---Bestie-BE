@@ -70,4 +70,11 @@ class StripeService
       source: source,
     })
   end
+
+  def self.update_default(stripe_customer_id, token)
+    Stripe::Customer.update(
+      stripe_customer_id,
+      {invoice_settings: {default_payment_method: token}},
+    )
+  end
 end

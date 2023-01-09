@@ -38,6 +38,7 @@ class Api::V1::CardsController < Api::V1::ApiController
   def update
     if @card.update(card_params)
       @current_user.cards.where.not(id: @card.id).update_all(default: false) if [true, "true"].include? params[:card][:default]
+      StripeService.update_default(@current_user.stripe_customer_id, @card.token)
       render json: {
         message: 'Card updated successfully',
         data: @card
@@ -52,6 +53,14 @@ class Api::V1::CardsController < Api::V1::ApiController
 
   def destroy
     if @card.destroy
+      begin
+        @current_user.cards.first.update(default: true) if @current_user.cards.present? && @card.default
+        Stripe::Customer.delete_source(@current_user.stripe_customer_id, @card.token)
+        StripeService.update_default(@current_user.stripe_customer_id, @current_user.cards.first.token)
+      rescue => e
+        return render json: { message: e.message }, status: :unprocessable_entity
+      end
+
       render json: {
         message: 'card deleted',
       }, status: :ok

@@ -36,6 +36,7 @@ class Api::V1::BanksController < Api::V1::ApiController
   def update
     if @bank.update(bank_params)
       @current_user.banks.where.not(id: @bank.id).update_all(default: false) if [true, "true"].include? params[:default]
+      StripeService.update_default(@current_user.stripe_customer_id, @bank.bank_id)
       render json: { message: "Account has been updated successfully!", bank: @bank }
     else
       render json: @bank.errors, status: :unprocessable_entity
@@ -49,6 +50,7 @@ class Api::V1::BanksController < Api::V1::ApiController
       begin
         @current_user.banks.first.update(default: true) if @current_user.banks.present? && @bank.default
         Stripe::Customer.delete_source(customer.id, bank_id)
+        StripeService.update_default(customer.id, bank_id)
       rescue => e
         return render json: { message: e.message }, status: :unprocessable_entity
       end
