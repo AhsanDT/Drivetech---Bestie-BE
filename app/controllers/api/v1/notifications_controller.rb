@@ -4,7 +4,9 @@ class Api::V1::NotificationsController < Api::V1::ApiController
   def notification_mobile_token
     if params[:mobile_token].present?
       token = @current_user.mobile_devices.find_or_create_by(mobile_token: params[:mobile_token])
-      @current_user.update(latitude: params[:latitude], longitude: params[:longitude])
+      if params[:latitude].present? && params[:longitude].present?
+        @current_user.update(latitude: params[:latitude], longitude: params[:longitude])
+      end
       if token.save
         render json: { message: "Successesfully Created" }
       end
