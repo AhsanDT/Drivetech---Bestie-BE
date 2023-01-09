@@ -188,17 +188,31 @@ Rails.application.routes.draw do
           get :current_user_bookings
         end
       end
+
       resources :reviews, only: [:create, :index] do
         collection do
           get :pending_reviews
         end
       end
+
       resources :reviews
+
       resources :payments, only: [:create] do
         collection do
           post :transfer
           post :make_default_payment
           post :create_payment
+        end
+      end
+
+      resources :pay_pal, only: [] do
+        collection do
+          post :pay_pal_confirm
+          post :create_paypal_customer_account
+          get :create_payment
+          post :transfer_amount
+          get :create_payout
+          post :save_paypal_account_details
         end
       end
     end

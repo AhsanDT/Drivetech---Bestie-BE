@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_01_04_074258) do
+ActiveRecord::Schema.define(version: 2023_01_06_095620) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
@@ -225,6 +225,18 @@ ActiveRecord::Schema.define(version: 2023_01_04_074258) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["permalink"], name: "index_pages_on_permalink"
+  end
+
+  create_table "paypal_partner_accounts", force: :cascade do |t|
+    t.integer "payment_type"
+    t.string "account_id"
+    t.string "account_type"
+    t.string "email"
+    t.boolean "is_default", default: false
+    t.bigint "user_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_paypal_partner_accounts_on_user_id"
   end
 
   create_table "posts", force: :cascade do |t|

@@ -57,6 +57,7 @@ class User < ApplicationRecord
   has_many :reviews, dependent: :destroy
   has_many :reviews, :foreign_key => "review_to_id", :class_name => "Review"
   has_one :default_payment
+  has_many :paypal_partner_accounts, dependent: :destroy
 
   accepts_nested_attributes_for :camera_detail, allow_destroy: true, :reject_if => :which_profile_type
   accepts_nested_attributes_for :user_interests, allow_destroy: true
