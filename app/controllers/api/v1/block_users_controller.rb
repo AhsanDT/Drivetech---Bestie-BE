@@ -48,7 +48,6 @@ class Api::V1::BlockUsersController < Api::V1::ApiController
 
   def index
     @blocked_users = @current_user.blocked_users
-    render json: { message: "Current user blocked users", data: @blocked_users }
   end
 
   # def report

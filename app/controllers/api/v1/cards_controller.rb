@@ -37,6 +37,7 @@ class Api::V1::CardsController < Api::V1::ApiController
 
   def update
     if @card.update(card_params)
+      @current_user.cards.where.not(id: @card.id).update_all(default: false) if [true, "true"].include? params[:card][:default]
       render json: {
         message: 'Card updated successfully',
         data: @card
