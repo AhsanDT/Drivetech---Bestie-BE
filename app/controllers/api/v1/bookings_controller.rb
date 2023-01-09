@@ -32,10 +32,10 @@ class Api::V1::BookingsController < Api::V1::ApiController
     @booking.update(booking_params)
     if params[:status] == "Accepted"
       current_user_notification = Notification.create(subject: "You #{params[:status]} The Booking", body: "This is added to your calendar you have an upcoming appointment today", user_id: @booking.send_to_id, send_by_id: @booking.send_to_id, send_by_name: @booking.send_to.full_name, notification_type: "UpdateBooking", booking_sender_id: @booking.send_by_id)
-      other_user_notification = Notification.create(subject: "Booking Has Been Set!", body: "This is added to your calendar you have an upcoming appointment today", user_id: @booking.send_by_id, send_by_id: @booking.send_to_id, send_by_name: @booking.send_to.full_name, notification_type: "UpdateBooking", booking_sender_id: @booking.send_by_id)
+      other_user_notification = Notification.create(subject: "Booking Has Been Set!", body: "Your booking with #{@booking.send_to.full_name} has been confirmed.", user_id: @booking.send_by_id, send_by_id: @booking.send_to_id, send_by_name: @booking.send_to.full_name, notification_type: "UpdateBooking", booking_sender_id: @booking.send_by_id)
     elsif params[:status] == "Rejected"
       current_user_notification = Notification.create(subject: "You Denied The Booking", body: "You denied the booking, you can never return this back", user_id: @booking.send_to_id, send_by_id: @booking.send_to_id, notification_type: "UpdateBooking", send_by_name: @booking.send_to.full_name, booking_sender_id: @booking.send_by_id)
-      other_user_notification = Notification.create(subject: "Booking Has Been Denied!", body: "Your booking has been denied by bestie, you can try and book again.", user_id: @booking.send_by_id, send_by_id: @booking.send_to_id, notification_type: "UpdateBooking", send_by_name: @booking.send_to.full_name, booking_sender_id: @booking.send_by_id)
+      other_user_notification = Notification.create(subject: "Booking Has Been Denied!", body: "#{@booking.send_to.full_name} has canceled your booking.", user_id: @booking.send_by_id, send_by_id: @booking.send_to_id, notification_type: "UpdateBooking", send_by_name: @booking.send_to.full_name, booking_sender_id: @booking.send_by_id)
     end
     render json: {message: "Booking has been #{params[:status]}", data: @booking}
   end
