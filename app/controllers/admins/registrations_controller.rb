@@ -17,7 +17,7 @@ class Admins::RegistrationsController < Devise::RegistrationsController
         set_flash_message! :alert, :signed_up
         sign_up(resource_name, resource)
         redirect_to admins_sub_admins_path
-        flash[:alert] = "SubAdmin has been created successfully."
+        flash[:notice] = "SubAdmin has been created successfully."
       else
         set_flash_message! :alert, :"signed_up_but_#{resource.inactive_message}"
         expire_data_after_sign_in!
