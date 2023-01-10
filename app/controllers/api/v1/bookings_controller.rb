@@ -1,6 +1,6 @@
 class Api::V1::BookingsController < Api::V1::ApiController
   before_action :authorize_user
-  before_action :find_booking, only: [:update, :send_reschedule, :reschedule]
+  before_action :find_booking, only: [:update, :send_reschedule, :reschedule, :cancel_booking]
   after_action :notification_worker, only: [:create]
 
   def create
@@ -31,13 +31,15 @@ class Api::V1::BookingsController < Api::V1::ApiController
   def update
     @booking.update(booking_params)
     if params[:status] == "Accepted"
+      booking_duration = (@booking.end_time.last - @booking.start_time.first) / 3600
+      @payment = StripeService.create_charge_by_card((((@booking.rate * booking_duration).to_f) * 100).to_i, @current_user.stripe_customer_id)
       current_user_notification = Notification.create(subject: "You #{params[:status]} The Booking", body: "This is added to your calendar you have an upcoming appointment today", user_id: @booking.send_to_id, send_by_id: @booking.send_to_id, send_by_name: @booking.send_to.full_name, notification_type: "UpdateBooking", booking_sender_id: @booking.send_by_id)
       other_user_notification = Notification.create(subject: "Booking Has Been Set!", body: "Your booking with #{@booking.send_to.full_name} has been confirmed.", user_id: @booking.send_by_id, send_by_id: @booking.send_to_id, send_by_name: @booking.send_to.full_name, notification_type: "UpdateBooking", booking_sender_id: @booking.send_by_id)
     elsif params[:status] == "Rejected"
       current_user_notification = Notification.create(subject: "You Denied The Booking", body: "You denied the booking, you can never return this back", user_id: @booking.send_to_id, send_by_id: @booking.send_to_id, notification_type: "UpdateBooking", send_by_name: @booking.send_to.full_name, booking_sender_id: @booking.send_by_id)
       other_user_notification = Notification.create(subject: "Booking Has Been Denied!", body: "#{@booking.send_to.full_name} has canceled your booking.", user_id: @booking.send_by_id, send_by_id: @booking.send_to_id, notification_type: "UpdateBooking", send_by_name: @booking.send_to.full_name, booking_sender_id: @booking.send_by_id)
     end
-    render json: {message: "Booking has been #{params[:status]}", data: @booking}
+    render json: {message: "Booking has been #{params[:status]}", data: @booking, payment: @payment}
   end
 
   def send_reschedule
@@ -76,6 +78,31 @@ class Api::V1::BookingsController < Api::V1::ApiController
 
   def current_user_bookings
     @bookings = Booking.where(send_by_id: @current_user.id).or(Booking.where(send_to_id: @current_user.id))
+  end
+
+  def cancel_booking
+    if @booking.present?
+      @booking_duration = (@booking.end_time.last - @booking.start_time.first) / 3600
+      if ((Time.now - @booking.updated_at) / 3600) <= 24
+        begin
+          @payment = StripePaymentService.create_transfer(((((@booking.rate * @booking_duration).to_f) * 100) / 2).to_i, @current_user.stripe_connect_id)
+        rescue => e
+          return render json: e.message
+        end
+        @booking.destroy
+        render json: { message: "Booking has been canceled" }
+      else
+        begin
+          @payment = StripePaymentService.create_transfer((((@booking.rate * @booking_duration).to_f) * 100).to_i, @current_user.stripe_connect_id)
+        rescue
+          return render json: e.message
+        end
+        @booking.destroy
+        render json: { message: "Booking has been canceled" }
+      end
+    else
+      render json: { message: "Booking not found." }
+    end
   end
 
   private

@@ -186,14 +186,18 @@ Rails.application.routes.draw do
           post :send_reschedule
           post :reschedule
           get :current_user_bookings
+          post :cancel_booking
         end
       end
+
       resources :reviews, only: [:create, :index] do
         collection do
           get :pending_reviews
         end
       end
+
       resources :reviews
+
       resources :payments, only: [:create] do
         collection do
           post :transfer
