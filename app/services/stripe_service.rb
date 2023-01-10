@@ -62,12 +62,11 @@ class StripeService
     subscription = Stripe::Subscription.cancel(subscription_id)
   end
 
-  def self.create_charge_by_card(amount, source, stripe_customer_id)
+  def self.create_charge_by_card(amount, stripe_customer_id)
     charge = Stripe::Charge.create({
       amount: amount,
       currency: 'usd',
-      customer: stripe_customer_id,
-      source: source,
+      customer: stripe_customer_id
     })
   end
 

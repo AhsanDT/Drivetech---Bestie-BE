@@ -21,7 +21,7 @@ class Api::V1::PaymentsController < Api::V1::ApiController
   def create_payment
     begin
       if @default_payment.payment_type == "card"
-        @payment = StripeService.create_charge_by_card((((params[:amount]).to_f) * 100).to_i, @card.last.token, @current_user.stripe_customer_id)
+        @payment = StripeService.create_charge_by_card((((params[:amount]).to_f) * 100).to_i, @current_user.stripe_customer_id)
         render json: { data: @payment }
       elsif @default_payment.payment_type == "apple_pay"
         @payment_intent = ApplePayService.apple_pay((((params[:amount]).to_f) * 100).to_i)
