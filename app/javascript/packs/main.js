@@ -78,6 +78,8 @@ $(document).on('turbolinks:load', function() {
 			data: this.data,
 			success: function(response) {
 				$('.add_popup_div').html(response)
+				let alert_message =  $("#showerrormessage").html();
+				alert_message? $("#customshowerrormessage").html('<h6 style="color:red;">'+alert_message+'</h6>') : ''
 			}
 		})
 	});
