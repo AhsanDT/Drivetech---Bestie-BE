@@ -42,6 +42,13 @@ class Api::V1::ProfileController < Api::V1::ApiController
         render json: { message: "User type is already bestie" }
       end
     end
+    if @current_user.reviews.present?
+      @review_rating = 0
+      @current_user.reviews.each do |review|
+        @review_rating  += review.rating
+      end
+      @review_average_rating = @review_rating / @current_user.reviews.count
+    end
   end
 
   def update_user_interests
