@@ -6,14 +6,21 @@ class Api::V1::ReviewsController < Api::V1::ApiController
   def create
     if @booking.present?
       if @current_user.profile_type == "bestie" || "Bestie"
-        @review = BestieReview.create(review_params.merge(review_to_id: @booking.send_to_id, review_by_id: @current_user.id))
         if @booking.send_to_id == @current_user.id
+          @review = BestieReview.create(review_params.merge(review_to_id: @booking.send_by_id, review_by_id: @current_user.id))
           Notification.create(subject: "Review", body: "#{@current_user.full_name} gave you feedback and posted a review on your profile.", notification_type: "Review", user_id: @booking.send_by_id, send_by_id: @current_user.id, send_by_name: @current_user.full_name, booking_sender_id: @booking.send_by_id)
         elsif @booking.send_by_id == @current_user.id
+          @review = BestieReview.create(review_params.merge(review_to_id: @booking.send_to_id, review_by_id: @current_user.id))
           Notification.create(subject: "Review", body: "#{@current_user.full_name} gave you feedback and posted a review on your profile.", notification_type: "Review", user_id: @booking.send_to_id, send_by_id: @current_user.id, send_by_name: @current_user.full_name, booking_sender_id: @booking.send_by_id)
         end
       else
-        @review = UserReview.create(review_params.merge(review_to_id: @booking.send_to_id, review_by_id: @current_user.id))
+        if @booking.send_to_id == @current_user.id
+          @review = UserReview.create(review_params.merge(review_to_id: @booking.send_by_id, review_by_id: @current_user.id))
+          Notification.create(subject: "Review", body: "#{@current_user.full_name} gave you feedback and posted a review on your profile.", notification_type: "Review", user_id: @booking.send_by_id, send_by_id: @current_user.id, send_by_name: @current_user.full_name, booking_sender_id: @booking.send_by_id)
+        elsif @booking.send_by_id == @current_user.id
+          @review = UserReview.create(review_params.merge(review_to_id: @booking.send_to_id, review_by_id: @current_user.id))
+          Notification.create(subject: "Review", body: "#{@current_user.full_name} gave you feedback and posted a review on your profile.", notification_type: "Review", user_id: @booking.send_to_id, send_by_id: @current_user.id, send_by_name: @current_user.full_name, booking_sender_id: @booking.send_by_id)
+        end
       end
     else
       render json: {message: "This booking is not present"}

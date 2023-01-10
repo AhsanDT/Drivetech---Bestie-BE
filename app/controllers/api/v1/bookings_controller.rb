@@ -2,6 +2,7 @@ class Api::V1::BookingsController < Api::V1::ApiController
   before_action :authorize_user
   before_action :find_booking, only: [:update, :send_reschedule, :reschedule, :cancel_booking]
   after_action :notification_worker, only: [:create]
+  before_action :find_bestie, only: [:create]
 
   def create
     @booking = []
@@ -22,7 +23,7 @@ class Api::V1::BookingsController < Api::V1::ApiController
     params[:start_time] = custom_start_time_params
     params[:end_time] = custom_end_time_params
     if params[:start_time].present?
-      @booking  = @current_user.bookings.create(booking_params)
+      @booking  = @current_user.bookings.create(booking_params.merge(rate: @bestie.rate))
       Notification.create(subject: "Booking_#{@booking.id}", body: "You have a new booking", notification_type: "Booking", user_id: @booking.send_to_id, send_by_id: @booking.send_by_id, send_by_name: @booking.send_by.full_name, booking_sender_id: @booking.send_by_id)
     end
     render json: { data: @booking }
@@ -108,11 +109,15 @@ class Api::V1::BookingsController < Api::V1::ApiController
   private
 
   def booking_params
-    params.permit(:id, :rate, :send_by_id, :send_to_id, :status, start_time: [], end_time: [])
+    params.permit(:id, :send_by_id, :send_to_id, :status, start_time: [], end_time: [])
   end
 
   def find_booking
     @booking = Booking.find_by(id: params[:id])
+  end
+
+  def find_bestie
+    @bestie = User.find_by(id: params[:send_to_id])
   end
 
   def notification_worker

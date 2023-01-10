@@ -68,6 +68,13 @@ class Api::V1::AuthenticationController < Api::V1::ApiController
       unless @user.profile_completed?
         @user
       end
+      if @user.reviews.present?
+        @review_rating = 0
+        @user.reviews.each do |review|
+          @review_rating  += review.rating
+        end
+        @review_average_rating = @review_rating / @user.reviews.count
+      end
     else
       render json:{
         message: 'Invalid Email or Password'
