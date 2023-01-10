@@ -1,6 +1,7 @@
 <section id="account_section">
   <%= render 'shared/sidebar' %>
   <div id="sub_admins" class="main_side">
+    <h1 id="showerrormessage" style="display: none;"></h1>
     <div id="top_header">
       <h2>Sub Admins</h2>
     </div>
@@ -35,7 +36,7 @@
     <div class="col-6">
 
       <ul class="right_blk">
-        <button type="button" class="add_sub_admin filter pop_btn" data-popup="add_subadmin">
+        <button type="button" id="clickonaddadminbtn" class="add_sub_admin filter pop_btn" data-popup="add_subadmin">
           <div class="img_blk">
             <img src="/assets/add-icon.svg" alt="">
           </div>
@@ -132,3 +133,11 @@
   </div>
   </div>
 </section>
+<script>
+    <% if flash[:alert].present? %>
+      $(document).ready(function (){
+          $("#clickonaddadminbtn").trigger("click");
+          $("#showerrormessage").html("<%= flash[:alert] %>");
+      })
+    <%end%>
+</script>
