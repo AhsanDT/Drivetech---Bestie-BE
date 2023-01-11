@@ -1,6 +1,6 @@
 class Api::V1::BookingsController < Api::V1::ApiController
   before_action :authorize_user
-  before_action :find_booking, only: [:update, :send_reschedule, :reschedule, :cancel_booking]
+  before_action :find_booking, only: [:update, :send_reschedule, :reschedule, :cancel_booking, :release_payment]
   after_action :notification_worker, only: [:create]
   before_action :find_bestie, only: [:create]
 
@@ -88,21 +88,36 @@ class Api::V1::BookingsController < Api::V1::ApiController
         begin
           @payment = StripePaymentService.create_transfer(((((@booking.rate * @booking_duration).to_f) * 100) / 2).to_i, @current_user.stripe_connect_id)
         rescue => e
-          return render json: e.message
+          return render json: { message: e.message }
         end
         @booking.destroy
         render json: { message: "Booking has been canceled" }
       else
         begin
           @payment = StripePaymentService.create_transfer((((@booking.rate * @booking_duration).to_f) * 100).to_i, @current_user.stripe_connect_id)
-        rescue
-          return render json: e.message
+        rescue => e
+          return render json: { message: e.message }
         end
         @booking.destroy
         render json: { message: "Booking has been canceled" }
       end
     else
       render json: { message: "Booking not found." }
+    end
+  end
+
+  def release_payment
+    if @booking.present?
+      @booking_duration = (@booking.end_time.last - @booking.start_time.first) / 3600
+      if params[:job_done] == "yes"
+        begin
+          @payment = StripePaymentService.create_transfer((((@booking.rate * @booking_duration).to_f) * 100).to_i, @booking.send_to.stripe_connect_id)
+        rescue => e
+          return render json: {message: e.message}
+        end
+      end
+    else
+      render json: { message: "Booking not found" }
     end
   end
 
