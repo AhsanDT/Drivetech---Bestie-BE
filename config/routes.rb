@@ -188,6 +188,8 @@ Rails.application.routes.draw do
           get :current_user_bookings
           post :cancel_booking
           post :release_payment
+          get :pending_bookings
+          post :search_pending_bookings
         end
       end
 

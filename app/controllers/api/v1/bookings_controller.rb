@@ -3,6 +3,7 @@ class Api::V1::BookingsController < Api::V1::ApiController
   before_action :find_booking, only: [:update, :send_reschedule, :reschedule, :cancel_booking, :release_payment]
   after_action :notification_worker, only: [:create]
   before_action :find_bestie, only: [:create]
+  before_action :find_pending_bookings, only: [:pending_bookings, :search_pending_bookings]
 
   def create
     @booking = []
@@ -106,6 +107,16 @@ class Api::V1::BookingsController < Api::V1::ApiController
     end
   end
 
+  def pending_bookings; end
+
+  # def search_pending_bookings
+  #   @bookings = @bookings.each do |booking|
+  #     @users = booking.send_by
+  #   end
+  #   @bookings.where('send_by.full_name ILIKE :search', search: "%#{params[:search]}%")
+  #   render json: { data: @bookings }
+  # end
+
   def release_payment
     if @booking.present?
       @booking_duration = (@booking.end_time.last - @booking.start_time.first) / 3600
@@ -133,6 +144,10 @@ class Api::V1::BookingsController < Api::V1::ApiController
 
   def find_bestie
     @bestie = User.find_by(id: params[:send_to_id])
+  end
+
+  def find_pending_bookings
+    @bookings = Booking.where(send_to_id: @current_user.id, status: nil)
   end
 
   def notification_worker
