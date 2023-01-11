@@ -138,6 +138,7 @@
       $(document).ready(function (){
           $("#clickonaddadminbtn").trigger("click");
           $("#showerrormessage").html("<%= flash[:alert] %>");
+          <% flash[:alert] = "" %>
       })
     <%end%>
 </script>
