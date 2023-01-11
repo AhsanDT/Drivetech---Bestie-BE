@@ -109,13 +109,9 @@ class Api::V1::BookingsController < Api::V1::ApiController
 
   def pending_bookings; end
 
-  # def search_pending_bookings
-  #   @bookings = @bookings.each do |booking|
-  #     @users = booking.send_by
-  #   end
-  #   @bookings.where('send_by.full_name ILIKE :search', search: "%#{params[:search]}%")
-  #   render json: { data: @bookings }
-  # end
+  def search_pending_bookings
+    @bookings = @bookings.joins(:send_by).where('full_name ILIKE :search', search: "%#{params[:search]}%")
+  end
 
   def release_payment
     if @booking.present?
