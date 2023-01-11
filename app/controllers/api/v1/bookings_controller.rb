@@ -135,6 +135,7 @@ class Api::V1::BookingsController < Api::V1::ApiController
         rescue => e
           return render json: {message: e.message}
         end
+        render json: { message: "Payment released.", data: @payment}
       end
     else
       render json: { message: "Booking not found" }
