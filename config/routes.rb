@@ -190,6 +190,7 @@ Rails.application.routes.draw do
           post :release_payment
           get :pending_bookings
           post :search_pending_bookings
+          post :add_more_time
         end
       end
 

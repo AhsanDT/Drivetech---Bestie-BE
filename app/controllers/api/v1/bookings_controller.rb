@@ -1,6 +1,6 @@
 class Api::V1::BookingsController < Api::V1::ApiController
   before_action :authorize_user
-  before_action :find_booking, only: [:update, :send_reschedule, :reschedule, :cancel_booking, :release_payment]
+  before_action :find_booking, only: [:update, :send_reschedule, :reschedule, :cancel_booking, :release_payment, :add_more_time]
   after_action :notification_worker, only: [:create]
   before_action :find_bestie, only: [:create]
   before_action :find_pending_bookings, only: [:pending_bookings, :search_pending_bookings]
@@ -111,6 +111,19 @@ class Api::V1::BookingsController < Api::V1::ApiController
 
   def search_pending_bookings
     @bookings = @bookings.joins(:send_by).where('full_name ILIKE :search', search: "%#{params[:search]}%")
+  end
+
+  def add_more_time
+    end_time_arr = @booking.end_time
+    _length = end_time_arr.length
+    new_arr_of_end_time = []
+    end_time_arr.each_with_index do |value,index|
+      new_arr_of_end_time << value + ((params[:time]).to_i).minutes if index  == (_length-1)
+      new_arr_of_end_time << value unless index  == (_length-1)
+    end
+      @booking.end_time =  new_arr_of_end_time
+      @booking.save
+    render json: { data: @booking}
   end
 
   def release_payment
