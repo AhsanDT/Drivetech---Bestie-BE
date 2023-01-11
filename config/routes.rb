@@ -191,6 +191,7 @@ Rails.application.routes.draw do
           get :pending_bookings
           post :search_pending_bookings
           post :add_more_time
+          post :finish_early
         end
       end
 

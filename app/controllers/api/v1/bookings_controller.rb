@@ -1,6 +1,6 @@
 class Api::V1::BookingsController < Api::V1::ApiController
   before_action :authorize_user
-  before_action :find_booking, only: [:update, :send_reschedule, :reschedule, :cancel_booking, :release_payment, :add_more_time]
+  before_action :find_booking, only: [:update, :send_reschedule, :reschedule, :cancel_booking, :release_payment, :add_more_time, :finish_early]
   after_action :notification_worker, only: [:create]
   before_action :find_bestie, only: [:create]
   before_action :find_pending_bookings, only: [:pending_bookings, :search_pending_bookings]
@@ -140,6 +140,15 @@ class Api::V1::BookingsController < Api::V1::ApiController
     else
       render json: { message: "Booking not found" }
     end
+  end
+
+  def finish_early
+    if @booking.send_by_id == @current_user.id
+      Notification.create(subject: "Finish earlier", body: "0", user_id: @booking.send_to_id, notification_type: "Post Reminder End", send_by_id: @current_user.id, send_by_name: @current_user.full_name, booking_sender_id: @booking.send_by_id)
+    elsif @booking.send_to_id == @current_user.id
+      Notification.create(subject: "Finish earlier", body: "0", user_id: @booking.send_by_id, notification_type: "Post Reminder End", send_by_id: @current_user.id, send_by_name: @current_user.full_name, booking_sender_id: @booking.send_by_id)
+    end
+    render json: { message: "Booking has been completed." }
   end
 
   private
