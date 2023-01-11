@@ -141,4 +141,8 @@
           <% flash[:alert] = "" %>
       })
     <%end%>
+    $(document).on("click", ".popup", function (e) {
+        $("#removethiselement").empty();
+        $("#showerrormessage").empty();
+    });
 </script>
