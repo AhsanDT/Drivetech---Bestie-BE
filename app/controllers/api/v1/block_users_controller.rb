@@ -37,6 +37,12 @@ class Api::V1::BlockUsersController < Api::V1::ApiController
     if @user.present?
       if @blocked_user.present?
         @blocked_user.destroy
+        @conversation = Conversation.where(sender_id: @user.id, recipient_id: @current_user.id).or(Conversation.where(sender_id: @current_user.id, recipient_id: @user.id))
+        if @conversation.present?
+          @conversation.update(is_blocked: false)
+        else
+          render json: { message: "Conversation is not present" }
+        end
         render json: { message: "User has been unblocked" }
       else
         render json: { message: "This user is not blocked" }
