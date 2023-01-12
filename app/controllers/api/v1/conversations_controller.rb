@@ -21,7 +21,7 @@ class Api::V1::ConversationsController < Api::V1::ApiController
 
   def index
     @conversations = Conversation.where(sender_id: @current_user.id).or(Conversation.where(recipient_id: @current_user.id))
-    @conversations = @conversations.joins(:messages).order("messages.created_at desc")
+    @conversations = @conversations.joins(:messages).order("messages.created_at desc").uniq
   end
 
   def destroy
