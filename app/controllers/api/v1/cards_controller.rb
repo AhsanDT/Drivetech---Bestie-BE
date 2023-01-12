@@ -4,9 +4,11 @@ class Api::V1::CardsController < Api::V1::ApiController
 
   def index
     cards = @current_user.cards
+    paypals = @current_user.paypal_partner_accounts
     render json: {
       message: 'Cards',
-      data: cards
+      cards: cards,
+      paypal: paypals
     }, status: :ok
   end
 
