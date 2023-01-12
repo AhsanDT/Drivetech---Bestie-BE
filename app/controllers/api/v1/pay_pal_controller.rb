@@ -71,4 +71,15 @@ class Api::V1::PayPalController < Api::V1::ApiController
       render json: { error: e.message }, status: :unprocessable_entity
     end
   end
+
+  def update_default
+    if @current_user.paypal_partner_accounts.present?
+      @pay_pal_account = @current_user.paypal_partner_accounts.find_by(id: params[:id])
+      @pay_pal_account.update(is_default: true)
+      @current_user.paypal_partner_accounts.where.not(id: params[:id]).update_all(is_default: false)
+      render json: { message: "Paypal account with id #{params[:id]} has been set to default.", data: @pay_pal_account}
+    else
+      render json: { message: "This user has no paypal account" }
+    end
+  end
 end

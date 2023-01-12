@@ -219,6 +219,7 @@ Rails.application.routes.draw do
           post :transfer_amount
           get :create_payout
           post :save_paypal_account_details
+          post :update_default
         end
       end
     end
