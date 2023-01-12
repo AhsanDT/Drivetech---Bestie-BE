@@ -50,7 +50,7 @@ class Api::V1::PayPalController < Api::V1::ApiController
   def create_payment
     begin
       if @current_user.paypal_partner_accounts.present?
-        email = @current_user.paypal_partner_accounts.last.email
+        email = @current_user.paypal_partner_accounts.where(is_default: true).last.email
       end
       response = PayPalPaymentService.new.create_payment(@current_user, email)
       render json: response
