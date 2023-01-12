@@ -9,6 +9,8 @@ json.data do
         @review_rating  += review.rating
       end
       json.review_average_rating_sender @review_average_rating = @review_rating / conversation.sender.reviews.count
+    else
+      json.review_average_rating_recipient "0"
     end
     json.recepient_profile_image conversation.recepient.profile_image.attached? ? conversation.recepient.profile_image.blob.url : ''
     json.recepient conversation.recepient
@@ -18,6 +20,8 @@ json.data do
         @review_rating  += review.rating
       end
       json.review_average_rating_recipient @review_average_rating = @review_rating / conversation.recepient.reviews.count
+    else
+      json.review_average_rating_recipient "0"
     end
     json.messages conversation.messages.last
   end
