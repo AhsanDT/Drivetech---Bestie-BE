@@ -27,7 +27,7 @@ class Api::V1::PayPalController < Api::V1::ApiController
     pay_pal_connect_id = params[:link].split("/").last
     account_type = "partner-referrals"
     if @current_user.paypal_partner_accounts.pluck(:account_id).include?(pay_pal_connect_id) == true
-      render json: { message: "Account with this ID already present!" }
+      render json: { error: "Account with this ID already present!" }, status: :unprocessable_entity
     else
       account = @current_user.paypal_partner_accounts.build(account_id: pay_pal_connect_id, account_type: account_type, email: params[:email], is_default: true, payment_type: "paypal")
       if account.save

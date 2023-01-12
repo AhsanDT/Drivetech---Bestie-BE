@@ -61,7 +61,6 @@ class PayPalPaymentService < BaseService
                                "payer_id" => account_id
                              })
 
-    # payer_id means destination account
     req_options = {
       use_ssl: uri.scheme == "https",
     }
