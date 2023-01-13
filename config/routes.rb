@@ -220,6 +220,7 @@ Rails.application.routes.draw do
           get :create_payout
           post :save_paypal_account_details
           post :update_default
+          post :delete_paypal
         end
       end
     end
