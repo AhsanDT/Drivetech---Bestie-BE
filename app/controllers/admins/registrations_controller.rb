@@ -14,7 +14,7 @@ class Admins::RegistrationsController < Devise::RegistrationsController
     resource.save
     if resource.persisted?
       if resource.active_for_authentication?
-        set_flash_message! :alert, :signed_up
+        set_flash_message! :notice, :signed_up
         sign_up(resource_name, resource)
         redirect_to admins_sub_admins_path
         flash[:notice] = "SubAdmin has been created successfully."

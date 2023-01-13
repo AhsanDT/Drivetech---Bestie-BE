@@ -9,7 +9,7 @@ class Admins::SessionsController < Devise::SessionsController
       elsif !user_params[:password].present?
         flash[:alert] = { password: "Password can't be blank"}
       else
-        flash[:alert] = {email: "Email can't be blank",password: "Password can't be blank"}
+        flash[:alert] = {email: "Email is invalid",password: "Password is invalid"}
       end
       redirect_to new_admin_session_path
     else

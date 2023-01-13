@@ -1,17 +1,7 @@
 class User < ApplicationRecord
   require 'csv'
   has_secure_password
-  # include PgSearch::Model
-  #     pg_search_scope :custom_search,
-  #                 against: [:email, :first_name, :last_name],
-  #                 using: {
-  #                   trigram: {
-  #                     threshold: 0.01,
-  #                     word_similarity: true
-  #                   }
-  #                 }
-
-    acts_as_mappable :default_formula => :sphere,
+  acts_as_mappable :default_formula => :sphere,
                     :distance_field_name => :distance,
                     :lat_column_name => :latitude,
                     :default_units => :kms,
@@ -110,7 +100,7 @@ class User < ApplicationRecord
   end
 
   def create_full_name
-    self.update(full_name: self.first_name + ' ' + self.last_name)
+    self.update(full_name: self&.first_name + ' ' + self&.last_name)
   end
 
   def check_is_online_update

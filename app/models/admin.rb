@@ -1,13 +1,6 @@
 class Admin < ApplicationRecord
   include PgSearch::Model
-  # pg_search_scope :custom_search,
-  #     against: :email,
-  #     using: {
-  #       trigram: {
-  #         threshold: 0.01,
-  #         word_similarity: true
-  #       }
-  #     }
+  after_create :create_full_name
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   require 'csv'
@@ -22,10 +15,11 @@ class Admin < ApplicationRecord
     sub_admin: 1
   }
 
-  enum status: {
-    active: 0,
-    inactive: 1
-  }
+  def create_full_name
+    self.update(full_name: self&.first_name + ' ' + self&.last_name)
+  end
+
+  enum status: {active: 'active', inactive: 'inactive'}
 
   scope :ordered_by_country, -> { reorder(location: :asc) }
 
