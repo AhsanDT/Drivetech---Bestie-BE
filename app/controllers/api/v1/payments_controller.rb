@@ -9,6 +9,16 @@ class Api::V1::PaymentsController < Api::V1::ApiController
     begin
       if @default_payment.present?
         @default_payment.update(payment_type: params[:payment_type])
+        if params[:payment_type] == "card"
+          @current_user.banks.update_all(default: false)
+          @current_user.paypal_partner_accounts.update_all(is_default: false)
+        elsif params[:payment_type] == "bank"
+          @current_user.cards.update_all(default: false)
+          @current_user.paypal_partner_accounts.update_all(is_default: false)
+        elsif params[:payment_type] == "paypal"
+          @current_user.cards.update_all(default: false)
+          @current_user.banks.update_all(default: false)
+        end
       else
         @default_payment = DefaultPayment.create(payment_type: params[:payment_type], user_id: @current_user.id)
       end
@@ -18,41 +28,41 @@ class Api::V1::PaymentsController < Api::V1::ApiController
     end
   end
 
-  def create_payment
-    begin
-      if @default_payment.payment_type == "card"
-        @payment = StripeService.create_charge_by_card((((params[:amount]).to_f) * 100).to_i, @current_user.stripe_customer_id)
-        render json: { data: @payment }
-      elsif @default_payment.payment_type == "apple_pay"
-        @payment_intent = ApplePayService.apple_pay((((params[:amount]).to_f) * 100).to_i)
-        render json: { data: @payment_intent }
-      elsif @default_payment.payment_type == "paypal"
-        render json: { message: "Payment using paypal" }
-      end
-    rescue => e
-      return render json: { error: e.message }
-    end
-  end
+  # def create_payment
+  #   begin
+  #     if @default_payment.payment_type == "card"
+  #       @payment = StripeService.create_charge_by_card((((params[:amount]).to_f) * 100).to_i, @current_user.stripe_customer_id)
+  #       render json: { data: @payment }
+  #     elsif @default_payment.payment_type == "apple_pay"
+  #       @payment_intent = ApplePayService.apple_pay((((params[:amount]).to_f) * 100).to_i)
+  #       render json: { data: @payment_intent }
+  #     elsif @default_payment.payment_type == "paypal"
+  #       render json: { message: "Payment using paypal" }
+  #     end
+  #   rescue => e
+  #     return render json: { error: e.message }
+  #   end
+  # end
 
-  def create
-    begin
-      @charge = StripePaymentService.create_charge((((params[:amount]).to_f) * 100).to_i, params[:card], @current_user.stripe_connect_id)
-    rescue => e
-      return render json: { error: e.message }
-    end
+  # def create
+  #   begin
+  #     @charge = StripePaymentService.create_charge((((params[:amount]).to_f) * 100).to_i, params[:card], @current_user.stripe_connect_id)
+  #   rescue => e
+  #     return render json: { error: e.message }
+  #   end
 
-    render json: { charge: @charge, transfer: @transfer }
-  end
+  #   render json: { charge: @charge, transfer: @transfer }
+  # end
 
-  def transfer
-    begin
-      @transfer = StripePaymentService.create_transfer((((params[:amount]).to_f) * 100).to_i, @user.stripe_connect_id)
-    rescue => e
-      return render json: { error: e.message }
-    end
+  # def transfer
+  #   begin
+  #     @transfer = StripePaymentService.create_transfer((((params[:amount]).to_f) * 100).to_i, @user.stripe_connect_id)
+  #   rescue => e
+  #     return render json: { error: e.message }
+  #   end
 
-    render json: { transfer: @transfer }
-  end
+  #   render json: { transfer: @transfer }
+  # end
 
   private
 

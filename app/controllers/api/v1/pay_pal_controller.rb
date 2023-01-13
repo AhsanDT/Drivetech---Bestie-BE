@@ -82,4 +82,14 @@ class Api::V1::PayPalController < Api::V1::ApiController
       render json: { message: "This user has no paypal account" }
     end
   end
+
+  def delete_paypal
+    @pay_pal_account = PaypalPartnerAccount.find_by(id: params[:id])
+    if @pay_pal_account.present?
+      @pay_pal_account.destroy
+      render json: { message: "Paypal account has been deleted" }
+    else
+      render json: { message: "This paypal is not present" }
+    end
+  end
 end
